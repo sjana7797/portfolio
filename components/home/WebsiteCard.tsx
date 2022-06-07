@@ -1,21 +1,32 @@
 /* eslint-disable @next/next/no-img-element */
+import { Dispatch, SetStateAction } from "react";
 import { FiLink } from "react-icons/fi";
 import { Website } from "../../typing";
 import { urlFor } from "../../utils/sanityClient";
 
 type Props = {
-  setImage: (webImage: string, mobileImage: string) => void;
+  setImage: (
+    webImage: string,
+    mobileImage: string,
+    description: string
+  ) => void;
   website: Website;
+  setCounter: Dispatch<SetStateAction<number>>;
+  index: number;
 };
 
-function WebsiteCard({ setImage, website }: Props) {
+function WebsiteCard({ setImage, website, setCounter, index }: Props) {
   const webImage = `${urlFor(website.web_image.asset._ref)}`;
   const mobileImage = `${urlFor(website.mobile_image.asset._ref)}`;
   const changeImage = () => {
-    setImage(webImage, mobileImage);
+    setImage(webImage, mobileImage, website.description);
+    setCounter(index);
   };
   return (
-    <div
+    <a
+      href={website.link}
+      target="_blank"
+      rel="noreferrer"
       className="group flex cursor-pointer select-none snap-start flex-col items-center space-y-2 rounded-lg border border-base-content/40 bg-base-200 p-2 shadow-md"
       onMouseEnter={changeImage}
       onClick={changeImage}
@@ -34,7 +45,7 @@ function WebsiteCard({ setImage, website }: Props) {
         </span>
         <button className="btn btn-primary btn-sm">go to website</button>
       </div>
-    </div>
+    </a>
   );
 }
 

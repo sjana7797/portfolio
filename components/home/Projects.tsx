@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Website } from "../../typing";
 import { urlFor } from "../../utils/sanityClient";
@@ -13,9 +13,11 @@ function Projects({ websites }: Props) {
   const [mobileImage, setMobileImage] = useState(initialMobileImage);
   const [webImage, setWebImage] = useState(initialWebImage);
   const [counter, setCounter] = useState(0);
-  const setImage = (webImage: string, mobileImage: string) => {
+  const [description, setDescription] = useState(websites[0].description);
+  const setImage = (webImage: string, mobileImage: string, desc: string) => {
     setWebImage(webImage);
     setMobileImage(mobileImage);
+    setDescription(desc);
   };
   const changeImage = (direction: "prev" | "next") => {
     if (direction === "prev") {
@@ -35,7 +37,8 @@ function Projects({ websites }: Props) {
   useEffect(() => {
     const webImage = `${urlFor(websites[counter].web_image.asset._ref)}`;
     const mobileImage = `${urlFor(websites[counter].mobile_image.asset._ref)}`;
-    setImage(webImage, mobileImage);
+    const desc = websites[counter].description;
+    setImage(webImage, mobileImage, desc);
   }, [counter, websites]);
   return (
     <section className="my-10 border-t-2 border-blue-300 py-10">
@@ -75,25 +78,20 @@ function Projects({ websites }: Props) {
       </div>
       <div className="mt-10">
         <div className="flex snap-x snap-mandatory space-x-5 overflow-x-scroll scrollbar-hide lg:space-x-10">
-          {websites.map((website) => (
+          {websites.map((website, index) => (
             <WebsiteCard
               key={website._id}
               setImage={setImage}
               website={website}
+              setCounter={setCounter}
+              index={index}
             />
           ))}
         </div>
       </div>
       <div className="prose mx-auto mt-10 space-y-2 lg:prose-xl">
         <h2 className="text-center text-secondary">Description</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut et nisi
-          vitae vel vero? Sunt, magnam? Repudiandae, distinctio. Vitae quam fuga
-          labore nobis veniam aspernatur ipsum, sint iusto, possimus nesciunt
-          architecto porro ipsa ratione ad. Magni tempora suscipit atque,
-          obcaecati ut ea sapiente, debitis culpa itaque id ipsum, accusamus
-          nisi.
-        </p>
+        <p>{description}</p>
       </div>
     </section>
   );

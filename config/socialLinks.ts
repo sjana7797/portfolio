@@ -8,11 +8,17 @@ import {
 
 export const socialLinks = {
   github: {
-    link: "/",
+    link: "https://github.com/sjana7797",
     Icon: FiGithub,
   },
-  linkedin: { link: "/", Icon: FiLinkedin },
-  twitter: { link: "/", Icon: FiTwitter },
-  instagram: { link: "/", Icon: FiInstagram },
-  email: { link: "/", Icon: FiMail },
+  linkedin: {
+    link: "https://www.linkedin.com/in/sjana7797/",
+    Icon: FiLinkedin,
+  },
+  twitter: { link: "https://twitter.com/_code_decoder", Icon: FiTwitter },
+  instagram: {
+    link: "https://www.instagram.com/code__decoder/",
+    Icon: FiInstagram,
+  },
+  email: { link: "mailto:sjana7797@gmail.com", Icon: FiMail },
 };

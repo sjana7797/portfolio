@@ -1,9 +1,10 @@
 import React from "react";
+import { Experience } from "../../typing";
 import ExperienceCard from "./ExperienceCard";
 
-type Props = {};
+type Props = { experiences: Experience[] };
 
-function Experience({}: Props) {
+function Experience({ experiences }: Props) {
   return (
     <section>
       <div>
@@ -12,9 +13,9 @@ function Experience({}: Props) {
         </h1>
       </div>
       <div className="mx-auto mt-16 flex w-fit max-w-xl flex-col space-y-10 sm:w-full">
-        <ExperienceCard />
-        <ExperienceCard />
-        <ExperienceCard />
+        {experiences.map((experience) => (
+          <ExperienceCard key={experience._id} experience={experience} />
+        ))}
       </div>
     </section>
   );

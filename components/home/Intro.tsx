@@ -1,10 +1,12 @@
 import { IoLogoReact, IoCodeSlash } from "react-icons/io5";
 import { socialLinks } from "../../utils/socialLinks";
 import SocialLink from "./SocialLink";
+import { Intro as IntroInterface } from "../../typing";
 
-type Props = {};
+type Props = { myIntro: IntroInterface };
 
-function Intro({}: Props) {
+function Intro({ myIntro }: Props) {
+  const { description, designation, quick_intro } = myIntro;
   return (
     <section className="flex flex-col space-y-10">
       <div className="flex w-full flex-col items-center space-y-5 md:flex-row md:justify-between md:space-y-0">
@@ -14,9 +16,7 @@ function Intro({}: Props) {
             <h1 className="text-xl font-bold text-primary md:text-3xl">
               Sanjay Jana
             </h1>
-            <h2 className="font-mono font-medium text-accent">
-              Frontend Developer
-            </h2>
+            <h2 className="font-mono font-medium text-accent">{designation}</h2>
           </div>
         </div>
         <div className="text-neutral-600/80 flex max-w-sm grow justify-evenly space-x-5 md:space-x-0">
@@ -27,8 +27,7 @@ function Intro({}: Props) {
       </div>
       <div>
         <p className="text-base font-medium md:text-base xl:text-xl">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur
-          veritatis ex molestias autem sed eum saepe fuga doloremque, sint quia.
+          {description}
         </p>
       </div>
       <div className="flex flex-col space-y-5">

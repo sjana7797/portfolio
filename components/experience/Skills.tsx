@@ -14,9 +14,9 @@ type Props = {};
 function Skills({}: Props) {
   return (
     <section className="mt-16 md:mt-20">
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+      <div className="group grid grid-cols-1 gap-5 md:grid-cols-2">
         <div className="flex items-center justify-center">
-          <h2 className="text-5xl font-semibold uppercase italic tracking-wider text-secondary">
+          <h2 className="text-5xl font-semibold uppercase italic tracking-wider text-secondary transition-all duration-1000 group-hover:-translate-y-2 group-hover:underline group-hover:decoration-wavy group-hover:underline-offset-4">
             Skills
           </h2>
         </div>
