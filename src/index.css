@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;900&family=Ubuntu+Mono:wght@400;700&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    ::-webkit-scrollbar {
+        @apply w-3 bg-transparent
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-slate-500 rounded-lg my-1
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-slate-700 border-slate-500 border-2 border-solid rounded-lg cursor-pointer hover:bg-emerald-500
+    }
+
+}
+
+
+.menuBurger {
+    box-sizing: unset;
+}
