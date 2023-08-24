@@ -1,3 +1,4 @@
+import { AnimatePresence } from "framer-motion";
 import type { NextFont } from "next/dist/compiled/@next/font";
 import NextNProgress from "nextjs-progressbar";
 import type { ReactNode } from "react";
@@ -16,7 +17,9 @@ function RootLayout({ children, font }: Props) {
         }}
         startPosition={0.1}
       />
-      {children}
+      <AnimatePresence mode="wait" initial={false}>
+        {children}
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,8 +1,7 @@
-import { workExperiences } from "../constants";
-import ExperienceCard from "./experience-card";
-import { buttonVariants } from "~/components/ui/button";
-import Link from "next/link";
-import { cn } from "~/lib/utils";
+import { workExperiences } from "../../constants";
+import { container } from "./animation";
+import ExperienceCard from "./card";
+import { motion } from "framer-motion";
 
 function Experience() {
   return (
@@ -17,11 +16,17 @@ function Experience() {
         </h2>
       </div>
       <div>
-        <ol className="group/list snap-y snap-center">
+        <motion.ol
+          className="group/list snap-y snap-center"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+        >
           {workExperiences.map((experience, index) => {
             return <ExperienceCard key={index} experience={experience} />;
           })}
-        </ol>
+        </motion.ol>
         {/* <div className="mt-12">
           <a
             className="text-slate-20 group inline-flex items-center font-semibold leading-tight"
@@ -41,14 +46,6 @@ function Experience() {
             </span>
           </a>
         </div> */}
-        <div>
-          <Link
-            href="/projects"
-            className={cn(buttonVariants({ variant: "default" }), "capitalize")}
-          >
-            projects
-          </Link>
-        </div>
       </div>
     </section>
   );

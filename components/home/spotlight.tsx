@@ -16,7 +16,7 @@ function Spotlight({}: Props) {
   return (
     <div
       ref={spotlight}
-      className="hidden lg:block w-96 h-96 fixed inset-0 -translate-x-1/2 -translate-y-1/2 pointer-events-none blur-sm"
+      className="pointer-events-none fixed inset-0 hidden h-96 w-96 -translate-x-1/2 -translate-y-1/2 blur lg:block"
       style={{
         top: position.y,
         left: position.x,

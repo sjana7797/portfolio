@@ -10,10 +10,10 @@ const roboto = Roboto({
   weight: ["100", "300", "400", "500", "700", "900"],
 });
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <RootLayout font={roboto}>
-      <Component {...pageProps} />
+      <Component {...pageProps} key={router.asPath} />
     </RootLayout>
   );
 }

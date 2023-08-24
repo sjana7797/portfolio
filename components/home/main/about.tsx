@@ -1,4 +1,5 @@
 import { aboutMe } from "../constants";
+import { motion } from "framer-motion";
 
 function About() {
   return (
@@ -12,9 +13,19 @@ function About() {
           About
         </h2>
       </div>
-      <div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{
+          opacity: 1,
+        }}
+        transition={{
+          duration: 0.5,
+          type: "spring",
+          stiffness: 260,
+        }}
+      >
         <p className="mb-4">{aboutMe}</p>
-      </div>
+      </motion.div>
     </section>
   );
 }

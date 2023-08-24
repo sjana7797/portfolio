@@ -3,6 +3,7 @@ import Header from "~/components/home/header";
 import Main from "~/components/home/main";
 import Spotlight from "~/components/home/spotlight";
 import { useSpotlightStore } from "~/store";
+import { motion } from "framer-motion";
 
 type Props = {};
 
@@ -13,8 +14,16 @@ function Home({}: Props) {
     setPosition({ x: event.clientX, y: event.clientY });
   };
   return (
-    <main
-      className="scrollbar-hide relative h-screen w-screen overflow-y-scroll scroll-smooth"
+    <motion.main
+      initial={{ x: 300, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: 300, opacity: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+      }}
+      className="relative h-screen w-screen overflow-y-scroll scroll-smooth scrollbar-hide"
       onMouseMove={handleSpotlightMouse}
     >
       <Spotlight />
@@ -24,7 +33,7 @@ function Home({}: Props) {
           <Main />
         </div>
       </div>
-    </main>
+    </motion.main>
   );
 }
 

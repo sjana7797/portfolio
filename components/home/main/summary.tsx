@@ -1,4 +1,5 @@
 import { profileSummary } from "../constants";
+import { motion } from "framer-motion";
 
 function Summary() {
   return (
@@ -12,12 +13,22 @@ function Summary() {
           Profile Summary
         </h2>
       </div>
-      <div className="lg:relative">
+      <motion.div
+        className="lg:relative"
+        animate={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, scale: 0.1 }}
+        transition={{
+          duration: 0.5,
+          type: "spring",
+          stiffness: 260,
+          damping: 20,
+        }}
+      >
         <div className="absolute inset-0 hidden bg-fuchsia-500 blur lg:block" />
         <div className="lg:relative lg:rounded-lg lg:border-2 lg:border-cyan-500 lg:bg-slate-800 lg:px-10 lg:py-5 lg:font-semibold lg:text-cyan-600 lg:shadow-lg lg:backdrop-blur-sm">
           <p className="mb-4">{profileSummary}</p>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,6 +1,8 @@
+import Mobile from "~/components/common/mockup/mobile";
 import About from "./about";
 import Experience from "./experience";
 import Summary from "./summary";
+import Projects from "./projects";
 
 type Props = {};
 
@@ -10,6 +12,7 @@ function Main({}: Props) {
       <Summary />
       <About />
       <Experience />
+      <Projects />
     </div>
   );
 }

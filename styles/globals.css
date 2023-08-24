@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  ::selection {
+    @apply bg-teal-500 text-slate-700;
+  }
+  a {
+    @apply select-none;
+  }
+  body {
+    @apply scrollbar-hide;
+  }
+}
