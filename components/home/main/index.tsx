@@ -3,6 +3,7 @@ import About from "./about";
 import Experience from "./experience";
 import Summary from "./summary";
 import Projects from "./projects";
+import Skills from "./skills";
 
 type Props = {};
 
@@ -13,6 +14,7 @@ function Main({}: Props) {
       <About />
       <Experience />
       <Projects />
+      <Skills />
     </div>
   );
 }

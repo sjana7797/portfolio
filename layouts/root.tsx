@@ -17,7 +17,7 @@ function RootLayout({ children, font }: Props) {
         }}
         startPosition={0.1}
       />
-      <AnimatePresence mode="wait">{children}</AnimatePresence>
+      <AnimatePresence mode="sync">{children}</AnimatePresence>
     </div>
   );
 }
