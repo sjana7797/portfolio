@@ -13,6 +13,7 @@ function Home({}: Props) {
   const handleSpotlightMouse: MouseEventHandler<HTMLElement> = (event) => {
     setPosition({ x: event.clientX, y: event.clientY });
   };
+
   return (
     <motion.main
       initial={{ x: 300, opacity: 0 }}
