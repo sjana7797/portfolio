@@ -6,9 +6,7 @@ import Nav from "./nav";
 import Socials from "./social";
 import { TypeAnimation } from "react-type-animation";
 
-type Props = {};
-
-function Header({}: Props) {
+function Header() {
   return (
     <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
       <div>
