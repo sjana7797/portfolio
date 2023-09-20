@@ -21,7 +21,17 @@ const container = {
 function Skills({}: Props) {
   const router = useRouter();
   return (
-    <main className="relative p-5">
+    <motion.main
+      className="relative p-5"
+      initial={{ x: 300, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: 300, opacity: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+      }}
+    >
       <Button
         variant={"ghost"}
         size={"icon"}
@@ -30,7 +40,7 @@ function Skills({}: Props) {
         }}
         className="fixed left-5 top-5"
       >
-        <IoArrowBackOutline />
+        <IoArrowBackOutline className="h-5 w-5" />
       </Button>
       <h1 className="text-center text-3xl font-bold uppercase">Skills</h1>
       <motion.ul
@@ -43,7 +53,7 @@ function Skills({}: Props) {
           return <Card key={skill.id} skill={skill} />;
         })}
       </motion.ul>
-    </main>
+    </motion.main>
   );
 }
 
