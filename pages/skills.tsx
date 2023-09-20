@@ -23,9 +23,9 @@ function Skills({}: Props) {
   return (
     <motion.main
       className="relative p-5"
-      initial={{ x: 300, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: 300, opacity: 0 }}
+      initial={{ scale: 0.6, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0.6, opacity: 0 }}
       transition={{
         type: "spring",
         stiffness: 260,
