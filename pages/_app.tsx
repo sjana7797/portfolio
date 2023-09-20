@@ -5,6 +5,7 @@ import { Roboto } from "next/font/google";
 // tailwind css
 import "~/styles/globals.css";
 
+// roboto font
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["100", "300", "400", "500", "700", "900"],
