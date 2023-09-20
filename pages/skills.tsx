@@ -33,16 +33,18 @@ function Skills({}: Props) {
       }}
     >
       <Button
-        variant={"ghost"}
+        variant={"secondary"}
         size={"icon"}
         onClick={() => {
           router.back();
         }}
-        className="fixed left-5 top-5"
+        className="fixed left-5 top-5 z-[100] rounded-full"
       >
         <IoArrowBackOutline className="h-5 w-5" />
       </Button>
-      <h1 className="text-center text-3xl font-bold uppercase">Skills</h1>
+      <h1 className="sticky top-0 z-50 bg-slate-900/70 text-center text-3xl font-bold uppercase backdrop-blur-sm">
+        Skills
+      </h1>
       <motion.ul
         className="mx-auto mt-10 grid max-w-2xl grid-cols-3 gap-x-5 gap-y-10 p-5 md:grid-cols-4 md:gap-7 lg:grid-cols-5 lg:gap-8"
         variants={container}

@@ -9,7 +9,7 @@ type Props = {};
 function Skills({}: Props) {
   return (
     <section
-      id="about"
+      id="skills"
       className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
       aria-label="Skills"
     >
@@ -20,7 +20,7 @@ function Skills({}: Props) {
       </div>
       <div className="mt-[100px] flex items-center justify-center">
         <motion.div
-          className="animate-cubeRotation h-[150px] w-[150px]"
+          className="h-[150px] w-[150px] animate-cubeRotation"
           style={{
             transformStyle: "preserve-3d",
           }}
@@ -55,7 +55,7 @@ function Skills({}: Props) {
             "mt-20 text-lg capitalize",
           )}
         >
-          Check Skills
+          View My Skills
         </Link>
       </div>
     </section>
