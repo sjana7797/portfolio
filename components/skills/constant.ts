@@ -1,4 +1,3 @@
-import type { IconType } from "react-icons";
 import { FaReact, FaNodeJs, FaHtml5, FaCss3Alt, FaFigma } from "react-icons/fa";
 import {
   SiTailwindcss,
@@ -12,15 +11,7 @@ import { DiJavascript1 } from "react-icons/di";
 import { TbBrandNextjs, TbSql } from "react-icons/tb";
 import { BiLogoPostgresql } from "react-icons/bi";
 import { BsGit } from "react-icons/bs";
-
-export type Skill = {
-  id: string;
-  name: string;
-  Icon: IconType;
-  level: number;
-  description: string;
-  color: string;
-};
+import type { Skill, SkillType } from "./type";
 
 const react: Skill = {
   id: "d31b4420-26d6-4646-984d-9f778f952c8e",
@@ -29,6 +20,7 @@ const react: Skill = {
   level: 80,
   description: "React is a JavaScript library for building user interfaces.",
   color: "bg-blue-400 text-blue-100",
+  type: "frontend",
 };
 const node: Skill = {
   id: "b5156672-af90-4950-be6b-81c92a252f12",
@@ -38,6 +30,7 @@ const node: Skill = {
   description:
     "Node.js is an open-source, cross-platform, back-end JavaScript runtime environment that runs on the V8 engine and executes JavaScript code outside a web browser.",
   color: "bg-emerald-300 text-emerald-700",
+  type: "backend",
 };
 
 const tailwindCss: Skill = {
@@ -48,6 +41,7 @@ const tailwindCss: Skill = {
   description:
     "Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces.",
   color: "bg-cyan-300 text-cyan-700",
+  type: "frontend",
 };
 
 const javascript: Skill = {
@@ -58,6 +52,7 @@ const javascript: Skill = {
   description:
     "JavaScript, often abbreviated as JS, is a programming language that conforms to the ECMAScript specification.",
   color: "bg-yellow-300 text-yellow-600",
+  type: "frontend",
 };
 
 const mongodb: Skill = {
@@ -68,6 +63,7 @@ const mongodb: Skill = {
   description:
     "MongoDB is a source-available cross-platform document-oriented database program.",
   color: "bg-green-400 text-green-100",
+  type: "database",
 };
 
 const next: Skill = {
@@ -78,6 +74,7 @@ const next: Skill = {
   description:
     "Next.js is an open-source React front-end development web framework created by Vercel that enables functionality such as server-side rendering and generating static websites for React based web applications.",
   color: "bg-black text-gray-100",
+  type: "frontend",
 };
 
 const html: Skill = {
@@ -88,15 +85,17 @@ const html: Skill = {
   description:
     "HTML is the standard markup language for documents designed to be displayed in a web browser.",
   color: "bg-red-400 text-red-100",
+  type: "frontend",
 };
 
-const css = {
+const css: Skill = {
   id: "af83b9d2-e1a0-4864-aa19-213910d825ff",
   name: "CSS",
   Icon: FaCss3Alt,
   level: 80,
   description: "CSS is the language we use to style an HTML document.",
   color: "bg-blue-400 text-blue-100",
+  type: "frontend",
 };
 
 const sass: Skill = {
@@ -107,6 +106,7 @@ const sass: Skill = {
   description:
     "Sass is a preprocessor scripting language that is interpreted or compiled into Cascading Style Sheets.",
   color: "bg-pink-400 text-pink-100",
+  type: "frontend",
 };
 
 const typescript: Skill = {
@@ -117,6 +117,7 @@ const typescript: Skill = {
   description:
     "TypeScript is an open-source language which builds on JavaScript, one of the world's most used tools, by adding static type definitions.",
   color: "bg-blue-200 text-blue-600",
+  type: "frontend",
 };
 
 const sql: Skill = {
@@ -127,6 +128,7 @@ const sql: Skill = {
   description:
     "SQL is a standard language for storing, manipulating and retrieving data in databases.",
   color: "bg-green-400 text-green-100",
+  type: "database",
 };
 
 const postgres: Skill = {
@@ -137,6 +139,7 @@ const postgres: Skill = {
   description:
     "PostgreSQL is a free and open-source relational database management system emphasizing extensibility and SQL compliance.",
   color: "bg-blue-400 text-blue-100",
+  type: "database",
 };
 
 const figma: Skill = {
@@ -147,6 +150,7 @@ const figma: Skill = {
   description:
     "Figma is a vector graphics editor and prototyping tool which is primarily web-based, with additional offline features enabled by desktop applications for macOS and Windows.",
   color: "bg-pink-400 text-pink-100",
+  type: "design",
 };
 
 const git: Skill = {
@@ -157,6 +161,7 @@ const git: Skill = {
   description:
     "Git is software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development.",
   color: "bg-red-400 text-red-100",
+  type: "tools",
 };
 
 const redux: Skill = {
@@ -167,6 +172,7 @@ const redux: Skill = {
   description:
     "Redux is an open-source JavaScript library for managing application state.",
   color: "bg-purple-400 text-purple-100",
+  type: "frontend",
 };
 
 const express: Skill = {
@@ -177,6 +183,7 @@ const express: Skill = {
   description:
     "Express.js, or simply Express, is a back end web application framework for Node.js.",
   color: "bg-black text-gray-100",
+  type: "backend",
 };
 
 export const skills: Skill[] = [
@@ -197,3 +204,14 @@ export const skills: Skill[] = [
   figma,
   git,
 ];
+
+export const segregatedSkills = new Map<SkillType, Skill[]>();
+
+skills.forEach((skill) => {
+  if (!segregatedSkills.get(skill.type)) {
+    segregatedSkills.set(skill.type, []);
+  }
+  if (segregatedSkills.get(skill.type)) {
+    segregatedSkills.get(skill.type)?.push(skill);
+  }
+});
