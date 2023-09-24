@@ -12,7 +12,7 @@ export function renderSkills(skillsMap: Map<SkillType, Skill[]>) {
   const skillsComponents: JSX.Element[] = [];
   skillsMap.forEach((skills, type) => {
     const skillComponent = (
-      <AccordionItem value={type}>
+      <AccordionItem value={type} key={type}>
         <AccordionTrigger className="capitalize hover:no-underline">
           {type}
         </AccordionTrigger>
