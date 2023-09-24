@@ -1,11 +1,14 @@
 import type { IconType } from "react-icons";
-export type SkillType =
-  | "frontend"
-  | "backend"
-  | "design"
-  | "database"
-  | "tools";
 
+export const skillsTypes = [
+  "frontend",
+  "backend",
+  "design",
+  "database",
+  "tools",
+] as const;
+
+export type SkillType = (typeof skillsTypes)[number];
 export type Skill = {
   id: string;
   name: string;
