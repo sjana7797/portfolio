@@ -8,7 +8,11 @@ type Props = {};
 function MobileLayoutSkill({}: Props) {
   const defaultTypes = [...skillsTypes];
   return (
-    <Accordion type="multiple" className="w-full" defaultValue={defaultTypes}>
+    <Accordion
+      type="multiple"
+      className="block w-full md:hidden"
+      defaultValue={defaultTypes}
+    >
       {renderSkills(segregatedSkills)}
     </Accordion>
   );
