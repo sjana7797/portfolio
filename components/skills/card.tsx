@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Skill } from "./constant";
+import type { Skill } from "./type";
 import { cn } from "~/lib/utils";
 import {
   HoverCard,
