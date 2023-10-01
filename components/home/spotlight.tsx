@@ -1,5 +1,5 @@
 import { useSpotlightStore } from "~/store";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import React from "~/assets/svg/react";
 
 type Props = {};
@@ -7,11 +7,6 @@ type Props = {};
 function Spotlight({}: Props) {
   const { position } = useSpotlightStore();
   const spotlight = useRef<HTMLDivElement>(null);
-
-  //   useEffect(() => {
-  //     if (!spotlight.current) return;
-  //     spotlight.current.style.background = `radial-gradient(600px at ${position.x}px ${position.y}px, rgba(29, 78, 216, 0.15), transparent 80%)`;
-  //   }, [position.x, position.y]);
 
   return (
     <div
@@ -22,13 +17,8 @@ function Spotlight({}: Props) {
         left: position.x,
       }}
     >
-      <React className="animate-spin-slow text-blue-400 opacity-5" />
+      <React className="animate-spin-slow text-blue-400 opacity-[0.01]" />
     </div>
-    // <div
-    //   ref={spotlight}
-    //   className="pointer-events-none fixed inset-0 z-30 transition duration-300 lg:absolute"
-    // >
-    // </div>
   );
 }
 
