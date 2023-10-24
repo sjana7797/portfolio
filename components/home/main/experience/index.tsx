@@ -1,7 +1,9 @@
+import Link from "next/link";
 import { workExperiences } from "../../constants";
 import { container } from "./animation";
 import ExperienceCard from "./card";
 import { motion } from "framer-motion";
+import { MoveRight } from "lucide-react";
 
 function Experience() {
   return (
@@ -47,6 +49,15 @@ function Experience() {
           </a>
         </div> */}
       </div>
+      <Link
+        href="/resume.pdf"
+        className="group flex cursor-pointer items-center gap-2 px-3.5 py-2.5 text-sm font-medium transition-all duration-200 ease-in-out hover:gap-4 hover:text-emerald-400"
+      >
+        <span className="underline-offset-2 group-hover:underline">
+          View Resume
+        </span>
+        <MoveRight className={"h-4 w-4"} />
+      </Link>
     </section>
   );
 }
