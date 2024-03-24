@@ -5,7 +5,7 @@ import { Button } from "~/components/ui/button";
 
 export default function Home() {
   return (
-    <main className="w-screen h-screen flex flex-col gap-y-4 p-2">
+    <main className="fixed top-0 bottom-0 left-0 right-0  flex flex-col gap-y-4 p-2">
       <div className="flex items-center sm:flex-row flex-col justify-between">
         <Button className="shrink-0 w-fit gap-x-2">
           <span>

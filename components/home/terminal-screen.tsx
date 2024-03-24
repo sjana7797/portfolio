@@ -22,7 +22,7 @@ function TerminalScreen({}: Props) {
   }, [terminalMessages.length]);
 
   return (
-    <section className="bg-gray-900 rounded-md border-2 w-full grow shadow max-h-[calc(100vh-150px)]">
+    <section className="bg-gray-900 rounded-md border-2 w-full grow shadow max-h-[calc(100%-150px)]">
       <ul className="p-4 flex flex-col max-h-full overflow-y-auto scroll-smooth scrollbar-hide text-lg">
         {terminalMessages.map((message, index) => {
           return (
