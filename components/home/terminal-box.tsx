@@ -29,7 +29,7 @@ function TerminalBox({}: Props) {
         <Terminal className="w-5" />
         <TerminalCombobox selected={selected} setSelected={setSelected} />
         <SendHorizontal
-          className="shrink-0 w-5 h-5"
+          className="shrink-0 w-5 h-5 cursor-pointer hover:text-cyan-400"
           onClick={handleSendMessage}
         />
       </div>
