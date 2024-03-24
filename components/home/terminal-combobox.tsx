@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { Check } from "lucide-react";
 import { cn } from "~/lib/utils";
@@ -8,8 +8,12 @@ import { Command } from "./type";
 import { terminalCommands, clear } from "./constants";
 import { useTerminal } from "~/hooks/termminal-command";
 
-function TerminalCombobox() {
-  const [selected, setSelected] = useState<Command | null>(terminalCommands[0]);
+type Props = {
+  selected: Command | null;
+  setSelected: Dispatch<SetStateAction<Command | null>>;
+};
+
+function TerminalCombobox({ selected, setSelected }: Props) {
   const [query, setQuery] = useState("");
   const { addCommand, clearCommands } = useTerminal();
 
