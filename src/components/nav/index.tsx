@@ -6,7 +6,7 @@ import { Download, Menu, X } from "lucide-react"
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 const links = [
@@ -65,17 +65,15 @@ export function Nav() {
         {/* Right actions */}
         <div className="flex items-center gap-1.5">
           <ThemeToggle />
-          <Button
-            size="sm"
-            variant="outline"
-            className="hidden sm:flex gap-1.5 h-8 text-xs border-border/60 hover:border-primary/50 transition-colors"
-            asChild
-          >
-            <a href="/resume.pdf" download>
+          <a href="/resume.pdf" download className={cn(buttonVariants({
+              variant: "outline",
+              size: "sm",
+              className:"hidden sm:flex gap-1.5 h-8 text-xs border-border/60 hover:border-primary/50 transition-colors"
+          }))}>
               <Download className="h-3 w-3" />
               Resume
             </a>
-          </Button>
+  
           <Button
             variant="ghost"
             size="icon"

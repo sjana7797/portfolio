@@ -4,8 +4,9 @@ import Link from "next/link"
 import { ArrowRight, Brain, Building2, Layers } from "lucide-react"
 import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { fadeUp, scaleIn, stagger, viewportOnce } from "@/lib/motion"
+import { cn } from "@/lib/utils"
 
 const pillars = [
   {
@@ -59,12 +60,12 @@ export function About() {
             <span className="text-foreground font-medium">IIIT Bangalore</span>{" "}
             (GPA 3.8/4.0).
           </p>
-          <Button variant="ghost" size="sm" className="mt-5 gap-2 px-0 hover:px-0 hover:bg-transparent text-primary hover:text-primary/80" asChild>
-            <Link href="/experience">
+            <Link href="/experience" className={
+              cn(buttonVariants({ variant: "ghost", size: "sm" }), "mt-5 gap-2 px-0 hover:px-0 hover:bg-transparent text-primary hover:text-primary/80")
+            }>
               View full experience
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
-          </Button>
         </motion.div>
 
         {/* Pillars */}
