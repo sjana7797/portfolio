@@ -5,6 +5,7 @@ export interface Project {
   highlights: string[]
   category: "AI / ML" | "FinTech" | "SaaS" | "E-Commerce" | "Healthcare" | "Enterprise"
   type: "work" | "personal"
+  href?: string
 }
 
 export const projects: Project[] = [
@@ -63,17 +64,34 @@ export const projects: Project[] = [
     type: "work",
   },
   {
-    title: "AHMU – Online Pharmacy Platform",
+    title: "AHMU – Online Pharmacy",
     description:
-      "NHS-compliant online pharmacy application enabling safe and timely delivery of medicines, with safeguarding practices and regulatory adherence built in.",
-    tech: ["Next.js", "Node.js", "MongoDB", "TypeScript"],
+      "GPhC-regulated UK online pharmacy with NHS-compliant online consultations, prescription services, same-day delivery, and a linked online doctor clinic — built end-to-end with Next.js.",
+    tech: ["Next.js", "TypeScript", "Node.js", "MongoDB", "CloudFront"],
     highlights: [
-      "NHS compliance & safeguarding",
-      "Medicine delivery workflows",
-      "Full-stack Next.js architecture",
+      "GPhC-regulated & NHS-compliant platform",
+      "Online doctor + pharmacist consultation flows",
+      "Same-day & express delivery system",
+      "Secure user auth & discreet checkout",
     ],
     category: "Healthcare",
     type: "personal",
+    href: "https://ahmu.co.uk",
+  },
+  {
+    title: "Fylde Clinic – Online Pharmacy",
+    description:
+      "GPhC-regulated online pharmacy for 30+ conditions including weight loss (Mounjaro, Wegovy), sexual health, and hair loss — featuring a BMI calculator, Trustpilot integration, and a pharmacist-authored Health Hub.",
+    tech: ["Next.js", "TypeScript", "Node.js", "Tailwind CSS"],
+    highlights: [
+      "GPhC registration No. 9012835 — fully regulated",
+      "BMI calculator for weight-loss eligibility",
+      "Health Hub with pharmacist-reviewed articles",
+      "Trustpilot & multi-payment gateway integration",
+    ],
+    category: "Healthcare",
+    type: "personal",
+    href: "https://fyldeclinic.co.uk",
   },
   {
     title: "One Store – E-Commerce Platform",
