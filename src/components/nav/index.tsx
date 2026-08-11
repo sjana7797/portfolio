@@ -2,151 +2,110 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Download, Menu, X } from "lucide-react"
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { MusicToggle } from "@/components/voyage/music-toggle"
 
-const links = [
-  { href: "/", label: "Home" },
-  { href: "/experience", label: "Experience" },
-  { href: "/skills", label: "Skills" },
-  { href: "/projects", label: "Projects" },
-  { href: "/contact", label: "Contact" },
+/**
+ * Each stop on the voyage exists twice: as an anchor on the single
+ * scrolling page, and as its own route for deep links and SEO. The nav
+ * always points at the anchor (works from any page — Next scrolls to
+ * the hash after navigating); the `route` is what marks a standalone
+ * page as current.
+ */
+const stops = [
+  { n: "01", label: "About", hash: "#about", route: "/about" },
+  { n: "02", label: "Route", hash: "#voyage", route: "/experience" },
+  { n: "03", label: "Bounties", hash: "#racks", route: "/projects" },
+  { n: "04", label: "Kit", hash: "#stack", route: "/skills" },
 ]
 
 export function Nav() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const onVoyage = pathname === "/"
+
+  const href = (hash: string) => (onVoyage ? hash : `/${hash}`)
 
   return (
-    <motion.header
-      className="fixed top-0 inset-x-0 z-50 border-b border-border/40 bg-background/75 backdrop-blur-xl"
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+    <header
+      className="fixed inset-x-0 top-0 z-40 border-b border-ink/20 backdrop-blur-xl"
+      style={{ background: "rgb(255 249 235 / 0.88)" }}
     >
-      <div className="mx-auto max-w-5xl px-6 h-14 flex items-center justify-between">
-        {/* Monogram */}
-        <Link
-          href="/"
-          className="font-mono text-[11px] font-bold h-7 w-7 rounded bg-primary text-primary-foreground flex items-center justify-center shrink-0 tracking-tight hover:bg-primary/90 transition-colors"
-        >
-          SJ
+      <div className="flex items-center justify-between gap-5 px-[5vw] py-3">
+        <Link href="/" className="flex items-center gap-3 text-ink hover:text-ink">
+          <span className="v-display grid h-8 w-8 place-items-center bg-gold text-sm text-ink">
+            SJ
+          </span>
+          <span className="v-mono text-[10.5px] uppercase tracking-[0.2em] text-muted-ink">
+            Sanjay Jana / Log
+          </span>
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center">
-          {links.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
+        {/* desktop */}
+        <nav className="hidden items-center gap-7 lg:flex">
+          {stops.map((s) => (
+            <a
+              key={s.hash}
+              href={href(s.hash)}
               className={cn(
-                "relative px-3.5 py-1.5 text-sm transition-colors duration-150",
-                pathname === href
-                  ? "text-foreground font-medium"
-                  : "text-muted-foreground hover:text-foreground",
+                "v-mono text-[10.5px] uppercase tracking-[0.16em] transition-colors",
+                pathname === s.route
+                  ? "text-crimson"
+                  : "text-muted-ink hover:text-crimson",
               )}
             >
-              {label}
-              {pathname === href && (
-                <motion.span
-                  layoutId="nav-indicator"
-                  className="absolute inset-x-2 -bottom-[calc(0.875rem+1px)] h-px bg-primary"
-                  transition={{ type: "spring", stiffness: 400, damping: 40 }}
-                />
-              )}
-            </Link>
+              <span className="text-faint">{s.n}</span> {s.label}
+            </a>
           ))}
+          <MusicToggle />
+          <a
+            href={href("#contact")}
+            className="v-mono bg-gold px-4 py-2.5 text-[10.5px] font-bold uppercase tracking-[0.16em] text-ink transition-colors hover:bg-crimson hover:text-parchment"
+          >
+            Hire me
+          </a>
         </nav>
 
-        {/* Right actions */}
-        <div className="flex items-center gap-1.5">
-          <ThemeToggle />
-          <a href="/resume.pdf" download className={cn(buttonVariants({
-              variant: "outline",
-              size: "sm",
-              className:"hidden sm:flex gap-1.5 h-8 text-xs border-border/60 hover:border-primary/50 transition-colors"
-          }))}>
-              <Download className="h-3 w-3" />
-              Resume
-            </a>
-  
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden h-8 w-8"
-            onClick={() => setOpen(!open)}
+        {/* mobile */}
+        <div className="flex items-center gap-2 lg:hidden">
+          <MusicToggle />
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
             aria-label="Toggle menu"
+            className="flex h-9 w-9 items-center justify-center border border-ink/25 bg-parchment/90 text-ink"
           >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={open ? "close" : "open"}
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.15 }}
-              >
-                {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-              </motion.span>
-            </AnimatePresence>
-          </Button>
+            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-            className="md:hidden overflow-hidden border-t border-border/40 bg-background/95 backdrop-blur-xl"
-          >
-            <div className="px-6 py-4 flex flex-col gap-1">
-              {links.map(({ href, label }, i) => (
-                <motion.div
-                  key={href}
-                  initial={{ x: -12, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: i * 0.04, duration: 0.2 }}
-                >
-                  <Link
-                    href={href}
-                    onClick={() => setOpen(false)}
-                    className={cn(
-                      "block px-3 py-2 text-sm rounded-md transition-colors",
-                      pathname === href
-                        ? "text-foreground font-medium bg-accent/50"
-                        : "text-muted-foreground hover:text-foreground hover:bg-accent/30",
-                    )}
-                  >
-                    {label}
-                  </Link>
-                </motion.div>
-              ))}
-              <motion.div
-                initial={{ x: -12, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: links.length * 0.04 }}
+      {open && (
+        <div className="border-t border-ink/15 bg-parchment/95 px-[5vw] py-4 lg:hidden">
+          <div className="flex flex-col">
+            {stops.map((s) => (
+              <a
+                key={s.hash}
+                href={href(s.hash)}
+                onClick={() => setOpen(false)}
+                className="v-mono border-b border-ink/10 py-3 text-[11px] uppercase tracking-[0.18em] text-muted-ink"
               >
-                <a
-                  href="/resume.pdf"
-                  download
-                  className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground rounded-md transition-colors mt-1"
-                  onClick={() => setOpen(false)}
-                >
-                  <Download className="h-3.5 w-3.5" />
-                  Download Resume
-                </a>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
+                <span className="text-faint">{s.n}</span> {s.label}
+              </a>
+            ))}
+            <a
+              href={href("#contact")}
+              onClick={() => setOpen(false)}
+              className="v-mono mt-4 bg-gold px-4 py-3 text-center text-[11px] font-bold uppercase tracking-[0.18em] text-ink"
+            >
+              Hire me
+            </a>
+          </div>
+        </div>
+      )}
+    </header>
   )
 }

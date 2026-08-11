@@ -1,41 +1,56 @@
-"use client"
+import { Reveal } from "@/components/voyage/reveal"
+import { Section, SectionHeading } from "@/components/voyage/section-heading"
+import { GitHubStats } from "@/features/skills/components/github-stats"
+import { skillGroups } from "@/features/skills/data"
 
-import { motion } from "framer-motion"
-import { fadeUp, stagger, viewportOnce } from "@/lib/motion"
-import { skillGroups } from "./data"
-import { SkillGroupCard } from "./components/skill-group"
+/** Rotating accent so the eight kit columns don't read as one flat block. */
+const tones = ["text-amber", "text-sea", "text-crimson"]
 
 export function SkillsSection() {
   return (
-    <section className="space-y-12">
-      <motion.div
-        variants={stagger(0.08)}
-        initial="hidden"
-        animate="show"
-      >
-        <motion.div variants={fadeUp}>
-          <p className="section-heading">Expertise</p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-            Technical Skills
-          </h2>
-          <p className="mt-3 text-muted-foreground max-w-lg text-[15px] leading-relaxed">
-            A broad, deep stack — AI/ML pipelines to fintech frontends, built
-            across 6+ years of production engineering.
-          </p>
-        </motion.div>
-      </motion.div>
+    <Section id="stack">
+      <SectionHeading index="04" label="THE KIT I CARRY" />
 
-      <motion.div
-        className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
-        variants={stagger(0.05)}
-        initial="hidden"
-        whileInView="show"
-        viewport={viewportOnce}
-      >
+      <Reveal className="v-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {skillGroups.map((group, i) => (
-          <SkillGroupCard key={group.category} group={group} index={i} />
+          <div key={group.category} className="px-7 py-7">
+            <div
+              className={`v-mono mb-4 text-[10px] uppercase tracking-[0.2em] ${tones[i % tones.length]}`}
+            >
+              {group.category}
+            </div>
+            <div className="grid gap-2.5 text-[15.5px] text-body">
+              {group.skills.map((s) => (
+                <span key={s}>{s}</span>
+              ))}
+            </div>
+          </div>
         ))}
-      </motion.div>
-    </section>
+      </Reveal>
+
+      <Reveal className="mt-4.5 grid gap-4.5 lg:grid-cols-2">
+        <GitHubStats />
+
+        <div className="v-card flex flex-col justify-between gap-6 px-7 py-7">
+          <div>
+            <div className="v-label">Education</div>
+            <div className="mt-3 text-[19px] font-bold text-ink">
+              PG in Software Development
+            </div>
+            <div className="mt-1.5 text-[15px] text-body">
+              IIIT Bangalore · GPA 3.8 / 4.0
+            </div>
+          </div>
+          <a
+            href="/resume.pdf"
+            download="Sanjay-Jana-Resume.pdf"
+            className="inline-flex items-center justify-between gap-3 bg-gold px-5 py-4 text-sm font-bold text-ink transition-colors hover:bg-crimson hover:text-parchment"
+          >
+            <span>Download the full resume</span>
+            <span>↓</span>
+          </a>
+        </div>
+      </Reveal>
+    </Section>
   )
 }

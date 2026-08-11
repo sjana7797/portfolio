@@ -1,11 +1,9 @@
 "use client"
 
 import NextTopLoader from "nextjs-toploader"
-import { useTheme } from "next-themes"
 
 export function TopLoader() {
-  const { resolvedTheme } = useTheme()
-  const color = resolvedTheme === "dark" ? "#6366f1" : "#4f46e5"
+  const color = "#f5c542"
 
   return (
     <NextTopLoader

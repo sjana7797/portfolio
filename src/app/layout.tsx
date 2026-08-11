@@ -1,35 +1,109 @@
-import type { Metadata } from "next"
-import { Geist_Mono, Inter } from "next/font/google"
+import type { Metadata, Viewport } from "next"
+import {
+  Bevan,
+  Bricolage_Grotesque,
+  JetBrains_Mono,
+  Manrope,
+} from "next/font/google"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
 import { TopLoader } from "@/components/top-loader"
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
+import { VoyageBackdrop } from "@/components/voyage/ocean-scene"
+import { ScrollProgress } from "@/components/voyage/scroll-progress"
+import { CursorWake } from "@/components/voyage/cursor-wake"
+import { SITE_URL, site } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
-const fontMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
+const display = Bricolage_Grotesque({
+  subsets: ["latin"],
+  weight: ["700", "800"],
+  variable: "--font-display",
+})
+const body = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-body",
+})
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-mono",
+})
+const poster = Bevan({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-poster",
+})
 
 export const metadata: Metadata = {
-  title: "Sanjay Jana — Senior Full Stack Engineer",
-  description:
-    "Senior Full Stack Engineer with 6+ years building scalable SaaS platforms and AI-driven applications. MERN Stack · Next.js · TypeScript · AI.",
-  keywords: [
-    "Full Stack Engineer",
-    "Next.js",
-    "React",
-    "TypeScript",
-    "AI",
-    "LangChain",
-    "MERN",
-  ],
-  authors: [{ name: "Sanjay Jana", url: "https://sanjayjana.dev" }],
-  openGraph: {
-    title: "Sanjay Jana — Senior Full Stack Engineer",
-    description:
-      "6+ years building scalable SaaS platforms and AI-driven applications.",
-    type: "website",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Sanjay Jana — Senior Full Stack Engineer (AI, Next.js, Mumbai)",
+    // Every child page inherits this, so titles stay consistent.
+    template: "%s | Sanjay Jana",
   },
+  description: site.description,
+  applicationName: "Sanjay Jana — Portfolio",
+  authors: [{ name: site.name, url: SITE_URL }],
+  creator: site.name,
+  publisher: site.name,
+  category: "technology",
+  keywords: [
+    "Sanjay Jana",
+    "Senior Full Stack Engineer",
+    "Full Stack Engineer Mumbai",
+    "Next.js developer",
+    "React developer",
+    "TypeScript engineer",
+    "LangChain developer",
+    "RAG pipelines",
+    "AI engineer India",
+    "Node.js",
+    "design systems",
+    "fintech frontend",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "profile",
+    siteName: "Sanjay Jana",
+    title: "Sanjay Jana — Senior Full Stack Engineer",
+    description: site.description,
+    url: SITE_URL,
+    locale: "en_US",
+    firstName: "Sanjay",
+    lastName: "Jana",
+    username: "sanjayjana",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sanjay Jana — Senior Full Stack Engineer",
+    description: site.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  icons: {
+    icon: "/icon",
+    apple: "/apple-icon",
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: "#cdeaf3",
+  colorScheme: "light",
+  width: "device-width",
+  initialScale: 1,
 }
 
 export default function RootLayout({
@@ -38,16 +112,23 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={cn(inter.variable, fontMono.variable)}>
-      <body className="antialiased min-h-svh flex flex-col">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <TopLoader />
-          <Nav />
-          <main className="flex-1 pt-14">
-            <div className="mx-auto max-w-5xl px-6">{children}</div>
-          </main>
-          <Footer />
-        </ThemeProvider>
+    <html
+      lang="en"
+      className={cn(
+        display.variable,
+        body.variable,
+        mono.variable,
+        poster.variable
+      )}
+    >
+      <body className="flex min-h-svh flex-col antialiased">
+        <VoyageBackdrop />
+        <TopLoader />
+        <ScrollProgress />
+        <CursorWake />
+        <Nav />
+        <main className="relative z-10 flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   )

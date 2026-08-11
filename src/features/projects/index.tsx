@@ -1,41 +1,119 @@
-"use client"
+import { Reveal } from "@/components/voyage/reveal"
+import { Section, SectionHeading } from "@/components/voyage/section-heading"
+import { projects } from "@/features/projects/data"
 
-import { motion } from "framer-motion"
-import { fadeUp, stagger, viewportOnce } from "@/lib/motion"
-import { projects } from "./data"
-import { ProjectCard } from "./components/project-card"
+/** Blinking lights down the spine of each bounty card. */
+const lights = ["#0a6285", "#f5c542", "#b81d22"]
 
 export function ProjectsSection() {
   return (
-    <section className="space-y-12">
-      <motion.div
-        variants={stagger(0.08)}
-        initial="hidden"
-        animate="show"
-      >
-        <motion.div variants={fadeUp}>
-          <p className="section-heading">Work</p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-            Notable Projects
-          </h2>
-          <p className="mt-3 text-muted-foreground max-w-lg text-[15px] leading-relaxed">
-            A selection of production and personal projects spanning AI,
-            fintech, healthcare, and e-commerce.
-          </p>
-        </motion.div>
-      </motion.div>
+    <Section id="racks">
+      <SectionHeading
+        index="03"
+        label={`THE BOUNTY BOARD · ${numberWord(projects.length)} CATCHES`}
+      />
 
-      <motion.div
-        className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"
-        variants={stagger(0.06)}
-        initial="hidden"
-        whileInView="show"
-        viewport={viewportOnce}
-      >
-        {projects.map((project, i) => (
-          <ProjectCard key={project.title} project={project} index={i} />
+      <Reveal className="mb-14 grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+        <h2 className="v-display m-0 text-[clamp(40px,7vw,118px)] leading-[0.88] tracking-[-0.05em]">
+          WHAT I&rsquo;VE
+          <br />
+          CLAIMED
+        </h2>
+        <p className="v-prose m-0 text-[17px] leading-[1.55] text-body">
+          Production work and personal builds. Every catch below is something real that
+          someone depends on.
+        </p>
+      </Reveal>
+
+      <div className="grid gap-4.5">
+        {projects.map((p, i) => (
+          <Reveal
+            as="article"
+            key={p.title}
+            className="v-card v-rack grid grid-cols-[52px_1fr] md:grid-cols-[62px_1fr]"
+          >
+            {/* spine */}
+            <div className="flex flex-col items-center gap-2 border-r border-ink/20 py-6">
+              <span className="v-mono text-[11px] text-faint">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              {lights.slice(0, 2 + (i % 2)).map((c, k) => (
+                <span
+                  key={k}
+                  className="h-1.5 w-1.5"
+                  style={{
+                    background: c,
+                    animation: `v-blip ${1.6 + ((i + k) % 5) * 0.4}s ease-in-out infinite`,
+                  }}
+                />
+              ))}
+            </div>
+
+            <div className="grid gap-8 px-6 py-7 md:px-8 lg:grid-cols-[1.25fr_0.75fr]">
+              <div>
+                <div className="v-mono flex flex-wrap items-center gap-2.5 text-[10px] uppercase tracking-[0.2em] text-sea">
+                  <span>
+                    {p.category} · {p.type === "work" ? "Work" : "Personal"}
+                  </span>
+                  {p.href && (
+                    <a
+                      href={p.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-amber underline-offset-4 hover:underline"
+                    >
+                      {p.href.replace(/^https?:\/\//, "")} ↗
+                    </a>
+                  )}
+                </div>
+
+                <h3 className="v-display m-0 mb-3 mt-2.5 text-[clamp(26px,3.2vw,46px)] leading-none tracking-[-0.035em]">
+                  {p.title}
+                </h3>
+                <p className="m-0 max-w-[60ch] text-[16px] leading-[1.55] text-body">
+                  {p.description}
+                </p>
+
+                <div className="mt-5 flex flex-wrap gap-1.5">
+                  {p.tech.map((t) => (
+                    <span key={t} className="v-tag v-tag-amber">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <ul className="m-0 grid list-none content-start gap-2.5 border-ink/20 p-0 lg:border-l lg:pl-6">
+                {p.highlights.map((h) => (
+                  <li
+                    key={h}
+                    className="v-mono text-[12.5px] leading-[1.45] text-muted-ink"
+                  >
+                    {h}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
         ))}
-      </motion.div>
-    </section>
+      </div>
+    </Section>
   )
+}
+
+function numberWord(n: number) {
+  const words = [
+    "ZERO",
+    "ONE",
+    "TWO",
+    "THREE",
+    "FOUR",
+    "FIVE",
+    "SIX",
+    "SEVEN",
+    "EIGHT",
+    "NINE",
+    "TEN",
+  ]
+  return words[n] ?? String(n)
 }

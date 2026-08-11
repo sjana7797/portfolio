@@ -1,15 +1,23 @@
 import type { Metadata } from "next"
 import { ContactSection } from "@/features/contact"
+import { PageShell } from "@/components/voyage/page-shell"
+import { StructuredData } from "@/components/seo/structured-data"
+
+const description =
+  "Get in touch with Sanjay Jana about senior or staff full stack roles, AI platform work and consulting — remote or Mumbai hybrid."
 
 export const metadata: Metadata = {
-  title: "Contact — Sanjay Jana",
-  description: "Get in touch for full-time roles, consulting, AI projects, or just to connect.",
+  title: "Contact",
+  description,
+  alternates: { canonical: "/contact" },
+  openGraph: { title: "Contact Sanjay Jana", description, url: "/contact" },
 }
 
 export default function ContactPage() {
   return (
-    <div className="py-16">
+    <PageShell backTo="#contact">
+      <StructuredData page={{ path: "/contact", name: "Contact", description }} />
       <ContactSection />
-    </div>
+    </PageShell>
   )
 }

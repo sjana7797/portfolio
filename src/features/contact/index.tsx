@@ -1,167 +1,177 @@
 "use client"
 
-import { useState } from "react"
-import { ArrowUpRight, CheckCheck, Copy, Mail, MapPin, MessageSquare } from "lucide-react"
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { GitHubIcon, LinkedInIcon } from "@/components/icons"
-import { fadeUp, scaleIn, stagger } from "@/lib/motion"
+import { useState, type FormEvent } from "react"
+import { Reveal } from "@/components/voyage/reveal"
+import { Section, SectionHeading } from "@/components/voyage/section-heading"
 
 const EMAIL = "sjana7797@gmail.com"
 
-const channels = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: EMAIL,
-    href: `mailto:${EMAIL}`,
-    desc: "Best for project inquiries",
-    color: "from-blue-500/10 to-indigo-500/10 border-blue-500/20 hover:border-blue-500/50",
-    iconColor: "text-blue-400 bg-blue-400/10",
-  },
-  {
-    icon: LinkedInIcon,
-    label: "LinkedIn",
-    value: "sanjayjana",
-    href: "https://linkedin.com/in/sanjayjana",
-    desc: "Connect professionally",
-    color: "from-sky-500/10 to-blue-600/10 border-sky-500/20 hover:border-sky-500/50",
-    iconColor: "text-sky-400 bg-sky-400/10",
-  },
-  {
-    icon: GitHubIcon,
-    label: "GitHub",
-    value: "sanjayjana",
-    href: "https://github.com/sanjayjana",
-    desc: "See my open source work",
-    color: "from-slate-500/10 to-slate-600/10 border-slate-500/20 hover:border-slate-500/50",
-    iconColor: "text-slate-300 bg-slate-400/10",
-  },
+const terms = [
+  { k: "TERMS", v: "Full-time senior / staff roles" },
+  { k: "BASE", v: "Remote, or Mumbai hybrid" },
+  { k: "SPEC", v: "AI platforms · fintech · SaaS" },
 ]
 
-const availability = [
-  "Full-time Roles",
-  "Contract / Freelance",
-  "Technical Consulting",
-  "AI & LLM Projects",
+const links = [
+  { label: "EMAIL ↗", href: `mailto:${EMAIL}` },
+  { label: "GITHUB ↗", href: "https://github.com/sanjayjana" },
+  { label: "LINKEDIN ↗", href: "https://linkedin.com/in/sanjayjana" },
+  { label: "RESUME ↓", href: "/resume.pdf" },
 ]
 
-function CopyEmailButton() {
-  const [copied, setCopied] = useState(false)
+export function ContactSection() {
+  const [note, setNote] = useState("")
 
-  const copy = async () => {
-    await navigator.clipboard.writeText(EMAIL)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+  /** No backend on this site — compose the mail client instead. */
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const form = new FormData(e.currentTarget)
+    const name = String(form.get("name") ?? "")
+    const email = String(form.get("email") ?? "")
+    const subject = String(form.get("subject") ?? "") || "Hello Sanjay"
+    const message = String(form.get("message") ?? "")
+
+    const body = `From: ${name} <${email}>\n\n${message}`
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(
+      subject,
+    )}&body=${encodeURIComponent(body)}`
+    setNote("Opening your mail client…")
   }
 
   return (
-    <motion.button
-      onClick={copy}
-      className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.97 }}
-    >
-      <span className="font-mono text-xs">{EMAIL}</span>
-      <span className="h-6 w-6 flex items-center justify-center rounded border border-border/60 group-hover:border-primary/40 transition-colors">
-        {copied ? (
-          <CheckCheck className="h-3 w-3 text-emerald-400" />
-        ) : (
-          <Copy className="h-3 w-3" />
-        )}
-      </span>
-    </motion.button>
-  )
-}
+    <Section id="contact" className="pb-32">
+      <SectionHeading index="05" label="TERMS OF ENGAGEMENT" />
 
-export function ContactSection() {
-  return (
-    <section className="py-4">
-      <motion.div
-        className="space-y-16"
-        variants={stagger(0.1)}
-        initial="hidden"
-        animate="show"
-      >
-        {/* Heading */}
-        <motion.div variants={fadeUp} className="space-y-5 max-w-2xl">
-          <p className="section-heading">Contact</p>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.05]">
-            Let&apos;s build something{" "}
-            <span className="gradient-text">great.</span>
-          </h1>
-          <p className="text-muted-foreground text-[15px] sm:text-base leading-[1.8] max-w-lg">
-            I&apos;m always open to new opportunities, collaborations, and
-            interesting conversations. Whether you have a project in mind or
-            just want to connect — reach out.
-          </p>
-          <CopyEmailButton />
-        </motion.div>
-
-        {/* Contact channels */}
-        <motion.div variants={stagger(0.1)} className="grid sm:grid-cols-3 gap-4">
-          {channels.map(({ icon: Icon, label, value, href, desc, color, iconColor }) => (
-            <motion.a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noreferrer"
-              variants={scaleIn}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              whileTap={{ scale: 0.98 }}
-              className={`group relative p-5 rounded-xl border bg-gradient-to-br ${color} transition-all duration-300 cursor-pointer`}
+      <Reveal className="grid items-start gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+        {/* ---- wanted poster ---- */}
+        <div
+          className="border border-[#c9b48a] bg-sand px-8 pb-7 pt-8 text-sand-ink"
+          style={{ boxShadow: "0 40px 90px -50px rgb(0 0 0 / 0.9)" }}
+        >
+          <div className="border-b-[3px] border-double border-sand-ink pb-3.5 text-center">
+            <div
+              className="text-[clamp(46px,6.4vw,86px)] leading-[0.9] tracking-[0.02em]"
+              style={{ fontFamily: "var(--font-poster), serif" }}
             >
-              <div className="flex items-start justify-between mb-4">
-                <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${iconColor}`}>
-                  <Icon className="h-[18px] w-[18px]" />
-                </div>
-                <ArrowUpRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-foreground group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
-              </div>
-              <p className="font-semibold text-sm">{label}</p>
-              <p className="font-mono text-[11px] text-muted-foreground mt-0.5">{value}</p>
-              <p className="text-[11.5px] text-muted-foreground/60 mt-2">{desc}</p>
-            </motion.a>
-          ))}
-        </motion.div>
-
-        {/* Availability */}
-        <motion.div variants={fadeUp} className="space-y-5">
-          <div className="flex items-center gap-2.5">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            <p className="text-sm font-medium">Available for</p>
+              WANTED
+            </div>
+            <div className="v-mono mt-2 text-[11px] tracking-[0.34em]">
+              HIRED OR CONSULTED
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2.5">
-            {availability.map((item) => (
-              <motion.span
-                key={item}
-                className="px-3.5 py-1.5 rounded-full border border-border/50 text-[12.5px] text-muted-foreground bg-secondary/30 hover:border-primary/40 hover:text-foreground transition-all duration-200 cursor-default"
-                whileHover={{ scale: 1.04 }}
-              >
-                {item}
-              </motion.span>
+
+          <div className="border-b border-sand-ink/40 py-5 text-center">
+            <div
+              className="text-[clamp(28px,3.6vw,46px)] leading-none"
+              style={{ fontFamily: "var(--font-poster), serif" }}
+            >
+              SANJAY JANA
+            </div>
+            <div className="v-mono mt-2.5 text-[11px] tracking-[0.18em] text-[#5a4429]">
+              SENIOR FULL STACK ENGINEER · MUMBAI, IN
+            </div>
+          </div>
+
+          <div className="grid gap-3 py-5">
+            {terms.map((t) => (
+              <div key={t.k} className="flex items-baseline gap-3">
+                <span className="v-mono min-w-[62px] text-[10px] tracking-[0.18em] text-[#6b5133]">
+                  {t.k}
+                </span>
+                <span className="text-[16px] font-bold">{t.v}</span>
+              </div>
             ))}
           </div>
-        </motion.div>
 
-        {/* Bottom CTA */}
-        <motion.div
-          variants={fadeUp}
-          className="flex items-center gap-3 py-8 border-t border-border/40"
-        >
-          <MessageSquare className="h-4 w-4 text-primary" />
-          <p className="text-sm text-muted-foreground">
-            Based in{" "}
-            <span className="text-foreground inline-flex items-center gap-1">
-              <MapPin className="h-3 w-3 text-primary inline" />
-              Mumbai, India
-            </span>{" "}
-            · Open to remote opportunities worldwide
+          <div className="flex flex-wrap items-center justify-between gap-3.5 border-t-[3px] border-double border-sand-ink pt-4">
+            <a
+              href={`mailto:${EMAIL}`}
+              className="v-mono text-[11px] text-[#5a4429] hover:text-[#b0231a]"
+            >
+              {EMAIL}
+            </a>
+            <div
+              className="border-2 border-[#a51d15] px-2.5 py-1.5 text-[13px] text-[#a51d15]"
+              style={{ fontFamily: "var(--font-poster), serif", transform: "rotate(-4deg)" }}
+            >
+              AVAILABLE
+            </div>
+          </div>
+        </div>
+
+        {/* ---- form ---- */}
+        <div>
+          <h2 className="v-display m-0 mb-3.5 text-[clamp(38px,6vw,92px)] leading-[0.88] tracking-[-0.05em]">
+            SET A
+            <br />
+            COURSE
+          </h2>
+          <p className="v-prose m-0 mb-7 max-w-[50ch] text-[17px] leading-[1.55] text-body">
+            Tell me what you&rsquo;re building and where it hurts. I answer everything within
+            a day.
           </p>
-        </motion.div>
-      </motion.div>
-    </section>
+
+          <form onSubmit={onSubmit} className="grid gap-3.5">
+            <div className="grid gap-3.5 sm:grid-cols-2">
+              <input
+                className="v-field"
+                name="name"
+                required
+                placeholder="Your name"
+                aria-label="Your name"
+              />
+              <input
+                className="v-field"
+                name="email"
+                type="email"
+                required
+                placeholder="Email"
+                aria-label="Email"
+              />
+            </div>
+            <input
+              className="v-field"
+              name="subject"
+              placeholder="Role, project or company"
+              aria-label="Role, project or company"
+            />
+            <textarea
+              className="v-field resize-y"
+              name="message"
+              required
+              rows={5}
+              placeholder="What are we building?"
+              aria-label="What are we building?"
+            />
+            <div className="flex flex-wrap items-center gap-4">
+              <button
+                type="submit"
+                className="cursor-pointer border-none bg-crimson px-7 py-4 text-sm font-bold text-parchment transition-colors hover:bg-ink"
+              >
+                Send the message →
+              </button>
+              <span className="v-mono text-[11px] text-muted-ink" role="status">
+                {note}
+              </span>
+            </div>
+          </form>
+
+          <div className="mt-8 flex flex-wrap gap-6 border-t border-ink/20 pt-6">
+            {links.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                target={l.href.startsWith("http") ? "_blank" : undefined}
+                rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                download={l.href.endsWith(".pdf") ? "Sanjay-Jana-Resume.pdf" : undefined}
+                className="v-mono text-[12px] tracking-[0.1em]"
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </Reveal>
+    </Section>
   )
 }

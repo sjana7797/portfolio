@@ -10,30 +10,30 @@ const socials = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-border/50 mt-24">
-      <div className="mx-auto max-w-5xl px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <span className="font-mono text-xs font-bold h-6 w-6 rounded bg-primary text-primary-foreground flex items-center justify-center">
-            SJ
-          </span>
-          <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Sanjay Jana. Built with Next.js & shadcn.
-          </p>
-        </div>
-        <div className="flex items-center gap-1">
-          {socials.map(({ href, label, icon: Icon }) => (
-            <Link
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={label}
-              className="h-8 w-8 flex items-center justify-center rounded-md text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <Icon className="h-4 w-4" />
-            </Link>
-          ))}
-        </div>
+    <footer
+      className="relative z-10 flex flex-wrap items-center justify-between gap-5 border-t border-ink/20 px-[5vw] pb-11 pt-8"
+      style={{ background: "rgb(255 253 245 / 0.94)" }}
+    >
+      <div className="v-mono text-[11px] text-faint">
+        © {new Date().getFullYear()} Sanjay Jana · the log continues
+      </div>
+
+      <div className="flex items-center gap-4">
+        {socials.map(({ href, label, icon: Icon }) => (
+          <Link
+            key={label}
+            href={href}
+            target={href.startsWith("http") ? "_blank" : undefined}
+            rel="noreferrer"
+            aria-label={label}
+            className="text-muted-ink transition-colors hover:text-crimson"
+          >
+            <Icon className="h-4 w-4" />
+          </Link>
+        ))}
+        <a href="#top" className="v-mono text-[11px] tracking-[0.16em]">
+          BACK TO THE BOW ↑
+        </a>
       </div>
     </footer>
   )

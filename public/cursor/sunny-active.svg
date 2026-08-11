@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="44" height="42" viewBox="0 0 44 42">
+  <!-- Hover state: sails full, jolly roger raised. Same hotspot. -->
+  <g fill="none" stroke="#0f2036" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M27 27V4" stroke-width="1.8"/>
+    <!-- jolly roger -->
+    <path d="M27 3.2l9 3-9 3z" fill="#0f2036" stroke="#0f2036"/>
+    <circle cx="30.6" cy="6.2" r="1.15" fill="#fffdf5" stroke="none"/>
+    <!-- mainsail, fuller -->
+    <path d="M26 8c-8.4 2.6-12.8 6.6-14.4 10.6C14.4 20.8 20.2 22.4 26 22.4z" fill="#fffdf5"/>
+    <path d="M28 11c4.8 1.8 7.6 4.2 8.8 6.8-2.6 1-5.6 1.5-8.8 1.5z" fill="#f4efe0"/>
+    <path d="M8 26h30l-4.5 8.5H12.5z" fill="#e8a33d"/>
+    <path d="M9.6 29.2h27" stroke="#2f7d5c" stroke-width="2.2"/>
+    <!-- bow wake -->
+    <path d="M3.6 33.4c2.4-1.1 4.6-1.1 6.4 0" stroke="#1595c4" stroke-width="1.5"/>
+    <circle cx="8.5" cy="21.5" r="4.4" fill="#f5c542"/>
+    <path d="M8.5 17.1l-2 -2.6M4.6 19.2l-3 -1.4M4.2 23.6l-3 1.2M8.5 25.9l-1.6 2.8" stroke="#e08a1e" stroke-width="1.7"/>
+    <path d="M3.9 21.6h2.8" stroke-width="1.5"/>
+    <circle cx="9.4" cy="20.4" r="0.9" fill="#0f2036" stroke="none"/>
+  </g>
+</svg>
