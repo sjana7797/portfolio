@@ -12,7 +12,7 @@ export function Footer() {
   return (
     <footer
       className="relative z-10 flex flex-wrap items-center justify-between gap-5 border-t border-ink/20 px-[5vw] pb-11 pt-8"
-      style={{ background: "rgb(255 253 245 / 0.94)" }}
+      style={{ background: "var(--v-chrome)" }}
     >
       <div className="v-mono text-[11px] text-faint">
         © {new Date().getFullYear()} Sanjay Jana · the log continues

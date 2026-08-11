@@ -1,0 +1,369 @@
+/* ==================================================================
+   Site variants.
+
+   Each block redefines the same token contract. Nothing here targets a
+   component — every Tailwind utility already resolves to var(--color-…),
+   and the .v-* classes in globals.css resolve to the structural tokens
+   below, so redefining both re-skins the entire site.
+
+   Token contract every theme must satisfy:
+     colour   --color-ink / body / muted-ink / faint / sea / sea-bright
+              / crimson / gold / amber / parchment / sand / sand-ink
+     surface  --v-surface, --v-surface-2, --v-border, --v-border-w,
+              --v-radius, --v-shadow, --v-shadow-hover, --v-lift
+     type     --v-font-display, --v-display-weight, --v-display-tracking,
+              --v-display-case
+     shadcn   --background, --foreground, --card, --primary, …
+   ================================================================== */
+
+/* ---------------- Voyage (default) — see :root in globals.css ------ */
+
+/* ---------------- Night Watch ------------------------------------- */
+html[data-theme="midnight"] {
+  --v-chrome: rgb(7 22 36 / 0.9);
+  color-scheme: dark;
+
+  --color-ink: #eaf2f7;
+  --color-body: #c4d6e2;
+  --color-muted-ink: #9db4c4;
+  --color-faint: #7d97a9;
+  --color-sea: #5fc8ee;
+  --color-sea-bright: #7fd3ea;
+  --color-crimson: #ff6b5e;
+  --color-gold: #f0c14b;
+  --color-amber: #e8b04a;
+  --color-parchment: #12263a;
+  --color-sand: #1c364f;
+  --color-sand-ink: #eaf2f7;
+
+  --v-surface: rgb(14 33 51 / 0.92);
+  --v-surface-2: rgb(14 33 51 / 0.85);
+  --v-border: rgb(234 242 247 / 0.18);
+  --v-border-w: 1px;
+  --v-radius: 0px;
+  --v-shadow: none;
+  --v-shadow-hover: -14px 0 40px -18px rgb(240 193 75 / 0.4);
+  --v-lift: translateY(-8px) scale(1.008);
+  --v-hover-border: rgb(255 107 94 / 0.6);
+
+  --v-font-display: var(--font-display);
+  --v-display-weight: 800;
+  --v-display-tracking: -0.045em;
+  --v-display-case: none;
+
+  --background: #071624;
+  --foreground: #eaf2f7;
+  --card: #12263a;
+  --card-foreground: #eaf2f7;
+  --popover: #12263a;
+  --popover-foreground: #eaf2f7;
+  --primary: #ff6b5e;
+  --primary-foreground: #071624;
+  --secondary: #f0c14b;
+  --secondary-foreground: #071624;
+  --muted: #16304a;
+  --muted-foreground: #9db4c4;
+  --accent: #f0c14b;
+  --accent-foreground: #071624;
+  --border: rgb(234 242 247 / 0.18);
+  --input: rgb(234 242 247 / 0.24);
+  --ring: #5fc8ee;
+}
+
+html[data-theme="midnight"] body {
+  background: #071624;
+}
+
+/* ---------------- Brutalist --------------------------------------- */
+html[data-theme="brutalism"] {
+  --v-chrome: #ffffff;
+  color-scheme: light;
+
+  --color-ink: #000000;
+  --color-body: #000000;
+  --color-muted-ink: #1a1a1a;
+  --color-faint: #3d3d3d;
+  --color-sea: #2323ff;
+  --color-sea-bright: #2323ff;
+  --color-crimson: #ff2d55;
+  --color-gold: #ffe500;
+  --color-amber: #000000;
+  --color-parchment: #ffffff;
+  --color-sand: #ffe500;
+  --color-sand-ink: #000000;
+
+  --v-surface: #ffffff;
+  --v-surface-2: #ffffff;
+  --v-border: #000000;
+  --v-border-w: 3px;
+  --v-radius: 0px;
+  /* The signature: a hard, un-blurred offset block instead of a shadow. */
+  --v-shadow: 6px 6px 0 #000000;
+  --v-shadow-hover: 11px 11px 0 #000000;
+  --v-lift: translate(-4px, -4px);
+  --v-hover-border: #000000;
+
+  --v-font-display: var(--font-mono);
+  --v-display-weight: 700;
+  --v-display-tracking: -0.03em;
+  --v-display-case: uppercase;
+
+  --background: #ffe500;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+  --primary: #ff2d55;
+  --primary-foreground: #ffffff;
+  --secondary: #ffe500;
+  --secondary-foreground: #000000;
+  --muted: #f2f2f2;
+  --muted-foreground: #3d3d3d;
+  --accent: #2323ff;
+  --accent-foreground: #ffffff;
+  --border: #000000;
+  --input: #000000;
+  --ring: #2323ff;
+}
+
+html[data-theme="brutalism"] body {
+  background: #ffe500;
+}
+
+/* Brutalism wants weight, not translucency — kill the soft treatments. */
+html[data-theme="brutalism"] .v-grid {
+  gap: var(--v-border-w);
+}
+html[data-theme="brutalism"] .v-tag {
+  border-width: 2px;
+  font-weight: 700;
+}
+html[data-theme="brutalism"] .v-chip,
+html[data-theme="brutalism"] .v-prose {
+  box-shadow: 4px 4px 0 #000;
+}
+html[data-theme="brutalism"] a:hover {
+  color: var(--color-crimson);
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+}
+
+/* ---------------- Editorial --------------------------------------- */
+html[data-theme="editorial"] {
+  --v-chrome: rgb(250 249 247 / 0.93);
+  color-scheme: light;
+
+  --color-ink: #121212;
+  --color-body: #333333;
+  --color-muted-ink: #52525b;
+  --color-faint: #737380;
+  --color-sea: #1d4ed8;
+  --color-sea-bright: #3b82f6;
+  --color-crimson: #1d4ed8;
+  --color-gold: #121212;
+  --color-amber: #52525b;
+  --color-parchment: #ffffff;
+  --color-sand: #f1efea;
+  --color-sand-ink: #121212;
+
+  --v-surface: rgb(255 255 255 / 0.96);
+  --v-surface-2: rgb(255 255 255 / 0.9);
+  --v-border: rgb(18 18 18 / 0.14);
+  --v-border-w: 1px;
+  --v-radius: 0px;
+  --v-shadow: none;
+  --v-shadow-hover: 0 18px 40px -28px rgb(18 18 18 / 0.5);
+  --v-lift: translateY(-4px);
+  --v-hover-border: rgb(29 78 216 / 0.5);
+
+  --v-font-display: var(--font-body);
+  --v-display-weight: 700;
+  --v-display-tracking: -0.035em;
+  --v-display-case: none;
+
+  --background: #faf9f7;
+  --foreground: #121212;
+  --card: #ffffff;
+  --card-foreground: #121212;
+  --popover: #ffffff;
+  --popover-foreground: #121212;
+  --primary: #1d4ed8;
+  --primary-foreground: #ffffff;
+  --secondary: #f1efea;
+  --secondary-foreground: #121212;
+  --muted: #f1efea;
+  --muted-foreground: #52525b;
+  --accent: #1d4ed8;
+  --accent-foreground: #ffffff;
+  --border: rgb(18 18 18 / 0.14);
+  --input: rgb(18 18 18 / 0.2);
+  --ring: #1d4ed8;
+}
+
+html[data-theme="editorial"] body {
+  background: #faf9f7;
+}
+
+/* Editorial earns its calm from restraint: gold becomes plain ink, so
+   the "hire me" chip reads as a black button rather than a yellow one. */
+html[data-theme="editorial"] .bg-gold {
+  color: #ffffff;
+}
+html[data-theme="editorial"] .v-display {
+  line-height: 0.95;
+}
+
+/* ==================================================================
+   Structure.
+
+   Everything above is palette and surface treatment. These blocks
+   change the shape of the page — measure, section rhythm, how the
+   project list and timeline are actually laid out — so a variant is a
+   different design rather than a recolour of the same one.
+
+   These rules are unlayered, which puts them above Tailwind's utility
+   layer in the cascade; that's what lets them override the inline
+   grid-template utilities the sections ship with.
+   ================================================================== */
+
+/* ---------------- Editorial: a magazine column -------------------- */
+html[data-theme="editorial"] {
+  /* The single biggest structural move: 1500px full-bleed becomes an
+     880px measure, so the site reads as an article, not a landing page. */
+  --v-measure: 880px;
+  --v-gutter: 6vw;
+  --v-section-y: clamp(4.5rem, 8vw, 8rem);
+  --v-hero-top: 9rem;
+}
+
+/* Centred, stacked eyebrow with a rule under it instead of beside it. */
+html[data-theme="editorial"] .v-section-head {
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+html[data-theme="editorial"] .v-section-head > span:first-child {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  box-shadow: none;
+}
+html[data-theme="editorial"] .v-section-head > span:last-child {
+  width: 100%;
+  flex: none;
+}
+
+html[data-theme="editorial"] .v-hero {
+  text-align: center;
+  align-items: center;
+}
+html[data-theme="editorial"] .v-hero .v-prose {
+  text-align: left;
+}
+
+/* Projects stop being cards and become a numbered index: rules instead
+   of boxes, no spine, one column. */
+html[data-theme="editorial"] .v-rack-list {
+  gap: 0;
+  border-top: 1px solid var(--v-border);
+}
+html[data-theme="editorial"] .v-rack {
+  grid-template-columns: 1fr;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--v-border);
+  box-shadow: none;
+}
+html[data-theme="editorial"] .v-rack > :first-child {
+  display: none;
+}
+html[data-theme="editorial"] .v-rack > :last-child {
+  grid-template-columns: 1fr;
+  padding-inline: 0;
+  padding-block: 2.75rem;
+}
+html[data-theme="editorial"] .v-rack:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--v-border);
+}
+
+/* Timeline collapses to one column: date, then role, then detail. */
+html[data-theme="editorial"] .v-tl-row {
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+html[data-theme="editorial"] .v-timeline {
+  background: transparent;
+  border: 0;
+  gap: 0;
+}
+html[data-theme="editorial"] .v-timeline > * {
+  background: transparent;
+  border-bottom: 1px solid var(--v-border);
+}
+
+/* ---------------- Brutalist: blocks in a hard grid ---------------- */
+html[data-theme="brutalism"] {
+  --v-measure: 1400px;
+  --v-gutter: 4vw;
+  --v-section-y: clamp(4rem, 6vw, 6rem);
+  --v-hero-top: 8rem;
+}
+
+/* The eyebrow becomes a solid slab rather than a chip beside a rule. */
+html[data-theme="brutalism"] .v-section-head > span:first-child {
+  background: #000;
+  color: #ffe500;
+  border: 0;
+  box-shadow: 6px 6px 0 #2323ff;
+  padding: 10px 16px;
+  font-weight: 700;
+}
+html[data-theme="brutalism"] .v-section-head > span:last-child {
+  height: 3px;
+  background: #000;
+}
+
+/* Projects tile two-up as hard blocks instead of full-width rows. */
+@media (min-width: 1024px) {
+  html[data-theme="brutalism"] .v-rack-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem;
+  }
+  html[data-theme="brutalism"] .v-rack > :last-child {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Timeline rows become separated slabs, not ruled bands. */
+html[data-theme="brutalism"] .v-timeline {
+  background: transparent;
+  border: 0;
+  gap: 1.5rem;
+}
+html[data-theme="brutalism"] .v-timeline > * {
+  border: 3px solid #000;
+  box-shadow: 6px 6px 0 #000;
+  padding: 1.75rem;
+}
+html[data-theme="brutalism"] .v-tl-row {
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+/* The prose/chip panels exist to lift text off the animated ocean.
+   Editorial has flat paper behind it, so the boxes are noise — strip
+   them inside <main> only, leaving the nav controls intact. */
+html[data-theme="editorial"] main .v-prose,
+html[data-theme="editorial"] main .v-chip {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  box-shadow: none;
+}
+html[data-theme="editorial"] main .v-prose {
+  margin-block: 0.5rem;
+}

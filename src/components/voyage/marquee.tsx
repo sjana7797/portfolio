@@ -14,7 +14,7 @@ export function Marquee() {
   return (
     <div
       className="relative z-10 overflow-hidden border-y border-ink/20 py-5"
-      style={{ background: "rgb(255 253 245 / 0.94)" }}
+      style={{ background: "var(--v-chrome)" }}
     >
       <div
         className="flex w-max gap-12 whitespace-nowrap"
@@ -24,7 +24,9 @@ export function Marquee() {
           <span
             key={i}
             className="v-display text-[28px] tracking-[-0.02em]"
-            style={{ color: w.tone ?? "rgb(15 32 54 / 0.34)" }}
+            style={{
+              color: w.tone ?? "color-mix(in srgb, var(--color-ink) 34%, transparent)",
+            }}
           >
             {w.text}
           </span>

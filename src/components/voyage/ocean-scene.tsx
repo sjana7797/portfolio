@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import * as THREE from "three"
+import type * as ThreeNS from "three"
+import { useTheme } from "@/components/theme/theme-provider"
 
 const GOLD = 0xf0c14b
 const RED = 0xe0362c
@@ -21,7 +22,7 @@ const HAIR_BLACK = 0x1a1410
  * Skipped entirely on reduced-motion or narrow screens — those get the
  * static gradient painted by the sibling <div> in <VoyageBackdrop>.
  */
-export function OceanScene() {
+export function OceanScene({ night = false }: { night?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -33,7 +34,45 @@ export function OceanScene() {
       window.innerWidth < 900
     if (flat) return
 
-    let renderer: THREE.WebGLRenderer
+    // Disposed by the cleanup below even if it runs mid-import.
+    let cancelled = false
+    let teardown: (() => void) | undefined
+
+    /**
+     * three is ~600KB of JS. A static import made every visitor parse
+     * and evaluate it — including phones, which skip the scene entirely
+     * via `flat` above. Importing here means the cost is paid only by
+     * clients that actually render, and after hydration rather than
+     * during it.
+     */
+    void import("three").then((THREE) => {
+      if (cancelled) return
+      teardown = build(THREE, canvas, night)
+    })
+
+    return () => {
+      cancelled = true
+      teardown?.()
+    }
+  }, [night])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden
+      className="pointer-events-none fixed inset-0 z-[1] h-screen w-screen"
+    />
+  )
+}
+
+/** Builds the scene and returns its teardown. */
+function build(
+  THREE: typeof ThreeNS,
+  canvas: HTMLCanvasElement,
+  night: boolean,
+): (() => void) | undefined {
+  {
+    let renderer: ThreeNS.WebGLRenderer
     try {
       renderer = new THREE.WebGLRenderer({
         canvas,
@@ -48,8 +87,38 @@ export function OceanScene() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
     renderer.setSize(window.innerWidth, window.innerHeight, false)
 
+    // Night reuses the whole scene and only re-tunes light, fog and the
+    // sea — the geometry is identical, so this costs nothing extra.
+    const P = night
+      ? {
+          fog: 0x0d2c44,
+          ambient: 0x2c4f6e,
+          ambientI: 0.75,
+          sun: 0xbcd4ff,
+          sunI: 0.5,
+          rim: 0x2a7fa8,
+          rimI: 0.35,
+          disc: 0xdbe6ff,
+          halo: 0x9fb9e8,
+          sea: 0x0d3a55,
+          lanternI: 1.5,
+        }
+      : {
+          fog: 0xcfe7ef,
+          ambient: 0xd6ecf4,
+          ambientI: 0.95,
+          sun: 0xfff3d2,
+          sunI: 1.2,
+          rim: 0x69d3f2,
+          rimI: 0.45,
+          disc: 0xfff2c8,
+          halo: 0xffe9a8,
+          sea: 0x1ba2cd,
+          lanternI: 0.5,
+        }
+
     const scene = new THREE.Scene()
-    scene.fog = new THREE.Fog(0xcfe7ef, 90, 520)
+    scene.fog = new THREE.Fog(P.fog, 90, 520)
 
     const cam = new THREE.PerspectiveCamera(
       62,
@@ -60,24 +129,24 @@ export function OceanScene() {
     cam.position.set(0, 3.4, 12)
 
     // ---- light ----
-    scene.add(new THREE.AmbientLight(0xd6ecf4, 0.95))
-    const sun = new THREE.DirectionalLight(0xfff3d2, 1.2)
+    scene.add(new THREE.AmbientLight(P.ambient, P.ambientI))
+    const sun = new THREE.DirectionalLight(P.sun, P.sunI)
     sun.position.set(-70, 80, -180)
     scene.add(sun)
-    const rim = new THREE.DirectionalLight(0x69d3f2, 0.45)
+    const rim = new THREE.DirectionalLight(P.rim, P.rimI)
     rim.position.set(50, 22, 70)
     scene.add(rim)
 
     const disc = new THREE.Mesh(
       new THREE.SphereGeometry(30, 26, 26),
-      new THREE.MeshBasicMaterial({ color: 0xfff2c8, fog: false }),
+      new THREE.MeshBasicMaterial({ color: P.disc, fog: false }),
     )
     disc.position.set(-150, 58, -720)
     scene.add(disc)
     const halo = new THREE.Mesh(
       new THREE.SphereGeometry(52, 26, 26),
       new THREE.MeshBasicMaterial({
-        color: 0xffe9a8,
+        color: P.halo,
         transparent: true,
         opacity: 0.28,
         fog: false,
@@ -91,7 +160,7 @@ export function OceanScene() {
     const sea = new THREE.Mesh(
       seaGeo,
       new THREE.MeshStandardMaterial({
-        color: 0x1ba2cd,
+        color: P.sea,
         roughness: 0.14,
         metalness: 0.5,
         flatShading: true,
@@ -100,7 +169,7 @@ export function OceanScene() {
     sea.rotation.x = -Math.PI / 2
     sea.position.z = -VOYAGE / 2 + 20
     scene.add(sea)
-    const seaAttr = seaGeo.attributes.position as THREE.BufferAttribute
+    const seaAttr = seaGeo.attributes.position as ThreeNS.BufferAttribute
     const seaBase = Float32Array.from(seaAttr.array as Float32Array)
 
     // ---- depth: far silhouette ranges ----
@@ -168,7 +237,7 @@ export function OceanScene() {
     }
 
     // ---- lanterns ----
-    const leds: { mat: THREE.MeshBasicMaterial; sp: number; ph: number }[] = []
+    const leds: { mat: ThreeNS.MeshBasicMaterial; sp: number; ph: number }[] = []
     const lantern = (x: number, y: number, z: number, color: number, scl: number) => {
       const mat = new THREE.MeshBasicMaterial({
         color,
@@ -179,7 +248,7 @@ export function OceanScene() {
       m.position.set(x, y, z)
       scene.add(m)
       leds.push({ mat, sp: 0.6 + Math.random() * 2.2, ph: Math.random() * 6.28 })
-      const l = new THREE.PointLight(color, 0.5, 22, 2)
+      const l = new THREE.PointLight(color, P.lanternI, 22, 2)
       l.position.set(x, y, z)
       scene.add(l)
     }
@@ -290,7 +359,7 @@ export function OceanScene() {
       metalness: 0.15,
       flatShading: true,
     })
-    const ships: { g: THREE.Group; ph: number; sp: number }[] = []
+    const ships: { g: ThreeNS.Group; ph: number; sp: number }[] = []
     for (let i = 0; i < 5; i++) {
       const g = new THREE.Group()
       const s = 1 + Math.random() * 0.8
@@ -351,7 +420,7 @@ export function OceanScene() {
       flatShading: true,
     })
     const bandMat = new THREE.MeshStandardMaterial({ color: 0xd7262b, roughness: 0.75 })
-    const hats: { g: THREE.Group; ph: number; sp: number; spin: number }[] = []
+    const hats: { g: ThreeNS.Group; ph: number; sp: number; spin: number }[] = []
     const strawHat = (x: number, y: number, z: number, s: number, tilt: number) => {
       const g = new THREE.Group()
       const brim = new THREE.Mesh(
@@ -427,8 +496,8 @@ export function OceanScene() {
     })
 
     type Pirate = {
-      g: THREE.Group
-      arm: THREE.Group
+      g: ThreeNS.Group
+      arm: ThreeNS.Group
       ph: number
       sp: number
       y0: number
@@ -439,12 +508,12 @@ export function OceanScene() {
       const g = new THREE.Group()
 
       const add = (
-        geo: THREE.BufferGeometry,
-        mat: THREE.Material,
+        geo: ThreeNS.BufferGeometry,
+        mat: ThreeNS.Material,
         px: number,
         py: number,
         pz: number,
-        parent: THREE.Object3D = g,
+        parent: ThreeNS.Object3D = g,
       ) => {
         const m = new THREE.Mesh(geo, mat)
         m.position.set(px * s, py * s, pz * s)
@@ -617,7 +686,7 @@ export function OceanScene() {
       roughness: 0.5,
       metalness: 0.6,
     })
-    const barrels: { g: THREE.Group; ph: number; sp: number }[] = []
+    const barrels: { g: ThreeNS.Group; ph: number; sp: number }[] = []
     for (let i = 0; i < 14; i++) {
       const g = new THREE.Group()
       g.add(new THREE.Mesh(new THREE.CylinderGeometry(0.85, 0.72, 1.9, 12), barrelMat))
@@ -644,7 +713,7 @@ export function OceanScene() {
       opacity: 0.94,
       fog: false,
     })
-    const clouds: { g: THREE.Group; sp: number; x0: number }[] = []
+    const clouds: { g: ThreeNS.Group; sp: number; x0: number }[] = []
     for (let i = 0; i < 26; i++) {
       const g = new THREE.Group()
       const puffs = 3 + Math.floor(Math.random() * 4)
@@ -677,9 +746,9 @@ export function OceanScene() {
       opacity: 0.85,
     })
     const birds: {
-      g: THREE.Group
-      l: THREE.Mesh
-      r: THREE.Mesh
+      g: ThreeNS.Group
+      l: ThreeNS.Mesh
+      r: ThreeNS.Mesh
       vx: number
       y0: number
       ph: number
@@ -832,7 +901,7 @@ export function OceanScene() {
       window.removeEventListener("mousemove", onMouse)
       window.removeEventListener("resize", onResize)
       scene.traverse((o) => {
-        const m = o as THREE.Mesh
+        const m = o as ThreeNS.Mesh
         if (m.geometry) m.geometry.dispose()
         const mat = m.material
         if (Array.isArray(mat)) mat.forEach((x) => x.dispose())
@@ -840,38 +909,73 @@ export function OceanScene() {
       })
       renderer.dispose()
     }
-  }, [])
-
-  return (
-    <canvas
-      ref={canvasRef}
-      aria-hidden
-      className="pointer-events-none fixed inset-0 z-[1] h-screen w-screen"
-    />
-  )
+  }
 }
 
+/** Per-backdrop sky gradient and the scrim that keeps text readable. */
+const SKY = {
+  "ocean-day": {
+    gradient:
+      "linear-gradient(180deg,#2ea9d6 0%,#7fd3ea 34%,#cfe9ef 56%,#f6e3bd 66%,#f6e3bd 100%)",
+    scrim: "rgb(255 252 242 / 0.42)",
+  },
+  "ocean-night": {
+    gradient:
+      "linear-gradient(180deg,#03080f 0%,#071624 30%,#0d2c44 58%,#16405c 78%,#1d5570 100%)",
+    scrim: "rgb(4 14 24 / 0.5)",
+  },
+} as const
+
 /**
- * Full backdrop: gradient sky, the 3D voyage, and a parchment scrim.
- * The scrim is the contrast fix — without it, body copy sits directly
- * on a bright animated sky and every text block reads as low-contrast.
+ * Theme-aware backdrop.
+ *
+ * The two ocean variants share one 3D scene and differ only in sky and
+ * scrim — the geometry reads as dusk under a dark gradient, which is far
+ * cheaper than a second scene. The flat variants skip WebGL entirely.
  */
 export function VoyageBackdrop() {
+  const { backdrop } = useTheme()
+
+  if (backdrop === "grid") {
+    return (
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-0"
+        style={{
+          background: "#ffe500",
+          backgroundImage:
+            "linear-gradient(#00000014 2px, transparent 2px), linear-gradient(90deg, #00000014 2px, transparent 2px)",
+          backgroundSize: "56px 56px",
+        }}
+      />
+    )
+  }
+
+  if (backdrop === "paper") {
+    return (
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-0"
+        style={{ background: "#faf9f7" }}
+      />
+    )
+  }
+
+  const sky = SKY[backdrop]
+  const night = backdrop === "ocean-night"
+
   return (
     <>
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0 z-0"
-        style={{
-          background:
-            "linear-gradient(180deg,#2ea9d6 0%,#7fd3ea 34%,#cfe9ef 56%,#f6e3bd 66%,#f6e3bd 100%)",
-        }}
+        style={{ background: sky.gradient }}
       />
-      <OceanScene />
+      <OceanScene night={night} />
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0 z-[2]"
-        style={{ background: "rgb(255 252 242 / 0.42)" }}
+        style={{ background: sky.scrim }}
       />
     </>
   )

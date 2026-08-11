@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+/* Site variants. Imported at the top (as @import requires), so the
+   overrides can't rely on source order to beat the :root defaults —
+   they use `html[data-theme=…]` (0,1,1) to outrank `:root` (0,1,0). */
+@import "./themes.css";
 
 /* ------------------------------------------------------------------
    Voyage palette.
@@ -97,6 +101,34 @@
   --sidebar-accent-foreground: #0f2036;
   --sidebar-border: rgb(15 32 54 / 0.22);
   --sidebar-ring: #0a6285;
+
+  /* ---- structural tokens (the Voyage defaults) ----
+     Every variant in themes.css redefines this same contract; the .v-*
+     classes below read only these, never literals. */
+  /* ---- layout ----
+     Page rhythm is tokenised too, so a variant can change the shape of
+     the site (measure, gutter, vertical pace) and not just its colours. */
+  --v-measure: 1500px;
+  --v-gutter: 5vw;
+  --v-section-y: clamp(5rem, 7vw, 7rem);
+  --v-hero-top: 8rem;
+
+  /* nav / footer / marquee bar */
+  --v-chrome: rgb(255 249 235 / 0.88);
+  --v-surface: rgb(255 253 245 / 0.97);
+  --v-surface-2: rgb(255 253 245 / 0.92);
+  --v-border: rgb(15 32 54 / 0.22);
+  --v-border-w: 1px;
+  --v-radius: 0px;
+  --v-shadow: none;
+  --v-shadow-hover: -14px 0 34px -18px rgb(133 89 10 / 0.5);
+  --v-lift: translateY(-8px) scale(1.008);
+  --v-hover-border: rgb(184 29 34 / 0.55);
+
+  --v-font-display: var(--font-display);
+  --v-display-weight: 800;
+  --v-display-tracking: -0.045em;
+  --v-display-case: none;
 }
 
 @layer base {
@@ -187,11 +219,25 @@
 }
 
 @layer components {
+  /* ---- page shell ---- */
+  .v-section {
+    max-width: var(--v-measure);
+    padding-inline: var(--v-gutter);
+    padding-block: var(--v-section-y);
+  }
+  .v-hero {
+    max-width: var(--v-measure);
+    padding-inline: var(--v-gutter);
+    padding-top: var(--v-hero-top);
+    padding-bottom: 4rem;
+  }
+
   /* ---- type roles ---- */
   .v-display {
-    font-family: var(--font-display), sans-serif;
-    font-weight: 800;
-    letter-spacing: -0.045em;
+    font-family: var(--v-font-display), sans-serif;
+    font-weight: var(--v-display-weight);
+    letter-spacing: var(--v-display-tracking);
+    text-transform: var(--v-display-case);
     color: var(--color-ink);
   }
   .v-mono {
@@ -207,33 +253,37 @@
   }
 
   /* ---- surfaces ----
-       .97 alpha rather than the artifact's .88 — the 3D sky was
-       bleeding through the text underneath. */
+       Everything below resolves to the structural tokens, so a theme
+       swaps borders, rounding and shadows without touching a component. */
   .v-card {
-    background: rgb(255 253 245 / 0.97);
-    border: 1px solid rgb(15 32 54 / 0.22);
+    background: var(--v-surface);
+    border: var(--v-border-w) solid var(--v-border);
+    border-radius: var(--v-radius);
+    box-shadow: var(--v-shadow);
   }
   /* hairline-separated grid: children sit on a ruled background */
   .v-grid {
-    background: rgb(15 32 54 / 0.22);
-    border: 1px solid rgb(15 32 54 / 0.22);
+    background: var(--v-border);
+    border: var(--v-border-w) solid var(--v-border);
+    border-radius: var(--v-radius);
     gap: 1px;
   }
   .v-grid > * {
-    background: rgb(255 253 245 / 0.97);
+    background: var(--v-surface);
   }
   .v-rule {
-    height: 1px;
-    background: rgb(15 32 54 / 0.24);
+    height: var(--v-border-w);
+    background: var(--v-border);
   }
 
   /* ---- prose panel ----
        Body copy that isn't already inside a card would otherwise sit
        straight on the animated sea, where mid-tone water drops it to
-       ~2.5:1. Everything long-form gets a parchment sheet under it. */
+       ~2.5:1. Everything long-form gets a surface sheet under it. */
   .v-prose {
-    background: rgb(255 253 245 / 0.92);
-    border: 1px solid rgb(15 32 54 / 0.14);
+    background: var(--v-surface-2);
+    border: var(--v-border-w) solid var(--v-border);
+    border-radius: var(--v-radius);
     padding: 22px 26px;
   }
   /* Small mono labels get the same treatment at chip scale. */
@@ -241,15 +291,17 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: rgb(255 253 245 / 0.92);
-    border: 1px solid rgb(15 32 54 / 0.14);
+    background: var(--v-surface-2);
+    border: var(--v-border-w) solid var(--v-border);
+    border-radius: var(--v-radius);
     padding: 7px 12px;
   }
 
   /* ---- field ---- */
   .v-field {
-    background: rgb(255 255 255 / 0.9);
-    border: 1px solid rgb(15 32 54 / 0.28);
+    background: var(--v-surface);
+    border: var(--v-border-w) solid var(--v-border);
+    border-radius: var(--v-radius);
     color: var(--color-ink);
     padding: 16px;
     font-size: 15px;
@@ -258,8 +310,7 @@
   .v-field:focus {
     outline: none;
     border-color: var(--color-crimson);
-    background: #fff;
-    box-shadow: 0 0 0 3px rgb(184 29 34 / 0.14);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-crimson) 18%, transparent);
   }
 
   /* ---- bounty card lift ---- */
@@ -271,9 +322,9 @@
     will-change: transform;
   }
   .v-rack:hover {
-    transform: translateY(-8px) scale(1.008);
-    border-color: rgb(184 29 34 / 0.55);
-    box-shadow: -14px 0 34px -18px rgb(133 89 10 / 0.5);
+    transform: var(--v-lift);
+    border-color: var(--v-hover-border);
+    box-shadow: var(--v-shadow-hover);
   }
 
   /* ---- scroll reveal ---- */

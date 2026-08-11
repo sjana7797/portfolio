@@ -11,7 +11,7 @@ export function Hero() {
   return (
     <header
       id="top"
-      className="relative z-10 mx-auto flex min-h-svh max-w-[1500px] flex-col justify-center gap-11 px-[5vw] pb-16 pt-32"
+      className="v-hero relative z-10 mx-auto flex min-h-svh flex-col justify-center gap-11"
     >
       <div className="v-chip self-start">
         <span

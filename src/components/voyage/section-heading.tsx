@@ -3,7 +3,7 @@ import { Reveal } from "@/components/voyage/reveal"
 /** The "02 / THE ROUTE SO FAR ————" eyebrow that opens every section. */
 export function SectionHeading({ index, label }: { index: string; label: string }) {
   return (
-    <Reveal className="mb-11 flex items-center gap-4">
+    <Reveal className="v-section-head mb-11 flex items-center gap-4">
       <span className="v-chip v-mono text-[11px] tracking-[0.24em] text-sea">
         {index} / {label}
       </span>
@@ -25,7 +25,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={`relative z-10 mx-auto max-w-[1500px] px-[5vw] py-24 md:py-28 ${className}`}
+      className={`v-section relative z-10 mx-auto ${className}`}
     >
       {children}
     </section>

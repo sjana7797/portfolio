@@ -13,6 +13,8 @@ import { VoyageBackdrop } from "@/components/voyage/ocean-scene"
 import { ScrollProgress } from "@/components/voyage/scroll-progress"
 import { CursorWake } from "@/components/voyage/cursor-wake"
 import { SITE_URL, site } from "@/lib/site"
+import { ThemeProvider, themeInitScript } from "@/components/theme/theme-provider"
+import { DEFAULT_THEME } from "@/lib/themes"
 import { cn } from "@/lib/utils"
 
 const display = Bricolage_Grotesque({
@@ -101,7 +103,6 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#cdeaf3",
-  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
 }
@@ -114,6 +115,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-theme={DEFAULT_THEME}
+      suppressHydrationWarning
       className={cn(
         display.variable,
         body.variable,
@@ -121,7 +124,14 @@ export default function RootLayout({
         poster.variable
       )}
     >
+      <head>
+        {/* Applies the stored theme before first paint. Without it the
+            page renders in the default and repaints — a visible flash
+            on every load for anyone who picked a variant. */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="flex min-h-svh flex-col antialiased">
+        <ThemeProvider>
         <VoyageBackdrop />
         <TopLoader />
         <ScrollProgress />
@@ -129,6 +139,7 @@ export default function RootLayout({
         <Nav />
         <main className="relative z-10 flex-1">{children}</main>
         <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )

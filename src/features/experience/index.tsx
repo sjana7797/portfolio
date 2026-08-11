@@ -16,12 +16,12 @@ export function ExperienceSection() {
         ONE <span className="text-sea">HEADING</span>
       </Reveal>
 
-      <div className="v-grid grid border-x-0">
+      <div className="v-timeline v-grid grid border-x-0">
         {experiences.map((job, i) => (
           <Reveal
             as="article"
             key={job.company}
-            className="grid gap-9 px-1 py-8 lg:grid-cols-[220px_1fr_300px]"
+            className="v-tl-row grid gap-9 px-1 py-8 lg:grid-cols-[220px_1fr_300px]"
           >
             <div>
               {job.current && (

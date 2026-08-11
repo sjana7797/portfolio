@@ -6,6 +6,7 @@ import { useState } from "react"
 import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { MusicToggle } from "@/components/voyage/music-toggle"
+import { ThemeSwitcher } from "@/components/theme/theme-switcher"
 
 /**
  * Each stop on the voyage exists twice: as an anchor on the single
@@ -31,7 +32,7 @@ export function Nav() {
   return (
     <header
       className="fixed inset-x-0 top-0 z-40 border-b border-ink/20 backdrop-blur-xl"
-      style={{ background: "rgb(255 249 235 / 0.88)" }}
+      style={{ background: "var(--v-chrome)" }}
     >
       <div className="flex items-center justify-between gap-5 px-[5vw] py-3">
         <Link href="/" className="flex items-center gap-3 text-ink hover:text-ink">
@@ -59,6 +60,7 @@ export function Nav() {
               <span className="text-faint">{s.n}</span> {s.label}
             </a>
           ))}
+          <ThemeSwitcher />
           <MusicToggle />
           <a
             href={href("#contact")}
@@ -70,6 +72,7 @@ export function Nav() {
 
         {/* mobile */}
         <div className="flex items-center gap-2 lg:hidden">
+          <ThemeSwitcher />
           <MusicToggle />
           <button
             type="button"

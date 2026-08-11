@@ -2,8 +2,9 @@ import { Reveal } from "@/components/voyage/reveal"
 import { Section, SectionHeading } from "@/components/voyage/section-heading"
 import { projects } from "@/features/projects/data"
 
-/** Blinking lights down the spine of each bounty card. */
-const lights = ["#0a6285", "#f5c542", "#b81d22"]
+/** Blinking lights down the spine of each bounty card. Token-based so
+ *  they take the active theme's accents rather than voyage's. */
+const lights = ["var(--color-sea)", "var(--color-gold)", "var(--color-crimson)"]
 
 export function ProjectsSection() {
   return (
@@ -25,7 +26,7 @@ export function ProjectsSection() {
         </p>
       </Reveal>
 
-      <div className="grid gap-4.5">
+      <div className="v-rack-list grid gap-4.5">
         {projects.map((p, i) => (
           <Reveal
             as="article"
