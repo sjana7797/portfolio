@@ -1,4 +1,3 @@
-import { Reveal } from "@/components/voyage/reveal"
 import { Section, SectionHeading } from "@/components/voyage/section-heading"
 import { GitHubStats } from "@/features/skills/components/github-stats"
 import { skillGroups } from "@/features/skills/data"
@@ -11,11 +10,11 @@ export function SkillsSection() {
     <Section id="stack">
       <SectionHeading index="04" label="THE KIT I CARRY" />
 
-      <Reveal className="v-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="v-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {skillGroups.map((group, i) => (
           <div key={group.category} className="px-7 py-7">
             <div
-              className={`v-mono mb-4 text-[10px] uppercase tracking-[0.2em] ${tones[i % tones.length]}`}
+              className={`v-mono mb-4 text-[10px] tracking-[0.2em] uppercase ${tones[i % tones.length]}`}
             >
               {group.category}
             </div>
@@ -26,9 +25,9 @@ export function SkillsSection() {
             </div>
           </div>
         ))}
-      </Reveal>
+      </div>
 
-      <Reveal className="mt-4.5 grid gap-4.5 lg:grid-cols-2">
+      <div className="mt-4.5 grid gap-4.5 lg:grid-cols-2">
         <GitHubStats />
 
         <div className="v-card flex flex-col justify-between gap-6 px-7 py-7">
@@ -50,7 +49,7 @@ export function SkillsSection() {
             <span>↓</span>
           </a>
         </div>
-      </Reveal>
+      </div>
     </Section>
   )
 }

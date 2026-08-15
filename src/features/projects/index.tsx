@@ -14,17 +14,17 @@ export function ProjectsSection() {
         label={`THE BOUNTY BOARD · ${numberWord(projects.length)} CATCHES`}
       />
 
-      <Reveal className="mb-14 grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+      <div className="mb-14 grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
         <h2 className="v-display m-0 text-[clamp(40px,7vw,118px)] leading-[0.88] tracking-[-0.05em]">
           WHAT I&rsquo;VE
           <br />
           CLAIMED
         </h2>
         <p className="v-prose m-0 text-[17px] leading-[1.55] text-body">
-          Production work and personal builds. Every catch below is something real that
-          someone depends on.
+          Production work and personal builds. Every catch below is something
+          real that someone depends on.
         </p>
-      </Reveal>
+      </div>
 
       <div className="v-rack-list grid gap-4.5">
         {projects.map((p, i) => (
@@ -52,7 +52,7 @@ export function ProjectsSection() {
 
             <div className="grid gap-8 px-6 py-7 md:px-8 lg:grid-cols-[1.25fr_0.75fr]">
               <div>
-                <div className="v-mono flex flex-wrap items-center gap-2.5 text-[10px] uppercase tracking-[0.2em] text-sea">
+                <div className="v-mono flex flex-wrap items-center gap-2.5 text-[10px] tracking-[0.2em] text-sea uppercase">
                   <span>
                     {p.category} · {p.type === "work" ? "Work" : "Personal"}
                   </span>
@@ -68,7 +68,7 @@ export function ProjectsSection() {
                   )}
                 </div>
 
-                <h3 className="v-display m-0 mb-3 mt-2.5 text-[clamp(26px,3.2vw,46px)] leading-none tracking-[-0.035em]">
+                <h3 className="v-display m-0 mt-2.5 mb-3 text-[clamp(26px,3.2vw,46px)] leading-none tracking-[-0.035em]">
                   {p.title}
                 </h3>
                 <p className="m-0 max-w-[60ch] text-[16px] leading-[1.55] text-body">

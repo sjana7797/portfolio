@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, type FormEvent } from "react"
-import { Reveal } from "@/components/voyage/reveal"
 import { Section, SectionHeading } from "@/components/voyage/section-heading"
 
 const EMAIL = "sjana7797@gmail.com"
@@ -33,7 +32,7 @@ export function ContactSection() {
 
     const body = `From: ${name} <${email}>\n\n${message}`
     window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`
     setNote("Opening your mail client…")
   }
@@ -42,11 +41,14 @@ export function ContactSection() {
     <Section id="contact" className="pb-32">
       <SectionHeading index="05" label="TERMS OF ENGAGEMENT" />
 
-      <Reveal className="grid items-start gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+      <div className="grid items-start gap-10 lg:grid-cols-[0.95fr_1.05fr]">
         {/* ---- wanted poster ---- */}
         <div
-          className="border border-[#c9b48a] bg-sand px-8 pb-7 pt-8 text-sand-ink"
-          style={{ boxShadow: "0 40px 90px -50px rgb(0 0 0 / 0.9)" }}
+          className="border bg-sand px-8 pt-8 pb-7 text-sand-ink"
+          style={{
+            borderColor: "var(--v-poster-edge)",
+            boxShadow: "var(--v-poster-shadow)",
+          }}
         >
           <div className="border-b-[3px] border-double border-sand-ink pb-3.5 text-center">
             <div
@@ -92,7 +94,10 @@ export function ContactSection() {
             </a>
             <div
               className="border-2 border-[#a51d15] px-2.5 py-1.5 text-[13px] text-[#a51d15]"
-              style={{ fontFamily: "var(--font-poster), serif", transform: "rotate(-4deg)" }}
+              style={{
+                fontFamily: "var(--font-poster), serif",
+                transform: "rotate(-4deg)",
+              }}
             >
               AVAILABLE
             </div>
@@ -107,8 +112,8 @@ export function ContactSection() {
             COURSE
           </h2>
           <p className="v-prose m-0 mb-7 max-w-[50ch] text-[17px] leading-[1.55] text-body">
-            Tell me what you&rsquo;re building and where it hurts. I answer everything within
-            a day.
+            Tell me what you&rsquo;re building and where it hurts. I answer
+            everything within a day.
           </p>
 
           <form onSubmit={onSubmit} className="grid gap-3.5">
@@ -162,8 +167,12 @@ export function ContactSection() {
                 key={l.label}
                 href={l.href}
                 target={l.href.startsWith("http") ? "_blank" : undefined}
-                rel={l.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                download={l.href.endsWith(".pdf") ? "Sanjay-Jana-Resume.pdf" : undefined}
+                rel={
+                  l.href.startsWith("http") ? "noopener noreferrer" : undefined
+                }
+                download={
+                  l.href.endsWith(".pdf") ? "Sanjay-Jana-Resume.pdf" : undefined
+                }
                 className="v-mono text-[12px] tracking-[0.1em]"
               >
                 {l.label}
@@ -171,7 +180,7 @@ export function ContactSection() {
             ))}
           </div>
         </div>
-      </Reveal>
+      </div>
     </Section>
   )
 }

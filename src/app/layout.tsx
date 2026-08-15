@@ -12,8 +12,12 @@ import { Footer } from "@/components/footer"
 import { VoyageBackdrop } from "@/components/voyage/ocean-scene"
 import { ScrollProgress } from "@/components/voyage/scroll-progress"
 import { CursorWake } from "@/components/voyage/cursor-wake"
+import { Captain } from "@/components/voyage/captain"
 import { SITE_URL, site } from "@/lib/site"
-import { ThemeProvider, themeInitScript } from "@/components/theme/theme-provider"
+import {
+  ThemeProvider,
+  themeInitScript,
+} from "@/components/theme/theme-provider"
 import { DEFAULT_THEME } from "@/lib/themes"
 import { cn } from "@/lib/utils"
 
@@ -132,13 +136,16 @@ export default function RootLayout({
       </head>
       <body className="flex min-h-svh flex-col antialiased">
         <ThemeProvider>
-        <VoyageBackdrop />
-        <TopLoader />
-        <ScrollProgress />
-        <CursorWake />
-        <Nav />
-        <main className="relative z-10 flex-1">{children}</main>
-        <Footer />
+          <VoyageBackdrop />
+          <TopLoader />
+          <ScrollProgress />
+          <CursorWake />
+          <Nav />
+          <main className="relative z-10 flex-1">{children}</main>
+          <Footer />
+          {/* After <main>, so he layers over the content rather than under
+            it — he's a character in the page, not part of the backdrop. */}
+          <Captain />
         </ThemeProvider>
       </body>
     </html>

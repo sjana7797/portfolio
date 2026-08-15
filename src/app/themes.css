@@ -20,115 +20,118 @@
 
 /* ---------------- Night Watch ------------------------------------- */
 html[data-theme="midnight"] {
-  --v-chrome: rgb(7 22 36 / 0.9);
   color-scheme: dark;
 
-  --color-ink: #eaf2f7;
-  --color-body: #c4d6e2;
-  --color-muted-ink: #9db4c4;
-  --color-faint: #7d97a9;
-  --color-sea: #5fc8ee;
-  --color-sea-bright: #7fd3ea;
-  --color-crimson: #ff6b5e;
-  --color-gold: #f0c14b;
-  --color-amber: #e8b04a;
-  --color-parchment: #12263a;
-  --color-sand: #1c364f;
-  --color-sand-ink: #eaf2f7;
+  /* ink ramp inverts: lightest to darkest, same cool axis as voyage */
+  --color-ink: oklch(95.7% 0.011 234.8);
+  --color-body: oklch(86.6% 0.026 236.9);
+  --color-muted-ink: oklch(75.8% 0.034 238.3);
+  --color-faint: oklch(66.3% 0.04 238.4);
+  --color-sea: oklch(78.5% 0.111 224.7);
+  --color-sea-bright: oklch(82.2% 0.088 217.3);
+  --color-crimson: oklch(70.9% 0.183 27.7);
+  --color-gold: oklch(83.2% 0.142 86.7);
+  --color-amber: oklch(79.1% 0.134 79.5);
+  --color-parchment: oklch(26.3% 0.046 250);
+  --color-sand: oklch(32.5% 0.055 249);
+  --color-sand-ink: oklch(95.7% 0.011 234.8);
 
-  --v-surface: rgb(14 33 51 / 0.92);
-  --v-surface-2: rgb(14 33 51 / 0.85);
-  --v-border: rgb(234 242 247 / 0.18);
+  --v-sea-bg: oklch(19.5% 0.035 248.2);
+  --v-chrome: oklch(19.5% 0.035 248.2 / 0.9);
+  --v-surface: oklch(24.5% 0.043 250 / 0.92);
+  --v-surface-2: oklch(24.5% 0.043 250 / 0.85);
+  --v-border: oklch(95.7% 0.011 234.8 / 0.18);
   --v-border-w: 1px;
   --v-radius: 0px;
   --v-shadow: none;
-  --v-shadow-hover: -14px 0 40px -18px rgb(240 193 75 / 0.4);
+  --v-shadow-hover: -14px 0 40px -18px oklch(83.2% 0.142 86.7 / 0.4);
   --v-lift: translateY(-8px) scale(1.008);
-  --v-hover-border: rgb(255 107 94 / 0.6);
+  --v-hover-border: oklch(70.9% 0.183 27.7 / 0.6);
+  --v-hairline: oklch(95.7% 0.011 234.8 / 0.28);
+  --v-hairline-amber: oklch(79.1% 0.134 79.5 / 0.5);
 
   --v-font-display: var(--font-display);
   --v-display-weight: 800;
   --v-display-tracking: -0.045em;
   --v-display-case: none;
 
-  --background: #071624;
-  --foreground: #eaf2f7;
-  --card: #12263a;
-  --card-foreground: #eaf2f7;
-  --popover: #12263a;
-  --popover-foreground: #eaf2f7;
-  --primary: #ff6b5e;
-  --primary-foreground: #071624;
-  --secondary: #f0c14b;
-  --secondary-foreground: #071624;
-  --muted: #16304a;
-  --muted-foreground: #9db4c4;
-  --accent: #f0c14b;
-  --accent-foreground: #071624;
-  --border: rgb(234 242 247 / 0.18);
-  --input: rgb(234 242 247 / 0.24);
-  --ring: #5fc8ee;
-}
-
-html[data-theme="midnight"] body {
-  background: #071624;
+  --background: var(--v-sea-bg);
+  --foreground: var(--color-ink);
+  --card: var(--color-parchment);
+  --card-foreground: var(--color-ink);
+  --popover: var(--color-parchment);
+  --popover-foreground: var(--color-ink);
+  --primary: var(--color-crimson);
+  --primary-foreground: var(--v-sea-bg);
+  --secondary: var(--color-gold);
+  --secondary-foreground: var(--v-sea-bg);
+  --muted: oklch(30.2% 0.057 250.3);
+  --muted-foreground: var(--color-muted-ink);
+  --accent: var(--color-gold);
+  --accent-foreground: var(--v-sea-bg);
+  --border: oklch(95.7% 0.011 234.8 / 0.18);
+  --input: oklch(95.7% 0.011 234.8 / 0.24);
+  --ring: var(--color-sea);
 }
 
 /* ---------------- Brutalist --------------------------------------- */
 html[data-theme="brutalism"] {
-  --v-chrome: #ffffff;
   color-scheme: light;
 
-  --color-ink: #000000;
-  --color-body: #000000;
-  --color-muted-ink: #1a1a1a;
-  --color-faint: #3d3d3d;
-  --color-sea: #2323ff;
-  --color-sea-bright: #2323ff;
-  --color-crimson: #ff2d55;
-  --color-gold: #ffe500;
-  --color-amber: #000000;
-  --color-parchment: #ffffff;
-  --color-sand: #ffe500;
-  --color-sand-ink: #000000;
+  /* Near-black and near-white rather than #000/#fff: pure endpoints
+     read flat and synthetic on a screen. 12% L still lands as "black
+     ink" to the eye while holding a trace of the blue accent axis. */
+  --color-ink: oklch(12% 0.012 265);
+  --color-body: oklch(12% 0.012 265);
+  --color-muted-ink: oklch(23% 0.008 265);
+  --color-faint: oklch(38% 0.006 265);
+  --color-sea: oklch(47.6% 0.297 267.4);
+  --color-sea-bright: oklch(47.6% 0.297 267.4);
+  --color-crimson: oklch(65% 0.238 17.9);
+  --color-gold: oklch(91.5% 0.191 101);
+  --color-amber: oklch(12% 0.012 265);
+  --color-parchment: oklch(98.8% 0.002 100);
+  --color-sand: oklch(91.5% 0.191 101);
+  --color-sand-ink: oklch(12% 0.012 265);
 
-  --v-surface: #ffffff;
-  --v-surface-2: #ffffff;
-  --v-border: #000000;
+  --v-sea-bg: oklch(91.5% 0.191 101);
+  --v-chrome: oklch(98.8% 0.002 100);
+  --v-surface: oklch(98.8% 0.002 100);
+  --v-surface-2: oklch(98.8% 0.002 100);
+  --v-border: oklch(12% 0.012 265);
   --v-border-w: 3px;
   --v-radius: 0px;
   /* The signature: a hard, un-blurred offset block instead of a shadow. */
-  --v-shadow: 6px 6px 0 #000000;
-  --v-shadow-hover: 11px 11px 0 #000000;
+  --v-shadow: 6px 6px 0 var(--color-ink);
+  --v-shadow-hover: 11px 11px 0 var(--color-ink);
+  --v-shadow-tight: 4px 4px 0 var(--color-ink);
   --v-lift: translate(-4px, -4px);
-  --v-hover-border: #000000;
+  --v-hover-border: oklch(12% 0.012 265);
+  --v-hairline: oklch(12% 0.012 265);
+  --v-hairline-amber: oklch(12% 0.012 265);
 
   --v-font-display: var(--font-mono);
   --v-display-weight: 700;
   --v-display-tracking: -0.03em;
   --v-display-case: uppercase;
 
-  --background: #ffe500;
-  --foreground: #000000;
-  --card: #ffffff;
-  --card-foreground: #000000;
-  --popover: #ffffff;
-  --popover-foreground: #000000;
-  --primary: #ff2d55;
-  --primary-foreground: #ffffff;
-  --secondary: #ffe500;
-  --secondary-foreground: #000000;
-  --muted: #f2f2f2;
-  --muted-foreground: #3d3d3d;
-  --accent: #2323ff;
-  --accent-foreground: #ffffff;
-  --border: #000000;
-  --input: #000000;
-  --ring: #2323ff;
-}
-
-html[data-theme="brutalism"] body {
-  background: #ffe500;
+  --background: var(--v-sea-bg);
+  --foreground: var(--color-ink);
+  --card: var(--color-parchment);
+  --card-foreground: var(--color-ink);
+  --popover: var(--color-parchment);
+  --popover-foreground: var(--color-ink);
+  --primary: var(--color-crimson);
+  --primary-foreground: var(--color-parchment);
+  --secondary: var(--color-gold);
+  --secondary-foreground: var(--color-ink);
+  --muted: oklch(96.1% 0.002 100);
+  --muted-foreground: var(--color-faint);
+  --accent: var(--color-sea);
+  --accent-foreground: var(--color-parchment);
+  --border: var(--color-ink);
+  --input: var(--color-ink);
+  --ring: var(--color-sea);
 }
 
 /* Brutalism wants weight, not translucency — kill the soft treatments. */
@@ -141,7 +144,7 @@ html[data-theme="brutalism"] .v-tag {
 }
 html[data-theme="brutalism"] .v-chip,
 html[data-theme="brutalism"] .v-prose {
-  box-shadow: 4px 4px 0 #000;
+  box-shadow: var(--v-shadow-tight);
 }
 html[data-theme="brutalism"] a:hover {
   color: var(--color-crimson);
@@ -151,64 +154,65 @@ html[data-theme="brutalism"] a:hover {
 
 /* ---------------- Editorial --------------------------------------- */
 html[data-theme="editorial"] {
-  --v-chrome: rgb(250 249 247 / 0.93);
   color-scheme: light;
 
-  --color-ink: #121212;
-  --color-body: #333333;
-  --color-muted-ink: #52525b;
-  --color-faint: #737380;
-  --color-sea: #1d4ed8;
-  --color-sea-bright: #3b82f6;
-  --color-crimson: #1d4ed8;
-  --color-gold: #121212;
-  --color-amber: #52525b;
-  --color-parchment: #ffffff;
-  --color-sand: #f1efea;
-  --color-sand-ink: #121212;
+  /* Warm-neutral ink: 0.004 chroma at 90° keeps it off pure grey, which
+     is what stops the page reading as a default stylesheet. */
+  --color-ink: oklch(18.2% 0.004 90);
+  --color-body: oklch(32.1% 0.004 90);
+  --color-muted-ink: oklch(44.2% 0.015 285.8);
+  --color-faint: oklch(56% 0.02 285.7);
+  --color-sea: oklch(48.8% 0.217 264.4);
+  --color-sea-bright: oklch(62.3% 0.188 259.8);
+  --color-crimson: oklch(48.8% 0.217 264.4);
+  --color-gold: oklch(18.2% 0.004 90);
+  --color-amber: oklch(44.2% 0.015 285.8);
+  --color-parchment: oklch(99.4% 0.002 90);
+  --color-sand: oklch(95.2% 0.007 88.6);
+  --color-sand-ink: oklch(18.2% 0.004 90);
 
-  --v-surface: rgb(255 255 255 / 0.96);
-  --v-surface-2: rgb(255 255 255 / 0.9);
-  --v-border: rgb(18 18 18 / 0.14);
+  --v-sea-bg: oklch(98.2% 0.003 84.6);
+  --v-chrome: oklch(98.2% 0.003 84.6 / 0.93);
+  --v-surface: oklch(99.4% 0.002 90 / 0.96);
+  --v-surface-2: oklch(99.4% 0.002 90 / 0.9);
+  --v-border: oklch(18.2% 0.004 90 / 0.14);
   --v-border-w: 1px;
   --v-radius: 0px;
   --v-shadow: none;
-  --v-shadow-hover: 0 18px 40px -28px rgb(18 18 18 / 0.5);
+  --v-shadow-hover: 0 18px 40px -28px oklch(18.2% 0.004 90 / 0.5);
   --v-lift: translateY(-4px);
-  --v-hover-border: rgb(29 78 216 / 0.5);
+  --v-hover-border: oklch(48.8% 0.217 264.4 / 0.5);
+  --v-hairline: oklch(18.2% 0.004 90 / 0.2);
+  --v-hairline-amber: oklch(44.2% 0.015 285.8 / 0.4);
 
   --v-font-display: var(--font-body);
   --v-display-weight: 700;
   --v-display-tracking: -0.035em;
   --v-display-case: none;
 
-  --background: #faf9f7;
-  --foreground: #121212;
-  --card: #ffffff;
-  --card-foreground: #121212;
-  --popover: #ffffff;
-  --popover-foreground: #121212;
-  --primary: #1d4ed8;
-  --primary-foreground: #ffffff;
-  --secondary: #f1efea;
-  --secondary-foreground: #121212;
-  --muted: #f1efea;
-  --muted-foreground: #52525b;
-  --accent: #1d4ed8;
-  --accent-foreground: #ffffff;
-  --border: rgb(18 18 18 / 0.14);
-  --input: rgb(18 18 18 / 0.2);
-  --ring: #1d4ed8;
-}
-
-html[data-theme="editorial"] body {
-  background: #faf9f7;
+  --background: var(--v-sea-bg);
+  --foreground: var(--color-ink);
+  --card: var(--color-parchment);
+  --card-foreground: var(--color-ink);
+  --popover: var(--color-parchment);
+  --popover-foreground: var(--color-ink);
+  --primary: var(--color-sea);
+  --primary-foreground: var(--color-parchment);
+  --secondary: var(--color-sand);
+  --secondary-foreground: var(--color-ink);
+  --muted: var(--color-sand);
+  --muted-foreground: var(--color-muted-ink);
+  --accent: var(--color-sea);
+  --accent-foreground: var(--color-parchment);
+  --border: oklch(18.2% 0.004 90 / 0.14);
+  --input: oklch(18.2% 0.004 90 / 0.2);
+  --ring: var(--color-sea);
 }
 
 /* Editorial earns its calm from restraint: gold becomes plain ink, so
    the "hire me" chip reads as a black button rather than a yellow one. */
 html[data-theme="editorial"] .bg-gold {
-  color: #ffffff;
+  color: var(--color-parchment);
 }
 html[data-theme="editorial"] .v-display {
   line-height: 0.95;
@@ -237,22 +241,9 @@ html[data-theme="editorial"] {
   --v-hero-top: 9rem;
 }
 
-/* Centred, stacked eyebrow with a rule under it instead of beside it. */
+/* The head is stacked everywhere now; editorial just centres it. */
 html[data-theme="editorial"] .v-section-head {
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
   text-align: center;
-}
-html[data-theme="editorial"] .v-section-head > span:first-child {
-  background: transparent;
-  border: 0;
-  padding: 0;
-  box-shadow: none;
-}
-html[data-theme="editorial"] .v-section-head > span:last-child {
-  width: 100%;
-  flex: none;
 }
 
 html[data-theme="editorial"] .v-hero {
@@ -313,18 +304,21 @@ html[data-theme="brutalism"] {
   --v-hero-top: 8rem;
 }
 
-/* The eyebrow becomes a solid slab rather than a chip beside a rule. */
+/* The label becomes a solid slab. inline-block so it hugs the text —
+   as a block it would stripe the full measure and the offset shadow
+   would read as a stray bar rather than a slab. */
 html[data-theme="brutalism"] .v-section-head > span:first-child {
-  background: #000;
-  color: #ffe500;
+  display: inline-block;
+  background: var(--color-ink);
+  color: var(--color-gold);
   border: 0;
-  box-shadow: 6px 6px 0 #2323ff;
+  box-shadow: 6px 6px 0 var(--color-sea);
   padding: 10px 16px;
   font-weight: 700;
 }
 html[data-theme="brutalism"] .v-section-head > span:last-child {
   height: 3px;
-  background: #000;
+  background: var(--color-ink);
 }
 
 /* Projects tile two-up as hard blocks instead of full-width rows. */
@@ -345,8 +339,8 @@ html[data-theme="brutalism"] .v-timeline {
   gap: 1.5rem;
 }
 html[data-theme="brutalism"] .v-timeline > * {
-  border: 3px solid #000;
-  box-shadow: 6px 6px 0 #000;
+  border: var(--v-border-w) solid var(--color-ink);
+  box-shadow: var(--v-shadow);
   padding: 1.75rem;
 }
 html[data-theme="brutalism"] .v-tl-row {

@@ -1,0 +1,4 @@
+# Types are a whole-project property — lint-staged only sees the files
+# you touched, so a change that breaks a consumer elsewhere still passes
+# pre-commit. Catch that here, before it reaches CI.
+bun run typecheck

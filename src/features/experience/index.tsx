@@ -7,14 +7,11 @@ export function ExperienceSection() {
     <Section id="voyage">
       <SectionHeading index="02" label="THE ROUTE SO FAR" />
 
-      <Reveal
-        as="h2"
-        className="v-display m-0 mb-14 text-[clamp(40px,7vw,118px)] leading-[0.88] tracking-[-0.05em]"
-      >
+      <h2 className="v-display m-0 mb-14 text-[clamp(40px,7vw,118px)] leading-[0.88] tracking-[-0.05em]">
         FIVE PORTS,
         <br />
         ONE <span className="text-sea">HEADING</span>
-      </Reveal>
+      </h2>
 
       <div className="v-timeline v-grid grid border-x-0">
         {experiences.map((job, i) => (
@@ -25,7 +22,7 @@ export function ExperienceSection() {
           >
             <div>
               {job.current && (
-                <div className="v-mono inline-flex items-center bg-crimson px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-parchment">
+                <div className="v-mono inline-flex items-center bg-crimson px-2.5 py-1.5 text-[10px] font-bold tracking-[0.18em] text-parchment uppercase">
                   Current port
                 </div>
               )}
@@ -35,7 +32,7 @@ export function ExperienceSection() {
                 {job.period}
               </div>
               {i === experiences.length - 1 && (
-                <div className="v-mono mt-2.5 text-[10px] uppercase tracking-[0.18em] text-faint">
+                <div className="v-mono mt-2.5 text-[10px] tracking-[0.18em] text-faint uppercase">
                   First port
                 </div>
               )}
@@ -45,7 +42,7 @@ export function ExperienceSection() {
               <h3 className="v-display m-0 text-[clamp(24px,2.6vw,38px)] leading-[1.05] tracking-[-0.03em]">
                 {job.role}
               </h3>
-              <div className="v-mono mt-2 text-[12px] uppercase tracking-[0.12em] text-amber">
+              <div className="v-mono mt-2 text-[12px] tracking-[0.12em] text-amber uppercase">
                 {job.company} · {job.location}
               </div>
               <ul className="m-0 mt-4 grid list-disc gap-2.5 pl-5 text-[15px] leading-[1.5] text-body marker:text-sea">
