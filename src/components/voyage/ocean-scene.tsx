@@ -1284,6 +1284,200 @@ function buildLogPose(
   }
 }
 
+/**
+ * Dev Mode backdrop: a drifting field of wireframe polyhedra over a
+ * graphite gradient, plus a faint point-grid for depth — an IDE's dark
+ * theme extended into 3D rather than another sea or sky.
+ */
+export function WireframeScene() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const flat =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.innerWidth < 900
+    if (flat) return
+
+    let cancelled = false
+    let teardown: (() => void) | undefined
+
+    void import("three").then((THREE) => {
+      if (cancelled) return
+      teardown = buildWireframe(THREE, canvas)
+    })
+
+    return () => {
+      cancelled = true
+      teardown?.()
+    }
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden
+      className="pointer-events-none fixed inset-0 z-[1] h-screen w-screen"
+    />
+  )
+}
+
+function buildWireframe(
+  THREE: typeof ThreeNS,
+  canvas: HTMLCanvasElement
+): (() => void) | undefined {
+  let renderer: ThreeNS.WebGLRenderer
+  try {
+    renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance",
+    })
+  } catch {
+    return
+  }
+
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+  renderer.setSize(window.innerWidth, window.innerHeight, false)
+
+  const scene = new THREE.Scene()
+  scene.fog = new THREE.Fog(0x1e1e1e, 60, 560)
+
+  const cam = new THREE.PerspectiveCamera(
+    60,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1400
+  )
+  cam.position.set(0, 2, 12)
+
+  // ---- faint depth grid: same dot-field trick as Log Pose's starfield ----
+  const dotCount = 900
+  const dotPos = new Float32Array(dotCount * 3)
+  for (let i = 0; i < dotCount; i++) {
+    dotPos[i * 3] = (Math.random() - 0.5) * 900
+    dotPos[i * 3 + 1] = (Math.random() - 0.5) * 500
+    dotPos[i * 3 + 2] = -Math.random() * (VOYAGE + 900)
+  }
+  const dotGeo = new THREE.BufferGeometry()
+  dotGeo.setAttribute("position", new THREE.BufferAttribute(dotPos, 3))
+  const dots = new THREE.Points(
+    dotGeo,
+    new THREE.PointsMaterial({
+      color: 0x569cd6,
+      size: 1.4,
+      transparent: true,
+      opacity: 0.35,
+      depthWrite: false,
+      fog: false,
+    })
+  )
+  scene.add(dots)
+
+  // ---- drifting wireframe polyhedra, strung along the voyage ----
+  const geos = [
+    new THREE.IcosahedronGeometry(2.4, 0),
+    new THREE.OctahedronGeometry(2.2, 0),
+    new THREE.BoxGeometry(3, 3, 3),
+    new THREE.TetrahedronGeometry(2.6, 0),
+  ]
+  const colors = [0x569cd6, 0x4ec9b0, 0xc586c0, 0xce9178]
+  const shapes: { m: ThreeNS.LineSegments; ph: number; sp: number }[] = []
+  for (let i = 0; i < 26; i++) {
+    const geo = geos[i % geos.length]
+    const edges = new THREE.EdgesGeometry(geo)
+    const mat = new THREE.LineBasicMaterial({
+      color: colors[i % colors.length],
+      transparent: true,
+      opacity: 0.55,
+      fog: true,
+    })
+    const mesh = new THREE.LineSegments(edges, mat)
+    const side = i % 2 === 0 ? -1 : 1
+    mesh.position.set(
+      side * (7 + Math.random() * 14),
+      -4 + Math.random() * 12,
+      -20 - i * 24 - Math.random() * 20
+    )
+    const s = 0.6 + Math.random() * 1.1
+    mesh.scale.setScalar(s)
+    scene.add(mesh)
+    shapes.push({
+      m: mesh,
+      ph: Math.random() * 6.28,
+      sp: 0.15 + Math.random() * 0.25,
+    })
+  }
+
+  // ---- drive: same scroll/mouse camera logic as the ocean/Log Pose ----
+  let p = 0
+  let pt = 0
+  let mx = 0
+  let my = 0
+  let tmx = 0
+  let tmy = 0
+  const t0 = performance.now()
+  let raf = 0
+
+  const onScroll = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight
+    pt = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0
+  }
+  const onMouse = (e: MouseEvent) => {
+    tmx = (e.clientX / window.innerWidth - 0.5) * 2
+    tmy = (e.clientY / window.innerHeight - 0.5) * 2
+  }
+  const onResize = () => {
+    renderer.setSize(window.innerWidth, window.innerHeight, false)
+    cam.aspect = window.innerWidth / window.innerHeight
+    cam.updateProjectionMatrix()
+  }
+  window.addEventListener("scroll", onScroll, { passive: true })
+  window.addEventListener("mousemove", onMouse, { passive: true })
+  window.addEventListener("resize", onResize)
+  onScroll()
+
+  const tick = () => {
+    raf = requestAnimationFrame(tick)
+    const t = (performance.now() - t0) / 1000
+    p += (pt - p) * 0.05
+    mx += (tmx - mx) * 0.04
+    my += (tmy - my) * 0.04
+
+    const z = 12 - p * VOYAGE
+    cam.position.set(mx * 2, 2 - my * 0.4, z)
+    cam.lookAt(mx * 1, 1.8 - my * 0.2, z - 18)
+
+    dots.rotation.y = t * 0.004
+
+    for (const S of shapes) {
+      S.m.rotation.x = t * S.sp + S.ph
+      S.m.rotation.y = t * S.sp * 0.7 + S.ph
+    }
+
+    renderer.render(scene, cam)
+  }
+  tick()
+
+  return () => {
+    cancelAnimationFrame(raf)
+    window.removeEventListener("scroll", onScroll)
+    window.removeEventListener("mousemove", onMouse)
+    window.removeEventListener("resize", onResize)
+    scene.traverse((o) => {
+      const m = o as ThreeNS.Mesh
+      if (m.geometry) m.geometry.dispose()
+      const mat = m.material
+      if (Array.isArray(mat)) mat.forEach((x) => x.dispose())
+      else if (mat) mat.dispose()
+    })
+    renderer.dispose()
+  }
+}
+
 /** Per-backdrop sky gradient and the scrim that keeps text readable. */
 const SKY = {
   "ocean-day": {
@@ -1351,6 +1545,27 @@ export function VoyageBackdrop() {
           aria-hidden
           className="pointer-events-none fixed inset-0 z-[2]"
           style={{ background: "rgb(4 6 18 / 0.48)" }}
+        />
+      </>
+    )
+  }
+
+  if (backdrop === "wireframe") {
+    return (
+      <>
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-0 z-0"
+          style={{
+            background:
+              "linear-gradient(180deg,#141414 0%,#1e1e1e 45%,#242424 80%,#1a1a1a 100%)",
+          }}
+        />
+        <WireframeScene />
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-0 z-[2]"
+          style={{ background: "rgb(10 10 10 / 0.4)" }}
         />
       </>
     )

@@ -511,6 +511,182 @@ html[data-theme="terminal"] .v-tl-row {
   gap: 0.75rem;
 }
 
+/* ---------------- Field Notes ------------------------------------- */
+html[data-theme="onecolumn"] {
+  color-scheme: light;
+
+  /* Almost pure grayscale — a single quiet slate accent stands in for
+     both sea and crimson, so nothing else is left to compete for eyes. */
+  --color-ink: oklch(17.5% 0.006 260);
+  --color-body: oklch(30.4% 0.006 260);
+  --color-muted-ink: oklch(45.8% 0.006 260);
+  --color-faint: oklch(58.6% 0.006 260);
+  --color-sea: oklch(41.2% 0.03 258);
+  --color-sea-bright: oklch(52.6% 0.028 258);
+  --color-crimson: oklch(41.2% 0.03 258);
+  --color-gold: oklch(93.4% 0.004 260);
+  --color-amber: oklch(45.8% 0.006 260);
+  --color-parchment: oklch(99.1% 0.002 260);
+  --color-sand: oklch(95.6% 0.003 260);
+  --color-sand-ink: oklch(17.5% 0.006 260);
+
+  --v-sea-bg: oklch(98.4% 0.002 260);
+  --v-chrome: oklch(98.4% 0.002 260 / 0.92);
+  --v-surface: oklch(99.1% 0.002 260 / 0.96);
+  --v-surface-2: oklch(99.1% 0.002 260 / 0.9);
+  --v-border: oklch(17.5% 0.006 260 / 0.12);
+  --v-border-w: 1px;
+  --v-radius: 0px;
+  --v-shadow: none;
+  --v-shadow-hover: none;
+  --v-lift: none;
+  --v-hover-border: oklch(41.2% 0.03 258 / 0.5);
+  --v-hairline: oklch(17.5% 0.006 260 / 0.16);
+  --v-hairline-amber: oklch(45.8% 0.006 260 / 0.35);
+
+  --v-font-display: var(--font-body);
+  --v-display-weight: 600;
+  --v-display-tracking: -0.02em;
+  --v-display-case: none;
+
+  --background: var(--v-sea-bg);
+  --foreground: var(--color-ink);
+  --card: var(--color-parchment);
+  --card-foreground: var(--color-ink);
+  --popover: var(--color-parchment);
+  --popover-foreground: var(--color-ink);
+  --primary: var(--color-ink);
+  --primary-foreground: var(--color-parchment);
+  --secondary: var(--color-sand);
+  --secondary-foreground: var(--color-ink);
+  --muted: var(--color-sand);
+  --muted-foreground: var(--color-muted-ink);
+  --accent: var(--color-sea);
+  --accent-foreground: var(--color-parchment);
+  --border: oklch(17.5% 0.006 260 / 0.12);
+  --input: oklch(17.5% 0.006 260 / 0.18);
+  --ring: var(--color-sea);
+}
+
+/* ---------------- Broadsheet ---------------------------------------- */
+html[data-theme="twocolumn"] {
+  color-scheme: light;
+
+  /* Newsprint cream and brick-red — the one saturated colour on the
+     page, reserved for the masthead accent and nothing else. */
+  --color-ink: oklch(16.8% 0.012 45);
+  --color-body: oklch(26.2% 0.012 45);
+  --color-muted-ink: oklch(41.6% 0.014 44);
+  --color-faint: oklch(54.2% 0.014 44);
+  --color-sea: oklch(38.4% 0.09 34.6);
+  --color-sea-bright: oklch(46.8% 0.11 32.8);
+  --color-crimson: oklch(43.6% 0.15 29.4);
+  --color-gold: oklch(16.8% 0.012 45);
+  --color-amber: oklch(41.6% 0.014 44);
+  --color-parchment: oklch(97.2% 0.013 78);
+  --color-sand: oklch(93.1% 0.019 76.4);
+  --color-sand-ink: oklch(16.8% 0.012 45);
+
+  --v-sea-bg: oklch(95.3% 0.016 79.5);
+  --v-chrome: oklch(95.3% 0.016 79.5 / 0.93);
+  --v-surface: oklch(97.2% 0.013 78 / 0.96);
+  --v-surface-2: oklch(97.2% 0.013 78 / 0.88);
+  --v-border: oklch(16.8% 0.012 45 / 0.18);
+  --v-border-w: 1px;
+  --v-radius: 0px;
+  --v-shadow: none;
+  --v-shadow-hover: none;
+  --v-lift: none;
+  --v-hover-border: oklch(43.6% 0.15 29.4 / 0.55);
+  --v-hairline: oklch(16.8% 0.012 45 / 0.24);
+  --v-hairline-amber: oklch(41.6% 0.014 44 / 0.4);
+
+  --v-font-display: var(--font-serif);
+  --v-display-weight: 800;
+  --v-display-tracking: -0.02em;
+  --v-display-case: none;
+
+  --background: var(--v-sea-bg);
+  --foreground: var(--color-ink);
+  --card: var(--color-parchment);
+  --card-foreground: var(--color-ink);
+  --popover: var(--color-parchment);
+  --popover-foreground: var(--color-ink);
+  --primary: var(--color-crimson);
+  --primary-foreground: var(--color-parchment);
+  --secondary: var(--color-sand);
+  --secondary-foreground: var(--color-ink);
+  --muted: var(--color-sand);
+  --muted-foreground: var(--color-muted-ink);
+  --accent: var(--color-sea);
+  --accent-foreground: var(--color-parchment);
+  --border: oklch(16.8% 0.012 45 / 0.18);
+  --input: oklch(16.8% 0.012 45 / 0.22);
+  --ring: var(--color-sea);
+}
+
+/* ---------------- Source (Dev Mode) ---------------------------------- */
+html[data-theme="devmode"] {
+  color-scheme: dark;
+
+  /* VS Code Dark+, essentially: blue keywords, teal types, warm string
+     orange, on a graphite editor pane. */
+  --color-ink: oklch(91.8% 0.011 255);
+  --color-body: oklch(80.4% 0.014 255);
+  --color-muted-ink: oklch(64.8% 0.016 255);
+  --color-faint: oklch(50.2% 0.016 255);
+  --color-sea: oklch(68.2% 0.13 254.6);
+  --color-sea-bright: oklch(75.4% 0.108 252.8);
+  --color-crimson: oklch(68.6% 0.15 332.4);
+  --color-gold: oklch(75.8% 0.108 174.6);
+  --color-amber: oklch(70.4% 0.098 42.8);
+  --color-parchment: oklch(20.4% 0.006 240);
+  --color-sand: oklch(24.2% 0.007 240);
+  --color-sand-ink: oklch(91.8% 0.011 255);
+
+  --v-sea-bg: oklch(18% 0.005 240);
+  --v-chrome: oklch(15.8% 0.005 240 / 0.94);
+  --v-surface: oklch(20.4% 0.006 240 / 0.92);
+  --v-surface-2: oklch(20.4% 0.006 240 / 0.84);
+  --v-border: oklch(91.8% 0.011 255 / 0.14);
+  --v-border-w: 1px;
+  --v-radius: 0px;
+  --v-shadow: none;
+  --v-shadow-hover: 0 0 0 1px oklch(68.2% 0.13 254.6 / 0.5);
+  --v-lift: translateY(-4px);
+  --v-hover-border: oklch(68.2% 0.13 254.6 / 0.6);
+  --v-hairline: oklch(91.8% 0.011 255 / 0.16);
+  --v-hairline-amber: oklch(75.8% 0.108 174.6 / 0.4);
+
+  --v-font-display: var(--font-mono);
+  --v-display-weight: 700;
+  --v-display-tracking: -0.01em;
+  --v-display-case: none;
+
+  --background: var(--v-sea-bg);
+  --foreground: var(--color-ink);
+  --card: var(--color-parchment);
+  --card-foreground: var(--color-ink);
+  --popover: var(--color-parchment);
+  --popover-foreground: var(--color-ink);
+  --primary: var(--color-sea);
+  --primary-foreground: var(--v-sea-bg);
+  --secondary: var(--color-gold);
+  --secondary-foreground: var(--v-sea-bg);
+  --muted: oklch(23% 0.006 240);
+  --muted-foreground: var(--color-muted-ink);
+  --accent: var(--color-sea);
+  --accent-foreground: var(--v-sea-bg);
+  --border: oklch(91.8% 0.011 255 / 0.14);
+  --input: oklch(91.8% 0.011 255 / 0.2);
+  --ring: var(--color-sea);
+}
+/* Hire Me stays legible: light ink on a mid-brightness teal reads too
+   low-contrast, so pin its text to the darkest surface instead. */
+html[data-theme="devmode"] .bg-gold {
+  color: var(--v-sea-bg);
+}
+
 /* ==================================================================
    Structure.
 
@@ -808,4 +984,281 @@ html[data-theme="editorial"] main .v-chip {
 }
 html[data-theme="editorial"] main .v-prose {
   margin-block: 0.5rem;
+}
+
+/* ---------------- Field Notes: one column, nothing else ------------ */
+/* The narrowest measure of any skin, left-aligned instead of centred,
+   and every tag/tech chip loses its pill so the page has no boxes at
+   all left to draw the eye off the text. */
+html[data-theme="onecolumn"] {
+  --v-measure: 640px;
+  --v-gutter: 7vw;
+  --v-section-y: clamp(5rem, 9vw, 8rem);
+  --v-hero-top: 9rem;
+}
+html[data-theme="onecolumn"] .v-hero {
+  text-align: left;
+  align-items: flex-start;
+}
+html[data-theme="onecolumn"] .v-section-head {
+  text-align: left;
+}
+
+html[data-theme="onecolumn"] .v-rack-list {
+  gap: 0;
+  border-top: 1px solid var(--v-border);
+}
+html[data-theme="onecolumn"] .v-rack {
+  grid-template-columns: 1fr;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--v-border);
+  box-shadow: none;
+}
+html[data-theme="onecolumn"] .v-rack > :first-child {
+  display: none;
+}
+html[data-theme="onecolumn"] .v-rack > :last-child {
+  grid-template-columns: 1fr;
+  padding-inline: 0;
+  padding-block: 2.25rem;
+}
+html[data-theme="onecolumn"] .v-rack:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+html[data-theme="onecolumn"] .v-timeline {
+  background: transparent;
+  border: 0;
+  gap: 0;
+}
+html[data-theme="onecolumn"] .v-timeline > * {
+  background: transparent;
+  border-bottom: 1px solid var(--v-border);
+}
+html[data-theme="onecolumn"] .v-tl-row {
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+html[data-theme="onecolumn"] .v-tag {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-weight: 400;
+  text-transform: none;
+  color: var(--color-muted-ink);
+}
+
+/* The whole point is one column and nothing competing with it — the
+   prose/chip panels are boxes, so they go, same move as editorial. */
+html[data-theme="onecolumn"] main .v-prose,
+html[data-theme="onecolumn"] main .v-chip {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  box-shadow: none;
+}
+html[data-theme="onecolumn"] main .v-prose {
+  margin-block: 0.5rem;
+}
+
+/* ---------------- Broadsheet: read it like print -------------------- */
+/* Rack and timeline run in two CSS columns with a rule down the gutter,
+   the way a real broadsheet sets copy — nothing else in this site does
+   multi-column text, so it's the one skin where that reads as intent. */
+html[data-theme="twocolumn"] {
+  --v-measure: 1100px;
+  --v-gutter: 5vw;
+  --v-section-y: clamp(4rem, 7vw, 7rem);
+  --v-hero-top: 8rem;
+}
+html[data-theme="twocolumn"] body {
+  font-family: var(--font-serif), Georgia, serif;
+}
+html[data-theme="twocolumn"] .v-mono {
+  font-family: var(--font-mono), monospace;
+}
+html[data-theme="twocolumn"] .v-section-head {
+  border-bottom: 3px solid var(--color-ink);
+  padding-bottom: 10px;
+}
+html[data-theme="twocolumn"] .v-section-head .v-rule {
+  display: none;
+}
+
+html[data-theme="twocolumn"] .v-rack-list {
+  display: block;
+  column-count: 2;
+  column-gap: 2.5rem;
+  column-rule: 1px solid var(--v-border);
+  gap: 0;
+}
+html[data-theme="twocolumn"] .v-rack {
+  break-inside: avoid;
+  grid-template-columns: 1fr;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--v-border);
+  box-shadow: none;
+  margin-bottom: 1.5rem;
+}
+html[data-theme="twocolumn"] .v-rack > :first-child {
+  display: none;
+}
+html[data-theme="twocolumn"] .v-rack > :last-child {
+  grid-template-columns: 1fr;
+  padding-inline: 0;
+  padding-block: 1.75rem;
+}
+html[data-theme="twocolumn"] .v-rack:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+html[data-theme="twocolumn"] .v-timeline {
+  display: block;
+  column-count: 2;
+  column-gap: 2.5rem;
+  column-rule: 1px solid var(--v-border);
+  background: transparent;
+  border: 0;
+  gap: 0;
+}
+html[data-theme="twocolumn"] .v-timeline > * {
+  break-inside: avoid;
+  background: transparent;
+  border-bottom: 1px solid var(--v-border);
+  margin-bottom: 1.25rem;
+  padding-block: 1.25rem;
+}
+html[data-theme="twocolumn"] .v-tl-row {
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+/* Gold collapses to plain ink here, same move as editorial — so the
+   logo mark and Hire Me button need their text pinned off ink too. */
+html[data-theme="twocolumn"] .bg-gold {
+  color: var(--color-parchment);
+}
+
+/* ---------------- Source: an editor, not a page ---------------------- */
+/* File-tree sidebar on wide screens (same rail trick as Log Pose),
+   section heads read like line comments, and every rack/timeline row
+   gets a line-number gutter via CSS counters. */
+html[data-theme="devmode"] {
+  --v-measure: 1160px;
+  --v-gutter: 4vw;
+  --v-section-y: clamp(4rem, 7vw, 6.5rem);
+  --v-hero-top: 7rem;
+}
+html[data-theme="devmode"] body {
+  font-family: var(--font-mono), monospace;
+}
+
+@media (min-width: 1024px) {
+  html[data-theme="devmode"] .v-nav {
+    inset: 0 auto 0 0;
+    width: 240px;
+    height: 100vh;
+    border-right: 1px solid var(--v-hairline);
+    border-bottom: 0;
+  }
+  html[data-theme="devmode"] .v-nav-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100%;
+    padding: 24px 18px;
+  }
+  html[data-theme="devmode"] .v-nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    margin-top: 40px;
+  }
+  html[data-theme="devmode"] main,
+  html[data-theme="devmode"] footer {
+    margin-left: 240px;
+  }
+}
+
+html[data-theme="devmode"] .v-section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+html[data-theme="devmode"] .v-section-head > span:first-child::before {
+  content: "// ";
+  color: var(--color-muted-ink);
+}
+html[data-theme="devmode"] .v-section-head .v-rule {
+  display: none;
+}
+
+html[data-theme="devmode"] .v-rack-list {
+  gap: 0;
+  border-top: 1px solid var(--v-border);
+  counter-reset: devline;
+}
+html[data-theme="devmode"] .v-rack {
+  grid-template-columns: 1fr;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--v-border);
+  box-shadow: none;
+  position: relative;
+  padding-left: 2.5rem;
+  counter-increment: devline;
+}
+html[data-theme="devmode"] .v-rack::before {
+  content: counter(devline);
+  position: absolute;
+  left: 0;
+  top: 1.75rem;
+  width: 2rem;
+  text-align: right;
+  color: var(--color-faint);
+  font-size: 12px;
+}
+html[data-theme="devmode"] .v-rack > :first-child {
+  display: none;
+}
+html[data-theme="devmode"] .v-rack > :last-child {
+  grid-template-columns: 1fr;
+  padding-inline: 0;
+  padding-block: 1.75rem;
+}
+html[data-theme="devmode"] .v-rack:hover {
+  transform: none;
+  border-color: var(--color-sea);
+  box-shadow: none;
+}
+
+html[data-theme="devmode"] .v-timeline {
+  background: transparent;
+  border: 0;
+  gap: 0;
+  counter-reset: devline2;
+}
+html[data-theme="devmode"] .v-timeline > * {
+  position: relative;
+  border-bottom: 1px solid var(--v-border);
+  padding-left: 2.5rem;
+  padding-block: 1.5rem;
+  counter-increment: devline2;
+}
+html[data-theme="devmode"] .v-timeline > *::before {
+  content: counter(devline2);
+  position: absolute;
+  left: 0;
+  top: 1.5rem;
+  width: 2rem;
+  text-align: right;
+  color: var(--color-faint);
+  font-size: 12px;
+}
+html[data-theme="devmode"] .v-tl-row {
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
 }

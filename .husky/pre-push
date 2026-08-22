@@ -2,3 +2,4 @@
 # you touched, so a change that breaks a consumer elsewhere still passes
 # pre-commit. Catch that here, before it reaches CI.
 bun run typecheck
+bun run build

@@ -93,6 +93,42 @@ export const THEMES = [
     character: false,
     cursor: "scan",
   },
+  {
+    id: "onecolumn",
+    name: "Field Notes",
+    tagline: "One column · no noise",
+    description:
+      "A single centered column and nothing else — no rack grid, no sidebar, just the next line.",
+    backdrop: "paper",
+    swatches: ["#fafafa", "#111111", "#6b6b6b"],
+    group: "STRUCTURAL",
+    character: false,
+    cursor: "ink",
+  },
+  {
+    id: "twocolumn",
+    name: "Broadsheet",
+    tagline: "Two columns · newspaper split",
+    description:
+      "Runs in two justified columns with a rule down the gutter, headline spanning both — read it like print.",
+    backdrop: "paper",
+    swatches: ["#f4f1ea", "#1a1a1a", "#8a1f11"],
+    group: "STRUCTURAL",
+    character: false,
+    cursor: "ink",
+  },
+  {
+    id: "devmode",
+    name: "Source",
+    tagline: "IDE · dark mode, three.js",
+    description:
+      "A file tree, line numbers, a dark editor pane — and a wireframe mesh drifting behind it all.",
+    backdrop: "wireframe",
+    swatches: ["#1e1e1e", "#569cd6", "#4ec9b0"],
+    group: "3D",
+    character: false,
+    cursor: "scan",
+  },
 ] as const
 
 export type ThemeId = (typeof THEMES)[number]["id"]
