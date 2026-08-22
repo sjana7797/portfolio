@@ -218,6 +218,299 @@ html[data-theme="editorial"] .v-display {
   line-height: 0.95;
 }
 
+/* ---------------- Log Pose ------------------------------------------ */
+html[data-theme="logpose"] {
+  color-scheme: dark;
+
+  /* Same inverted ramp shape as midnight, shifted toward violet-indigo
+     rather than navy — this is deep space over water, not dusk. */
+  --color-ink: oklch(96.1% 0.014 268.5);
+  --color-body: oklch(87.4% 0.028 269.8);
+  --color-muted-ink: oklch(76.6% 0.036 270.6);
+  --color-faint: oklch(66.8% 0.042 270.9);
+  --color-sea: oklch(80.1% 0.09 214.9);
+  --color-sea-bright: oklch(85.3% 0.075 210.2);
+  --color-crimson: oklch(74.2% 0.16 25.4);
+  --color-gold: oklch(83.9% 0.146 87.4);
+  --color-amber: oklch(80.4% 0.128 80.1);
+  --color-parchment: oklch(23.8% 0.058 271.6);
+  --color-sand: oklch(29.6% 0.066 270.8);
+  --color-sand-ink: oklch(96.1% 0.014 268.5);
+
+  --v-sea-bg: oklch(14.2% 0.05 271.9);
+  --v-chrome: oklch(14.2% 0.05 271.9 / 0.88);
+  --v-surface: oklch(21.5% 0.056 271.3 / 0.92);
+  --v-surface-2: oklch(21.5% 0.056 271.3 / 0.84);
+  --v-border: oklch(96.1% 0.014 268.5 / 0.16);
+  --v-border-w: 1px;
+  --v-radius: 0px;
+  --v-shadow: none;
+  --v-shadow-hover: 0 18px 46px -22px oklch(83.9% 0.146 87.4 / 0.42);
+  --v-lift: translateY(-8px) scale(1.008);
+  --v-hover-border: oklch(80.1% 0.09 214.9 / 0.55);
+  --v-hairline: oklch(96.1% 0.014 268.5 / 0.24);
+  --v-hairline-amber: oklch(80.4% 0.128 80.1 / 0.45);
+
+  --v-font-display: var(--font-display);
+  --v-display-weight: 800;
+  --v-display-tracking: -0.045em;
+  --v-display-case: none;
+
+  --background: var(--v-sea-bg);
+  --foreground: var(--color-ink);
+  --card: var(--color-parchment);
+  --card-foreground: var(--color-ink);
+  --popover: var(--color-parchment);
+  --popover-foreground: var(--color-ink);
+  --primary: var(--color-gold);
+  --primary-foreground: var(--v-sea-bg);
+  --secondary: var(--color-sea);
+  --secondary-foreground: var(--v-sea-bg);
+  --muted: oklch(27.4% 0.06 271.5);
+  --muted-foreground: var(--color-muted-ink);
+  --accent: var(--color-sea);
+  --accent-foreground: var(--v-sea-bg);
+  --border: oklch(96.1% 0.014 268.5 / 0.16);
+  --input: oklch(96.1% 0.014 268.5 / 0.22);
+  --ring: var(--color-sea);
+}
+
+/* ---------------- Reading Room --------------------------------------- */
+html[data-theme="reading-room"] {
+  color-scheme: light;
+
+  /* Warm, ink-on-paper brown rather than grey — a library reading
+     lamp axis, not a screen. */
+  --color-ink: oklch(24.5% 0.032 55.4);
+  --color-body: oklch(34.8% 0.03 54.8);
+  --color-muted-ink: oklch(47.6% 0.026 54.2);
+  --color-faint: oklch(59.8% 0.022 53.6);
+  --color-sea: oklch(38.4% 0.083 152.3);
+  --color-sea-bright: oklch(49.6% 0.092 150.8);
+  --color-crimson: oklch(38.9% 0.128 24.9);
+  --color-gold: oklch(66.7% 0.096 75.8);
+  --color-amber: oklch(56.2% 0.088 69.4);
+  --color-parchment: oklch(97.3% 0.014 79.8);
+  --color-sand: oklch(92.4% 0.024 74.6);
+  --color-sand-ink: oklch(24.5% 0.032 55.4);
+
+  --v-sea-bg: oklch(94.6% 0.017 78.2);
+  --v-chrome: oklch(94.6% 0.017 78.2 / 0.92);
+  --v-surface: oklch(97.3% 0.014 79.8 / 0.96);
+  --v-surface-2: oklch(97.3% 0.014 79.8 / 0.88);
+  --v-border: oklch(24.5% 0.032 55.4 / 0.16);
+  --v-border-w: 1px;
+  --v-radius: 0px;
+  --v-shadow: none;
+  --v-shadow-hover: 0 20px 44px -30px oklch(24.5% 0.032 55.4 / 0.4);
+  --v-lift: translateY(-4px);
+  --v-hover-border: oklch(38.9% 0.128 24.9 / 0.5);
+  --v-hairline: oklch(24.5% 0.032 55.4 / 0.22);
+  --v-hairline-amber: oklch(56.2% 0.088 69.4 / 0.4);
+
+  --v-font-display: var(--font-serif);
+  --v-display-weight: 700;
+  --v-display-tracking: -0.012em;
+  --v-display-case: none;
+
+  --background: var(--v-sea-bg);
+  --foreground: var(--color-ink);
+  --card: var(--color-parchment);
+  --card-foreground: var(--color-ink);
+  --popover: var(--color-parchment);
+  --popover-foreground: var(--color-ink);
+  --primary: var(--color-crimson);
+  --primary-foreground: var(--color-parchment);
+  --secondary: var(--color-sand);
+  --secondary-foreground: var(--color-ink);
+  --muted: var(--color-sand);
+  --muted-foreground: var(--color-muted-ink);
+  --accent: var(--color-sea);
+  --accent-foreground: var(--color-parchment);
+  --border: oklch(24.5% 0.032 55.4 / 0.16);
+  --input: oklch(24.5% 0.032 55.4 / 0.2);
+  --ring: var(--color-sea);
+}
+
+/* A library page: narrow serif column, drop cap on the opening line,
+   everything centred like a book rather than a landing page. */
+html[data-theme="reading-room"] {
+  --v-measure: 760px;
+  --v-gutter: 6vw;
+  --v-section-y: clamp(5rem, 9vw, 9rem);
+  --v-hero-top: 10rem;
+}
+html[data-theme="reading-room"] body {
+  font-family: var(--font-serif), Georgia, serif;
+}
+html[data-theme="reading-room"] .v-mono {
+  font-family: var(--font-mono), monospace;
+}
+html[data-theme="reading-room"] .v-hero {
+  text-align: center;
+  align-items: center;
+}
+html[data-theme="reading-room"] .v-hero .v-prose {
+  text-align: left;
+}
+html[data-theme="reading-room"] .v-hero .v-prose::first-letter {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 3.6em;
+  font-weight: 700;
+  line-height: 0.78;
+  float: left;
+  padding-right: 0.09em;
+  padding-top: 0.04em;
+  color: var(--color-crimson);
+}
+html[data-theme="reading-room"] .v-section-head {
+  text-align: center;
+}
+html[data-theme="reading-room"] .v-rack-list {
+  gap: 0;
+  border-top: 1px solid var(--v-border);
+}
+html[data-theme="reading-room"] .v-rack {
+  grid-template-columns: 1fr;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--v-border);
+  box-shadow: none;
+}
+html[data-theme="reading-room"] .v-rack > :first-child {
+  display: none;
+}
+html[data-theme="reading-room"] .v-rack > :last-child {
+  grid-template-columns: 1fr;
+  padding-block: 2.75rem;
+}
+html[data-theme="reading-room"] .v-rack:hover {
+  transform: none;
+  box-shadow: none;
+}
+html[data-theme="reading-room"] .v-timeline {
+  background: transparent;
+  border: 0;
+  gap: 0;
+}
+html[data-theme="reading-room"] .v-timeline > * {
+  background: transparent;
+  border-bottom: 1px solid var(--v-border);
+}
+html[data-theme="reading-room"] .v-tl-row {
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* ---------------- Terminal -------------------------------------------- */
+html[data-theme="terminal"] {
+  color-scheme: dark;
+
+  /* Phosphor green on near-black — the "ink" ramp is the CRT glow
+     falling off, not a neutral grey scale. */
+  --color-ink: oklch(89.4% 0.19 149.2);
+  --color-body: oklch(76.8% 0.17 149.6);
+  --color-muted-ink: oklch(61.2% 0.145 149.8);
+  --color-faint: oklch(47.5% 0.115 150.1);
+  --color-sea: oklch(78.6% 0.16 175.4);
+  --color-sea-bright: oklch(85.2% 0.14 172.6);
+  --color-crimson: oklch(64.8% 0.22 25.6);
+  --color-gold: oklch(79.8% 0.15 80.9);
+  --color-amber: oklch(71.4% 0.14 75.2);
+  --color-parchment: oklch(9.8% 0.024 149);
+  --color-sand: oklch(13.6% 0.028 149);
+  --color-sand-ink: oklch(89.4% 0.19 149.2);
+
+  --v-sea-bg: oklch(6.2% 0.016 149);
+  --v-chrome: oklch(6.2% 0.016 149 / 0.94);
+  --v-surface: oklch(9.8% 0.024 149 / 0.92);
+  --v-surface-2: oklch(9.8% 0.024 149 / 0.84);
+  --v-border: oklch(89.4% 0.19 149.2 / 0.32);
+  --v-border-w: 1px;
+  --v-radius: 0px;
+  --v-shadow: none;
+  --v-shadow-hover: 0 0 26px -4px oklch(89.4% 0.19 149.2 / 0.55);
+  --v-lift: translateY(-4px);
+  --v-hover-border: oklch(79.8% 0.15 80.9 / 0.7);
+  --v-hairline: oklch(89.4% 0.19 149.2 / 0.3);
+  --v-hairline-amber: oklch(79.8% 0.15 80.9 / 0.45);
+
+  --v-font-display: var(--font-mono);
+  --v-display-weight: 700;
+  --v-display-tracking: -0.01em;
+  --v-display-case: uppercase;
+
+  --background: var(--v-sea-bg);
+  --foreground: var(--color-ink);
+  --card: var(--color-parchment);
+  --card-foreground: var(--color-ink);
+  --popover: var(--color-parchment);
+  --popover-foreground: var(--color-ink);
+  --primary: var(--color-ink);
+  --primary-foreground: var(--v-sea-bg);
+  --secondary: var(--color-gold);
+  --secondary-foreground: var(--v-sea-bg);
+  --muted: oklch(12% 0.026 149);
+  --muted-foreground: var(--color-muted-ink);
+  --accent: var(--color-sea);
+  --accent-foreground: var(--v-sea-bg);
+  --border: oklch(89.4% 0.19 149.2 / 0.32);
+  --input: oklch(89.4% 0.19 149.2 / 0.3);
+  --ring: var(--color-sea);
+}
+
+/* Every scrap of text goes mono, section labels read like shell
+   prompts, and a cursor block blinks at the end of each one. */
+html[data-theme="terminal"] body {
+  font-family: var(--font-mono), monospace;
+}
+html[data-theme="terminal"] .v-section-head > span:first-child::before {
+  content: "$ ";
+  color: var(--color-gold);
+}
+html[data-theme="terminal"] .v-section-head > span:first-child::after {
+  content: "_";
+  margin-left: 6px;
+  color: var(--color-ink);
+  animation: v-blip 1.1s step-end infinite;
+}
+html[data-theme="terminal"] .v-rack-list {
+  gap: 0;
+  border-top: 1px solid var(--v-border);
+}
+html[data-theme="terminal"] .v-rack {
+  grid-template-columns: 1fr;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--v-border);
+  box-shadow: none;
+}
+html[data-theme="terminal"] .v-rack > :first-child {
+  display: none;
+}
+html[data-theme="terminal"] .v-rack > :last-child {
+  grid-template-columns: 1fr;
+  padding-block: 1.75rem;
+}
+html[data-theme="terminal"] .v-rack:hover {
+  transform: none;
+  border-color: var(--color-gold);
+  box-shadow: none;
+}
+html[data-theme="terminal"] .v-timeline {
+  background: transparent;
+  border: 0;
+  gap: 0.5rem;
+}
+html[data-theme="terminal"] .v-timeline > * {
+  border: 1px solid var(--v-border);
+  padding: 1.25rem 1.5rem;
+}
+html[data-theme="terminal"] .v-tl-row {
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
 /* ==================================================================
    Structure.
 
@@ -230,6 +523,161 @@ html[data-theme="editorial"] .v-display {
    layer in the cascade; that's what lets them override the inline
    grid-template utilities the sections ship with.
    ================================================================== */
+
+/* ---------------- Night Watch: mirrored and cut loose -------------- */
+/* Midnight was a pure recolour of the flagship until now — same measure,
+   same rows, same rack. That's a palette, not a skin. It now runs
+   right-aligned, its bounty rack scrolls as a horizontal strip of
+   tickets instead of stacking, and its timeline reads right-to-left. */
+html[data-theme="midnight"] .v-hero {
+  text-align: right;
+  align-items: flex-end;
+}
+html[data-theme="midnight"] .v-hero .v-prose {
+  text-align: left;
+}
+
+html[data-theme="midnight"] .v-rack-list {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.75rem;
+}
+html[data-theme="midnight"] .v-rack {
+  grid-template-columns: 1fr;
+  flex: 0 0 min(82vw, 380px);
+  scroll-snap-align: start;
+}
+html[data-theme="midnight"] .v-rack > :first-child {
+  display: none;
+}
+html[data-theme="midnight"] .v-rack > :last-child {
+  grid-template-columns: 1fr;
+}
+
+html[data-theme="midnight"] .v-tl-row {
+  text-align: right;
+}
+html[data-theme="midnight"] .v-tl-row > :nth-child(1) {
+  order: 3;
+}
+html[data-theme="midnight"] .v-tl-row > :nth-child(2) {
+  order: 2;
+}
+html[data-theme="midnight"] .v-tl-row > :nth-child(3) {
+  order: 1;
+  justify-content: flex-end;
+}
+html[data-theme="midnight"] .v-tl-row ul {
+  padding-left: 0;
+  padding-right: 1.25rem;
+  list-style-position: inside;
+}
+
+/* ---------------- Log Pose: a route index, not a page ------------- */
+/* The nav becomes a fixed left rail on wide screens — the stop list
+   read top-to-bottom, like waypoints on a chart, rather than left-to-
+   right like a website. Section heads become route markers. Projects
+   read as a manifest, the timeline as a single spine with waypoints. */
+html[data-theme="logpose"] {
+  --v-measure: 1180px;
+  --v-gutter: 4vw;
+  --v-section-y: clamp(4rem, 7vw, 6.5rem);
+  --v-hero-top: 7rem;
+}
+
+@media (min-width: 1024px) {
+  html[data-theme="logpose"] .v-nav {
+    inset: 0 auto 0 0;
+    width: 232px;
+    height: 100vh;
+    border-right: 1px solid var(--v-hairline);
+    border-bottom: 0;
+  }
+  html[data-theme="logpose"] .v-nav-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100%;
+    padding: 28px 22px;
+  }
+  html[data-theme="logpose"] .v-nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+    margin-top: 44px;
+  }
+  html[data-theme="logpose"] main,
+  html[data-theme="logpose"] footer {
+    margin-left: 232px;
+  }
+}
+
+html[data-theme="logpose"] .v-section-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-left: 3px solid var(--color-gold);
+  padding-left: 14px;
+}
+html[data-theme="logpose"] .v-section-head .v-rule {
+  display: none;
+}
+
+html[data-theme="logpose"] .v-rack-list {
+  gap: 0;
+  border-top: 1px solid var(--v-border);
+}
+html[data-theme="logpose"] .v-rack {
+  grid-template-columns: 88px 1fr;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--v-border);
+  box-shadow: none;
+}
+html[data-theme="logpose"] .v-rack > :first-child {
+  border-right: 0;
+  align-items: flex-start;
+  padding-top: 2rem;
+}
+html[data-theme="logpose"] .v-rack > :first-child > :first-child {
+  font-size: 30px;
+  letter-spacing: -0.02em;
+  color: var(--color-gold);
+}
+html[data-theme="logpose"] .v-rack:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--color-gold);
+}
+
+html[data-theme="logpose"] .v-timeline {
+  background: transparent;
+  border: 0;
+  border-left: 2px solid var(--v-hairline);
+  gap: 0;
+  padding-left: 28px;
+}
+html[data-theme="logpose"] .v-timeline > * {
+  background: transparent;
+  position: relative;
+  border-bottom: 1px solid var(--v-border);
+  padding-block: 1.75rem;
+}
+html[data-theme="logpose"] .v-timeline > *::before {
+  content: "";
+  position: absolute;
+  left: -33px;
+  top: 2rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-gold);
+}
+html[data-theme="logpose"] .v-tl-row {
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
 
 /* ---------------- Editorial: a magazine column -------------------- */
 html[data-theme="editorial"] {

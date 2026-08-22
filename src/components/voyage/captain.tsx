@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import type * as ThreeNS from "three"
+import { useTheme } from "@/components/theme/theme-provider"
 
 // Same palette as the background pirates — an original low-poly fan
 // figure, not a likeness lifted from official art.
@@ -28,10 +29,12 @@ const BAND = 0xd4453c
  */
 export function Captain() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const { character } = useTheme()
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas) return
+    // No canvas to draw into (character-less skin) — nothing to build.
+    if (!canvas || !character) return
 
     // Same gate as the ocean: no motion, no room, no captain.
     if (
@@ -53,7 +56,12 @@ export function Captain() {
       cancelled = true
       teardown?.()
     }
-  }, [])
+  }, [character])
+
+  // He's a One Piece character — skins that aren't sailing the Grand
+  // Line don't get him. Bailing before the canvas mounts means no
+  // element to hit-test and no three.js import to pay for.
+  if (!character) return null
 
   return (
     <canvas

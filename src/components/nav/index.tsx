@@ -6,7 +6,7 @@ import { useState } from "react"
 import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { MusicToggle } from "@/components/voyage/music-toggle"
-import { ThemeSwitcher } from "@/components/theme/theme-switcher"
+import { SkinSwitcherTrigger } from "@/components/theme/skin-switcher-trigger"
 
 /**
  * Each stop on the voyage exists twice: as an anchor on the single
@@ -31,40 +31,54 @@ export function Nav() {
 
   return (
     <header
-      className="fixed inset-x-0 top-0 z-40 border-b border-ink/20 backdrop-blur-xl"
+      className="v-nav fixed inset-x-0 top-0 z-40 border-b border-ink/20 backdrop-blur-xl"
       style={{ background: "var(--v-chrome)" }}
     >
-      <div className="flex items-center justify-between gap-5 px-[5vw] py-3">
-        <Link href="/" className="flex items-center gap-3 text-ink hover:text-ink">
+      <div className="v-nav-bar flex items-center justify-between gap-5 px-[5vw] py-3">
+        <Link
+          href="/"
+          className="flex items-center gap-3 text-ink hover:text-ink"
+        >
           <span className="v-display grid h-8 w-8 place-items-center bg-gold text-sm text-ink">
             SJ
           </span>
-          <span className="v-mono text-[10.5px] uppercase tracking-[0.2em] text-muted-ink">
+          <span className="v-mono text-[10.5px] tracking-[0.2em] text-muted-ink uppercase">
             Sanjay Jana / Log
           </span>
         </Link>
 
         {/* desktop */}
-        <nav className="hidden items-center gap-7 lg:flex">
+        <nav className="v-nav-links hidden items-center gap-7 lg:flex">
           {stops.map((s) => (
             <a
               key={s.hash}
               href={href(s.hash)}
               className={cn(
-                "v-mono text-[10.5px] uppercase tracking-[0.16em] transition-colors",
+                "v-mono text-[10.5px] tracking-[0.16em] uppercase transition-colors",
                 pathname === s.route
                   ? "text-crimson"
-                  : "text-muted-ink hover:text-crimson",
+                  : "text-muted-ink hover:text-crimson"
               )}
             >
               <span className="text-faint">{s.n}</span> {s.label}
             </a>
           ))}
-          <ThemeSwitcher />
+          <Link
+            href="/resume"
+            className={cn(
+              "v-mono text-[10.5px] tracking-[0.16em] uppercase transition-colors",
+              pathname === "/resume"
+                ? "text-crimson"
+                : "text-muted-ink hover:text-crimson"
+            )}
+          >
+            <span className="text-faint">05</span> Resume
+          </Link>
+          <SkinSwitcherTrigger />
           <MusicToggle />
           <a
             href={href("#contact")}
-            className="v-mono bg-gold px-4 py-2.5 text-[10.5px] font-bold uppercase tracking-[0.16em] text-ink transition-colors hover:bg-crimson hover:text-parchment"
+            className="v-mono bg-gold px-4 py-2.5 text-[10.5px] font-bold tracking-[0.16em] text-ink uppercase transition-colors hover:bg-crimson hover:text-parchment"
           >
             Hire me
           </a>
@@ -72,7 +86,7 @@ export function Nav() {
 
         {/* mobile */}
         <div className="flex items-center gap-2 lg:hidden">
-          <ThemeSwitcher />
+          <SkinSwitcherTrigger />
           <MusicToggle />
           <button
             type="button"
@@ -94,15 +108,22 @@ export function Nav() {
                 key={s.hash}
                 href={href(s.hash)}
                 onClick={() => setOpen(false)}
-                className="v-mono border-b border-ink/10 py-3 text-[11px] uppercase tracking-[0.18em] text-muted-ink"
+                className="v-mono border-b border-ink/10 py-3 text-[11px] tracking-[0.18em] text-muted-ink uppercase"
               >
                 <span className="text-faint">{s.n}</span> {s.label}
               </a>
             ))}
+            <Link
+              href="/resume"
+              onClick={() => setOpen(false)}
+              className="v-mono border-b border-ink/10 py-3 text-[11px] tracking-[0.18em] text-muted-ink uppercase"
+            >
+              <span className="text-faint">05</span> Resume
+            </Link>
             <a
               href={href("#contact")}
               onClick={() => setOpen(false)}
-              className="v-mono mt-4 bg-gold px-4 py-3 text-center text-[11px] font-bold uppercase tracking-[0.18em] text-ink"
+              className="v-mono mt-4 bg-gold px-4 py-3 text-center text-[11px] font-bold tracking-[0.18em] text-ink uppercase"
             >
               Hire me
             </a>

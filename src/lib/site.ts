@@ -50,5 +50,6 @@ export const routes = [
   { path: "/experience", priority: 0.9, changeFrequency: "monthly" },
   { path: "/projects", priority: 0.9, changeFrequency: "monthly" },
   { path: "/skills", priority: 0.7, changeFrequency: "yearly" },
+  { path: "/resume", priority: 0.9, changeFrequency: "yearly" },
   { path: "/contact", priority: 0.6, changeFrequency: "yearly" },
 ] as const

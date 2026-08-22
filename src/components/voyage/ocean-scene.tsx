@@ -69,7 +69,7 @@ export function OceanScene({ night = false }: { night?: boolean }) {
 function build(
   THREE: typeof ThreeNS,
   canvas: HTMLCanvasElement,
-  night: boolean,
+  night: boolean
 ): (() => void) | undefined {
   {
     let renderer: ThreeNS.WebGLRenderer
@@ -124,7 +124,7 @@ function build(
       62,
       window.innerWidth / window.innerHeight,
       0.1,
-      1600,
+      1600
     )
     cam.position.set(0, 3.4, 12)
 
@@ -139,7 +139,7 @@ function build(
 
     const disc = new THREE.Mesh(
       new THREE.SphereGeometry(30, 26, 26),
-      new THREE.MeshBasicMaterial({ color: P.disc, fog: false }),
+      new THREE.MeshBasicMaterial({ color: P.disc, fog: false })
     )
     disc.position.set(-150, 58, -720)
     scene.add(disc)
@@ -150,7 +150,7 @@ function build(
         transparent: true,
         opacity: 0.28,
         fog: false,
-      }),
+      })
     )
     halo.position.copy(disc.position)
     scene.add(halo)
@@ -164,7 +164,7 @@ function build(
         roughness: 0.14,
         metalness: 0.5,
         flatShading: true,
-      }),
+      })
     )
     sea.rotation.x = -Math.PI / 2
     sea.position.z = -VOYAGE / 2 + 20
@@ -191,13 +191,18 @@ function build(
       for (let i = 0; i < layer.count; i++) {
         const h = (30 + Math.random() * 60) * layer.scale
         const peak = new THREE.Mesh(
-          new THREE.ConeGeometry((20 + Math.random() * 26) * layer.scale, h, 5, 1),
-          mat,
+          new THREE.ConeGeometry(
+            (20 + Math.random() * 26) * layer.scale,
+            h,
+            5,
+            1
+          ),
+          mat
         )
         peak.position.set(
           (Math.random() - 0.5) * 900 * layer.scale,
           h / 2 - 6,
-          layer.z - Math.random() * 90,
+          layer.z - Math.random() * 90
         )
         peak.rotation.y = Math.random() * 3
         scene.add(peak)
@@ -237,8 +242,15 @@ function build(
     }
 
     // ---- lanterns ----
-    const leds: { mat: ThreeNS.MeshBasicMaterial; sp: number; ph: number }[] = []
-    const lantern = (x: number, y: number, z: number, color: number, scl: number) => {
+    const leds: { mat: ThreeNS.MeshBasicMaterial; sp: number; ph: number }[] =
+      []
+    const lantern = (
+      x: number,
+      y: number,
+      z: number,
+      color: number,
+      scl: number
+    ) => {
       const mat = new THREE.MeshBasicMaterial({
         color,
         transparent: true,
@@ -247,7 +259,11 @@ function build(
       const m = new THREE.Mesh(new THREE.SphereGeometry(scl, 10, 10), mat)
       m.position.set(x, y, z)
       scene.add(m)
-      leds.push({ mat, sp: 0.6 + Math.random() * 2.2, ph: Math.random() * 6.28 })
+      leds.push({
+        mat,
+        sp: 0.6 + Math.random() * 2.2,
+        ph: Math.random() * 6.28,
+      })
       const l = new THREE.PointLight(color, P.lanternI, 22, 2)
       l.position.set(x, y, z)
       scene.add(l)
@@ -281,7 +297,7 @@ function build(
       const g = new THREE.Group()
       const tr = new THREE.Mesh(
         new THREE.CylinderGeometry(0.18 * s, 0.3 * s, 6 * s, 6),
-        trunkMat,
+        trunkMat
       )
       tr.position.y = 3 * s
       tr.rotation.z = 0.14
@@ -289,14 +305,18 @@ function build(
       for (let f = 0; f < 6; f++) {
         const fr = new THREE.Mesh(
           new THREE.ConeGeometry(0.7 * s, 3.4 * s, 4, 1, true),
-          frondMat,
+          frondMat
         )
         fr.position.set(
           Math.cos(f * 1.05) * 1.5 * s - 0.8 * s,
           6.1 * s,
-          Math.sin(f * 1.05) * 1.5 * s,
+          Math.sin(f * 1.05) * 1.5 * s
         )
-        fr.rotation.set(Math.cos(f * 1.05) * 1.1, f, Math.sin(f * 1.05) * 1.1 + 0.6)
+        fr.rotation.set(
+          Math.cos(f * 1.05) * 1.1,
+          f,
+          Math.sin(f * 1.05) * 1.1 + 0.6
+        )
         g.add(fr)
       }
       g.position.set(px, py, pz)
@@ -313,9 +333,9 @@ function build(
           4.5 + Math.random() * 7,
           h,
           6 + Math.floor(Math.random() * 3),
-          1,
+          1
         ),
-        rockMat,
+        rockMat
       )
       isle.position.set(x, h / 2 - 1.4, z)
       isle.rotation.y = Math.random() * 3
@@ -324,7 +344,7 @@ function build(
       const beachR = 11 + Math.random() * 6
       const beach = new THREE.Mesh(
         new THREE.CylinderGeometry(beachR - 2, beachR, 1.6, 9),
-        sandMat,
+        sandMat
       )
       beach.position.set(x, -0.5, z)
       scene.add(beach)
@@ -332,18 +352,28 @@ function build(
 
       const spur = new THREE.Mesh(
         new THREE.ConeGeometry(2.4 + Math.random() * 3, h * 0.55, 6, 1),
-        rockMat,
+        rockMat
       )
       spur.position.set(
         x + side * (4 + Math.random() * 4),
         h * 0.26 - 1.2,
-        z + (Math.random() - 0.5) * 9,
+        z + (Math.random() - 0.5) * 9
       )
       scene.add(spur)
 
-      palm(x - side * (5 + Math.random() * 3), 0, z + 3 + Math.random() * 4, 0.8 + Math.random() * 0.5)
+      palm(
+        x - side * (5 + Math.random() * 3),
+        0,
+        z + 3 + Math.random() * 4,
+        0.8 + Math.random() * 0.5
+      )
       if (i % 3 === 0)
-        palm(x + side * (7 + Math.random() * 3), 0, z - 4 - Math.random() * 4, 0.7 + Math.random() * 0.4)
+        palm(
+          x + side * (7 + Math.random() * 3),
+          0,
+          z - 4 - Math.random() * 4,
+          0.7 + Math.random() * 0.4
+        )
       if (i % 2 === 0) lantern(x - side * 3, h * 0.78, z + 2, RED, 0.42)
     }
 
@@ -363,30 +393,45 @@ function build(
     for (let i = 0; i < 5; i++) {
       const g = new THREE.Group()
       const s = 1 + Math.random() * 0.8
-      const hull = new THREE.Mesh(new THREE.BoxGeometry(7 * s, 2.1 * s, 2.6 * s), hullMat)
+      const hull = new THREE.Mesh(
+        new THREE.BoxGeometry(7 * s, 2.1 * s, 2.6 * s),
+        hullMat
+      )
       hull.position.y = 0.9 * s
       g.add(hull)
-      const bow = new THREE.Mesh(new THREE.ConeGeometry(1.3 * s, 3.4 * s, 4), hullMat)
+      const bow = new THREE.Mesh(
+        new THREE.ConeGeometry(1.3 * s, 3.4 * s, 4),
+        hullMat
+      )
       bow.rotation.z = -Math.PI / 2
       bow.position.set(5 * s, 1 * s, 0)
       g.add(bow)
       const mast = new THREE.Mesh(
         new THREE.CylinderGeometry(0.14 * s, 0.16 * s, 11 * s, 6),
-        hullMat,
+        hullMat
       )
       mast.position.y = 6.2 * s
       g.add(mast)
-      const sail = new THREE.Mesh(new THREE.PlaneGeometry(5.4 * s, 6.4 * s), sailMat)
+      const sail = new THREE.Mesh(
+        new THREE.PlaneGeometry(5.4 * s, 6.4 * s),
+        sailMat
+      )
       sail.position.set(0, 6.6 * s, 0)
       sail.rotation.y = Math.PI / 2
       g.add(sail)
-      const jib = new THREE.Mesh(new THREE.PlaneGeometry(3 * s, 3.6 * s), sailMat)
+      const jib = new THREE.Mesh(
+        new THREE.PlaneGeometry(3 * s, 3.6 * s),
+        sailMat
+      )
       jib.position.set(2.6 * s, 4.4 * s, 0)
       jib.rotation.y = Math.PI / 2
       g.add(jib)
       const flag = new THREE.Mesh(
         new THREE.PlaneGeometry(1.9 * s, 1.1 * s),
-        new THREE.MeshBasicMaterial({ color: i % 2 ? RED : GOLD, side: THREE.DoubleSide }),
+        new THREE.MeshBasicMaterial({
+          color: i % 2 ? RED : GOLD,
+          side: THREE.DoubleSide,
+        })
       )
       flag.position.set(-0.85 * s, 11.4 * s, 0)
       flag.rotation.y = Math.PI / 2
@@ -394,7 +439,7 @@ function build(
       g.position.set(
         (i % 2 ? 1 : -1) * (26 + Math.random() * 34),
         0,
-        -40 - i * 78 - Math.random() * 30,
+        -40 - i * 78 - Math.random() * 30
       )
       g.rotation.y = (Math.random() - 0.5) * 1.6
       scene.add(g)
@@ -409,7 +454,7 @@ function build(
         3 + Math.random() * 16,
         -Math.random() * VOYAGE + 10,
         Math.random() < 0.25 ? RED : GOLD,
-        0.16 + Math.random() * 0.14,
+        0.16 + Math.random() * 0.14
       )
     }
 
@@ -419,30 +464,40 @@ function build(
       roughness: 0.95,
       flatShading: true,
     })
-    const bandMat = new THREE.MeshStandardMaterial({ color: 0xd7262b, roughness: 0.75 })
-    const hats: { g: ThreeNS.Group; ph: number; sp: number; spin: number }[] = []
-    const strawHat = (x: number, y: number, z: number, s: number, tilt: number) => {
+    const bandMat = new THREE.MeshStandardMaterial({
+      color: 0xd7262b,
+      roughness: 0.75,
+    })
+    const hats: { g: ThreeNS.Group; ph: number; sp: number; spin: number }[] =
+      []
+    const strawHat = (
+      x: number,
+      y: number,
+      z: number,
+      s: number,
+      tilt: number
+    ) => {
       const g = new THREE.Group()
       const brim = new THREE.Mesh(
         new THREE.CylinderGeometry(2.15 * s, 2.35 * s, 0.14 * s, 26),
-        strawMat,
+        strawMat
       )
       g.add(brim)
       const crown = new THREE.Mesh(
         new THREE.CylinderGeometry(1.05 * s, 1.25 * s, 1.15 * s, 22),
-        strawMat,
+        strawMat
       )
       crown.position.y = 0.62 * s
       g.add(crown)
       const cap = new THREE.Mesh(
         new THREE.CylinderGeometry(1.05 * s, 1.05 * s, 0.08 * s, 22),
-        strawMat,
+        strawMat
       )
       cap.position.y = 1.2 * s
       g.add(cap)
       const band = new THREE.Mesh(
         new THREE.CylinderGeometry(1.27 * s, 1.3 * s, 0.36 * s, 24),
-        bandMat,
+        bandMat
       )
       band.position.y = 0.22 * s
       g.add(band)
@@ -504,7 +559,13 @@ function build(
     }
     const pirates: Pirate[] = []
 
-    const strawHatPirate = (x: number, y: number, z: number, s: number, faceY: number) => {
+    const strawHatPirate = (
+      x: number,
+      y: number,
+      z: number,
+      s: number,
+      faceY: number
+    ) => {
       const g = new THREE.Group()
 
       const add = (
@@ -513,7 +574,7 @@ function build(
         px: number,
         py: number,
         pz: number,
-        parent: ThreeNS.Object3D = g,
+        parent: ThreeNS.Object3D = g
       ) => {
         const m = new THREE.Mesh(geo, mat)
         m.position.set(px * s, py * s, pz * s)
@@ -523,13 +584,19 @@ function build(
 
       // sandals + legs
       for (const side of [-1, 1]) {
-        add(new THREE.BoxGeometry(0.34, 0.1, 0.62), sandalMat, side * 0.26, 0.05, 0.04)
+        add(
+          new THREE.BoxGeometry(0.34, 0.1, 0.62),
+          sandalMat,
+          side * 0.26,
+          0.05,
+          0.04
+        )
         add(
           new THREE.CylinderGeometry(0.19, 0.16, 1.05, 7),
           skinMat,
           side * 0.26,
           0.62,
-          0,
+          0
         )
       }
 
@@ -540,52 +607,75 @@ function build(
       add(new THREE.CylinderGeometry(0.42, 0.46, 1.02, 9), skinMat, 0, 2.16, 0)
       const vest = new THREE.Mesh(
         new THREE.CylinderGeometry(0.5, 0.53, 1.06, 12, 1, true, 0.7, 4.9),
-        vestMat,
+        vestMat
       )
       vest.position.set(0, 2.16 * s, 0)
       vest.material.side = THREE.DoubleSide
       g.add(vest)
 
       // arms — the right one is a group so it can swing
-      add(new THREE.CylinderGeometry(0.15, 0.13, 1.0, 7), skinMat, -0.6, 2.1, 0).rotation.z =
-        0.32
+      add(
+        new THREE.CylinderGeometry(0.15, 0.13, 1.0, 7),
+        skinMat,
+        -0.6,
+        2.1,
+        0
+      ).rotation.z = 0.32
 
       const arm = new THREE.Group()
       arm.position.set(0.5 * s, 2.55 * s, 0)
       const upper = new THREE.Mesh(
         new THREE.CylinderGeometry(0.15, 0.13, 1.15, 7),
-        skinMat,
+        skinMat
       )
       upper.position.set(0.34 * s, 0.3 * s, 0)
       upper.rotation.z = -0.85
       arm.add(upper)
-      const fist = new THREE.Mesh(new THREE.SphereGeometry(0.19 * s, 8, 7), skinMat)
+      const fist = new THREE.Mesh(
+        new THREE.SphereGeometry(0.19 * s, 8, 7),
+        skinMat
+      )
       fist.position.set(0.72 * s, 0.72 * s, 0)
       arm.add(fist)
       g.add(arm)
 
       // head
-      const head = new THREE.Mesh(new THREE.SphereGeometry(0.42 * s, 12, 10), skinMat)
+      const head = new THREE.Mesh(
+        new THREE.SphereGeometry(0.42 * s, 12, 10),
+        skinMat
+      )
       head.position.set(0, 2.98 * s, 0)
       head.scale.set(1, 1.04, 0.96)
       g.add(head)
 
       // hair — a skullcap sitting back on the crown
-      const hair = new THREE.Mesh(new THREE.SphereGeometry(0.44 * s, 12, 10), hairMat)
+      const hair = new THREE.Mesh(
+        new THREE.SphereGeometry(0.44 * s, 12, 10),
+        hairMat
+      )
       hair.position.set(0, 3.08 * s, -0.05 * s)
       hair.scale.set(1, 0.72, 1)
       g.add(hair)
 
       // face: eyes, grin, and the scar under the left eye
       for (const side of [-1, 1]) {
-        add(new THREE.SphereGeometry(0.055, 7, 6), darkMat, side * 0.15, 3.03, 0.38)
+        add(
+          new THREE.SphereGeometry(0.055, 7, 6),
+          darkMat,
+          side * 0.15,
+          3.03,
+          0.38
+        )
       }
-      const grin = new THREE.Mesh(new THREE.BoxGeometry(0.3 * s, 0.05 * s, 0.04 * s), darkMat)
+      const grin = new THREE.Mesh(
+        new THREE.BoxGeometry(0.3 * s, 0.05 * s, 0.04 * s),
+        darkMat
+      )
       grin.position.set(0, 2.83 * s, 0.4 * s)
       g.add(grin)
       const scar = new THREE.Mesh(
         new THREE.BoxGeometry(0.04 * s, 0.16 * s, 0.03 * s),
-        scarMat,
+        scarMat
       )
       scar.position.set(-0.16 * s, 2.9 * s, 0.4 * s)
       g.add(scar)
@@ -594,24 +684,24 @@ function build(
       const hat = new THREE.Group()
       const brim = new THREE.Mesh(
         new THREE.CylinderGeometry(0.78 * s, 0.86 * s, 0.06 * s, 20),
-        strawMat,
+        strawMat
       )
       hat.add(brim)
       const crown = new THREE.Mesh(
         new THREE.CylinderGeometry(0.4 * s, 0.46 * s, 0.42 * s, 18),
-        strawMat,
+        strawMat
       )
       crown.position.y = 0.23 * s
       hat.add(crown)
       const cap = new THREE.Mesh(
         new THREE.CylinderGeometry(0.4 * s, 0.4 * s, 0.04 * s, 18),
-        strawMat,
+        strawMat
       )
       cap.position.y = 0.45 * s
       hat.add(cap)
       const band = new THREE.Mesh(
         new THREE.CylinderGeometry(0.47 * s, 0.48 * s, 0.14 * s, 18),
-        bandMat,
+        bandMat
       )
       band.position.y = 0.09 * s
       hat.add(band)
@@ -655,7 +745,7 @@ function build(
       for (let i = 0; i < 3; i++) {
         const b = new THREE.Mesh(
           new THREE.CylinderGeometry(0.9 * s, 0.78 * s, 2.1 * s, 12),
-          raftMat,
+          raftMat
         )
         b.rotation.z = Math.PI / 2
         b.position.set(rx + (i - 1) * 1.9 * s, 0.5 * s, rz)
@@ -689,19 +779,32 @@ function build(
     const barrels: { g: ThreeNS.Group; ph: number; sp: number }[] = []
     for (let i = 0; i < 14; i++) {
       const g = new THREE.Group()
-      g.add(new THREE.Mesh(new THREE.CylinderGeometry(0.85, 0.72, 1.9, 12), barrelMat))
+      g.add(
+        new THREE.Mesh(
+          new THREE.CylinderGeometry(0.85, 0.72, 1.9, 12),
+          barrelMat
+        )
+      )
       for (const hy of [-0.5, 0.5]) {
         const hp = new THREE.Mesh(
           new THREE.CylinderGeometry(0.88, 0.88, 0.16, 12),
-          hoopMat,
+          hoopMat
         )
         hp.position.y = hy
         g.add(hp)
       }
-      g.position.set((Math.random() - 0.5) * 70, 0.3, -12 - Math.random() * VOYAGE)
+      g.position.set(
+        (Math.random() - 0.5) * 70,
+        0.3,
+        -12 - Math.random() * VOYAGE
+      )
       g.rotation.z = (Math.random() - 0.5) * 0.5
       scene.add(g)
-      barrels.push({ g, ph: Math.random() * 6.28, sp: 0.7 + Math.random() * 0.7 })
+      barrels.push({
+        g,
+        ph: Math.random() * 6.28,
+        sp: 0.7 + Math.random() * 0.7,
+      })
     }
 
     // ---- clouds ----
@@ -720,7 +823,11 @@ function build(
       for (let k = 0; k < puffs; k++) {
         const r = 6 + Math.random() * 9
         const pf = new THREE.Mesh(new THREE.SphereGeometry(r, 10, 8), cloudMat)
-        pf.position.set((k - puffs / 2) * r * 1.1, Math.random() * r * 0.4, Math.random() * r * 0.5)
+        pf.position.set(
+          (k - puffs / 2) * r * 1.1,
+          Math.random() * r * 0.4,
+          Math.random() * r * 0.5
+        )
         pf.scale.y = 0.55
         g.add(pf)
       }
@@ -728,7 +835,7 @@ function build(
       g.position.set(
         (Math.random() - 0.5) * 620,
         40 + Math.random() * 90,
-        -120 - Math.random() * 900,
+        -120 - Math.random() * 900
       )
       g.scale.setScalar(depth * 1.6)
       scene.add(g)
@@ -767,7 +874,7 @@ function build(
       g.position.set(
         (Math.random() - 0.5) * 160,
         y0,
-        10 - Math.random() * VOYAGE * 0.9,
+        10 - Math.random() * VOYAGE * 0.9
       )
       scene.add(g)
       birds.push({
@@ -797,7 +904,7 @@ function build(
         transparent: true,
         opacity: 0.5,
         depthWrite: false,
-      }),
+      })
     )
     scene.add(dots)
 
@@ -852,12 +959,17 @@ function build(
 
       const z = 12 - p * VOYAGE
       const bob = Math.sin(t * 0.85) * 0.22 + Math.sin(t * 1.7) * 0.09
-      cam.position.set(mx * 2.2 + Math.sin(t * 0.24) * 0.7, 3.4 + bob - my * 0.5, z)
+      cam.position.set(
+        mx * 2.2 + Math.sin(t * 0.24) * 0.7,
+        3.4 + bob - my * 0.5,
+        z
+      )
       cam.lookAt(mx * 1.1, 3.1 + bob * 0.6 - my * 0.3, z - 18)
       cam.rotation.z = mx * 0.03 + Math.sin(t * 0.42) * 0.012
 
       for (const L of leds) {
-        L.mat.opacity = 0.9 * (0.5 + 0.5 * (0.5 + 0.5 * Math.sin(t * L.sp + L.ph)))
+        L.mat.opacity =
+          0.9 * (0.5 + 0.5 * (0.5 + 0.5 * Math.sin(t * L.sp + L.ph)))
       }
       for (const S of ships) {
         S.g.position.y = Math.sin(t * S.sp + S.ph) * 0.5
@@ -873,7 +985,8 @@ function build(
         B.g.rotation.z = Math.sin(t * B.sp * 0.9 + B.ph) * 0.22
       }
       for (const C of clouds) {
-        C.g.position.x = C.x0 + Math.sin(t * 0.03 * C.sp) * 26 * C.sp - p * 40 * C.sp
+        C.g.position.x =
+          C.x0 + Math.sin(t * 0.03 * C.sp) * 26 * C.sp - p * 40 * C.sp
       }
       for (const P of pirates) {
         // ride the swell, and throw the arm up on a slower beat
@@ -912,6 +1025,265 @@ function build(
   }
 }
 
+/**
+ * Log Pose backdrop: a night chart instead of a night sea. Starfield,
+ * a drifting nebula, and waypoint compasses strung along the same -Z
+ * voyage path the ocean camera sails — same drive logic, no water.
+ */
+export function LogPoseScene() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const flat =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.innerWidth < 900
+    if (flat) return
+
+    let cancelled = false
+    let teardown: (() => void) | undefined
+
+    void import("three").then((THREE) => {
+      if (cancelled) return
+      teardown = buildLogPose(THREE, canvas)
+    })
+
+    return () => {
+      cancelled = true
+      teardown?.()
+    }
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden
+      className="pointer-events-none fixed inset-0 z-[1] h-screen w-screen"
+    />
+  )
+}
+
+function buildLogPose(
+  THREE: typeof ThreeNS,
+  canvas: HTMLCanvasElement
+): (() => void) | undefined {
+  let renderer: ThreeNS.WebGLRenderer
+  try {
+    renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance",
+    })
+  } catch {
+    return
+  }
+
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+  renderer.setSize(window.innerWidth, window.innerHeight, false)
+
+  const scene = new THREE.Scene()
+  scene.fog = new THREE.Fog(0x0a1128, 80, 620)
+
+  const cam = new THREE.PerspectiveCamera(
+    62,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1600
+  )
+  cam.position.set(0, 3.4, 12)
+
+  scene.add(new THREE.AmbientLight(0x2a3a6e, 0.55))
+  const key = new THREE.DirectionalLight(0xbcd4ff, 0.4)
+  key.position.set(-60, 90, -160)
+  scene.add(key)
+
+  // ---- nebula glow, off to one side ----
+  const nebula = new THREE.Mesh(
+    new THREE.SphereGeometry(70, 24, 24),
+    new THREE.MeshBasicMaterial({
+      color: 0x7ec8e3,
+      transparent: true,
+      opacity: 0.1,
+      fog: false,
+    })
+  )
+  nebula.position.set(-140, 70, -640)
+  scene.add(nebula)
+  const nebulaCore = new THREE.Mesh(
+    new THREE.SphereGeometry(24, 20, 20),
+    new THREE.MeshBasicMaterial({
+      color: 0xf2c14b,
+      transparent: true,
+      opacity: 0.5,
+      fog: false,
+    })
+  )
+  nebulaCore.position.copy(nebula.position)
+  scene.add(nebulaCore)
+
+  // ---- starfield: two layers, dense white + sparse gold ----
+  const field = (
+    count: number,
+    spread: number,
+    color: number,
+    size: number,
+    opacity: number
+  ) => {
+    const pos = new Float32Array(count * 3)
+    for (let i = 0; i < count; i++) {
+      pos[i * 3] = (Math.random() - 0.5) * spread
+      pos[i * 3 + 1] = Math.random() * spread * 0.6
+      pos[i * 3 + 2] = -Math.random() * (VOYAGE + spread)
+    }
+    const g = new THREE.BufferGeometry()
+    g.setAttribute("position", new THREE.BufferAttribute(pos, 3))
+    const pts = new THREE.Points(
+      g,
+      new THREE.PointsMaterial({
+        color,
+        size,
+        transparent: true,
+        opacity,
+        depthWrite: false,
+        fog: false,
+      })
+    )
+    scene.add(pts)
+    return pts
+  }
+  const starsFar = field(1400, 1100, 0xdfe9ff, 1.3, 0.75)
+  const starsNear = field(220, 700, 0xf2c14b, 2.1, 0.6)
+
+  // ---- waypoint compasses strung along the voyage ----
+  const ringMat = new THREE.MeshBasicMaterial({
+    color: 0x7ec8e3,
+    transparent: true,
+    opacity: 0.55,
+  })
+  const needleMat = new THREE.MeshBasicMaterial({ color: 0xf2c14b })
+  const compasses: {
+    g: ThreeNS.Group
+    needle: ThreeNS.Mesh
+    ph: number
+    sp: number
+  }[] = []
+  const compass = (x: number, y: number, z: number, s: number) => {
+    const g = new THREE.Group()
+    g.add(
+      new THREE.Mesh(new THREE.TorusGeometry(2.2 * s, 0.06 * s, 8, 32), ringMat)
+    )
+    g.add(
+      new THREE.Mesh(
+        new THREE.TorusGeometry(1.5 * s, 0.045 * s, 8, 28),
+        ringMat
+      )
+    )
+    const needle = new THREE.Mesh(
+      new THREE.BoxGeometry(0.09 * s, 0.09 * s, 3.6 * s),
+      needleMat
+    )
+    g.add(needle)
+    const glow = new THREE.Mesh(
+      new THREE.SphereGeometry(0.22 * s, 10, 10),
+      new THREE.MeshBasicMaterial({
+        color: 0xf2c14b,
+        transparent: true,
+        opacity: 0.9,
+      })
+    )
+    g.add(glow)
+    g.position.set(x, y, z)
+    scene.add(g)
+    compasses.push({
+      g,
+      needle,
+      ph: Math.random() * 6.28,
+      sp: 0.3 + Math.random() * 0.3,
+    })
+  }
+  for (let i = 0; i < 7; i++) {
+    const z = -30 - i * 62 - Math.random() * 20
+    const side = i % 2 === 0 ? -1 : 1
+    compass(
+      side * (9 + Math.random() * 10),
+      2 + Math.random() * 5,
+      z,
+      1 + Math.random() * 0.7
+    )
+  }
+
+  // ---- drive: same scroll/mouse camera logic as the ocean ----
+  let p = 0
+  let pt = 0
+  let mx = 0
+  let my = 0
+  let tmx = 0
+  let tmy = 0
+  const t0 = performance.now()
+  let raf = 0
+
+  const onScroll = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight
+    pt = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0
+  }
+  const onMouse = (e: MouseEvent) => {
+    tmx = (e.clientX / window.innerWidth - 0.5) * 2
+    tmy = (e.clientY / window.innerHeight - 0.5) * 2
+  }
+  const onResize = () => {
+    renderer.setSize(window.innerWidth, window.innerHeight, false)
+    cam.aspect = window.innerWidth / window.innerHeight
+    cam.updateProjectionMatrix()
+  }
+  window.addEventListener("scroll", onScroll, { passive: true })
+  window.addEventListener("mousemove", onMouse, { passive: true })
+  window.addEventListener("resize", onResize)
+  onScroll()
+
+  const tick = () => {
+    raf = requestAnimationFrame(tick)
+    const t = (performance.now() - t0) / 1000
+    p += (pt - p) * 0.05
+    mx += (tmx - mx) * 0.04
+    my += (tmy - my) * 0.04
+
+    const z = 12 - p * VOYAGE
+    cam.position.set(mx * 2.2, 3.4 - my * 0.5, z)
+    cam.lookAt(mx * 1.1, 3.1 - my * 0.3, z - 18)
+    cam.rotation.z = mx * 0.02
+
+    starsFar.rotation.y = t * 0.003
+    starsNear.rotation.y = -t * 0.005
+
+    for (const C of compasses) {
+      C.g.rotation.y = t * 0.25 + C.ph
+      C.needle.rotation.x = Math.sin(t * C.sp + C.ph) * 0.5
+      C.g.position.y += Math.sin(t * C.sp + C.ph) * 0.003
+    }
+
+    renderer.render(scene, cam)
+  }
+  tick()
+
+  return () => {
+    cancelAnimationFrame(raf)
+    window.removeEventListener("scroll", onScroll)
+    window.removeEventListener("mousemove", onMouse)
+    window.removeEventListener("resize", onResize)
+    scene.traverse((o) => {
+      const m = o as ThreeNS.Mesh
+      if (m.geometry) m.geometry.dispose()
+      const mat = m.material
+      if (Array.isArray(mat)) mat.forEach((x) => x.dispose())
+      else if (mat) mat.dispose()
+    })
+    renderer.dispose()
+  }
+}
+
 /** Per-backdrop sky gradient and the scrim that keeps text readable. */
 const SKY = {
   "ocean-day": {
@@ -937,14 +1309,16 @@ export function VoyageBackdrop() {
   const { backdrop } = useTheme()
 
   if (backdrop === "grid") {
+    // Themed via tokens rather than a fixed hex, so brutalism's acid-yellow
+    // grid and terminal's black-on-phosphor scanlines share one backdrop.
     return (
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0 z-0"
         style={{
-          background: "#ffe500",
+          background: "var(--v-sea-bg)",
           backgroundImage:
-            "linear-gradient(#00000014 2px, transparent 2px), linear-gradient(90deg, #00000014 2px, transparent 2px)",
+            "linear-gradient(color-mix(in oklch, var(--color-ink) 12%, transparent) 2px, transparent 2px), linear-gradient(90deg, color-mix(in oklch, var(--color-ink) 12%, transparent) 2px, transparent 2px)",
           backgroundSize: "56px 56px",
         }}
       />
@@ -956,8 +1330,29 @@ export function VoyageBackdrop() {
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0 z-0"
-        style={{ background: "#faf9f7" }}
+        style={{ background: "var(--v-sea-bg)" }}
       />
+    )
+  }
+
+  if (backdrop === "starfield") {
+    return (
+      <>
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-0 z-0"
+          style={{
+            background:
+              "linear-gradient(180deg,#050815 0%,#0a1128 38%,#141b3d 68%,#1c2454 100%)",
+          }}
+        />
+        <LogPoseScene />
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-0 z-[2]"
+          style={{ background: "rgb(4 6 18 / 0.48)" }}
+        />
+      </>
     )
   }
 

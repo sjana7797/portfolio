@@ -4,6 +4,7 @@ import {
   Bricolage_Grotesque,
   JetBrains_Mono,
   Manrope,
+  Source_Serif_4,
 } from "next/font/google"
 import "./globals.css"
 import { TopLoader } from "@/components/top-loader"
@@ -13,6 +14,7 @@ import { VoyageBackdrop } from "@/components/voyage/ocean-scene"
 import { ScrollProgress } from "@/components/voyage/scroll-progress"
 import { CursorWake } from "@/components/voyage/cursor-wake"
 import { Captain } from "@/components/voyage/captain"
+import { SkinSwitcher } from "@/components/theme/skin-switcher"
 import { SITE_URL, site } from "@/lib/site"
 import {
   ThemeProvider,
@@ -40,6 +42,17 @@ const poster = Bevan({
   subsets: ["latin"],
   weight: "400",
   variable: "--font-poster",
+})
+/**
+ * Only the Reading Room skin uses this — not preloaded, so visitors on
+ * the default voyage theme never pay for a font they won't render.
+ */
+const serif = Source_Serif_4({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+  preload: false,
 })
 
 export const metadata: Metadata = {
@@ -125,7 +138,8 @@ export default function RootLayout({
         display.variable,
         body.variable,
         mono.variable,
-        poster.variable
+        poster.variable,
+        serif.variable
       )}
     >
       <head>
@@ -146,6 +160,7 @@ export default function RootLayout({
           {/* After <main>, so he layers over the content rather than under
             it — he's a character in the page, not part of the backdrop. */}
           <Captain />
+          <SkinSwitcher />
         </ThemeProvider>
       </body>
     </html>

@@ -1,6 +1,12 @@
 "use client"
 
-import { createContext, useCallback, useContext, useSyncExternalStore, type ReactNode } from "react"
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react"
 import {
   DEFAULT_THEME,
   THEME_IDS,
@@ -8,6 +14,7 @@ import {
   getTheme,
   isThemeId,
   type Backdrop,
+  type CursorStyle,
   type ThemeId,
 } from "@/lib/themes"
 
@@ -68,6 +75,8 @@ document.documentElement.dataset.theme=(t&&ok.indexOf(t)>-1)?t:${JSON.stringify(
 type ThemeContextValue = {
   theme: ThemeId
   backdrop: Backdrop
+  character: boolean
+  cursor: CursorStyle
   setTheme: (id: ThemeId) => void
 }
 
@@ -76,10 +85,17 @@ const ThemeContext = createContext<ThemeContextValue | null>(null)
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
   const setTheme = useCallback((id: ThemeId) => applyTheme(id), [])
+  const active = getTheme(theme)
 
   return (
     <ThemeContext.Provider
-      value={{ theme, backdrop: getTheme(theme).backdrop, setTheme }}
+      value={{
+        theme,
+        backdrop: active.backdrop,
+        character: active.character,
+        cursor: active.cursor,
+        setTheme,
+      }}
     >
       {children}
     </ThemeContext.Provider>

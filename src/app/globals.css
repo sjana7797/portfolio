@@ -40,6 +40,7 @@
   --font-body: var(--font-body);
   --font-mono: var(--font-mono);
   --font-poster: var(--font-poster);
+  --font-serif: var(--font-serif);
 }
 
 @theme inline {

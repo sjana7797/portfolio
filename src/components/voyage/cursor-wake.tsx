@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import { useTheme } from "@/components/theme/theme-provider"
+import type { CursorStyle } from "@/lib/themes"
 
 type Particle = {
   x: number
@@ -14,14 +16,85 @@ type Particle = {
 }
 
 const MAX_PARTICLES = 320
-/** Below this pointer speed (px/frame) the ship isn't making way. */
+/** Below this pointer speed (px/frame) the trail isn't making way. */
 const MIN_SPEED = 0.6
 /** Frames of stillness before the loop parks itself. */
 const IDLE_FRAMES = 90
 
 /**
- * Water trailing the ship cursor: a diverging V wake with foam caps
- * and the occasional ripple ring, drawn on a full-screen canvas.
+ * Per-skin cursor-trail personality. Colours are CSS custom property
+ * names, resolved against the live theme rather than hardcoded — so
+ * "wake" reads as ocean spray under voyage and lantern-lit water under
+ * midnight without two separate variants.
+ */
+type Variant = {
+  shape: "circle" | "square"
+  primary: string
+  secondary: string
+  ring: boolean
+  decayScale: number
+  sizeScale: number
+}
+
+const VARIANTS: Record<CursorStyle, Variant> = {
+  // Foam-capped water wake — the original effect, One Piece skins only.
+  wake: {
+    shape: "circle",
+    primary: "--color-parchment",
+    secondary: "--color-sea",
+    ring: true,
+    decayScale: 1,
+    sizeScale: 1,
+  },
+  // Hard offset squares, no fade blur — brutalism doesn't do soft edges.
+  blocks: {
+    shape: "square",
+    primary: "--color-ink",
+    secondary: "--color-crimson",
+    ring: false,
+    decayScale: 1.7,
+    sizeScale: 1.05,
+  },
+  // A quiet, short dot trail — editorial and reading-room stay restrained.
+  ink: {
+    shape: "circle",
+    primary: "--color-ink",
+    secondary: "--color-ink",
+    ring: false,
+    decayScale: 2.4,
+    sizeScale: 0.5,
+  },
+  // Short green blips with the odd amber one — a CRT phosphor trail.
+  scan: {
+    shape: "square",
+    primary: "--color-ink",
+    secondary: "--color-gold",
+    ring: false,
+    decayScale: 2.1,
+    sizeScale: 0.75,
+  },
+  // Slow gold/teal sparkles drifting outward — stardust, not spray.
+  orbit: {
+    shape: "circle",
+    primary: "--color-gold",
+    secondary: "--color-sea",
+    ring: false,
+    decayScale: 1.2,
+    sizeScale: 0.65,
+  },
+}
+
+function resolveColor(name: string) {
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim()
+}
+
+/**
+ * A short particle trail behind the pointer, restyled per skin: ocean
+ * wake for the voyage themes, hard offset blocks for brutalism, a
+ * quiet ink dot for the reading themes, phosphor blips for the
+ * terminal, and slow sparkles for Log Pose.
  *
  * The loop stops itself once the pointer has been still for a moment
  * and the last particle has faded — an always-on rAF for a decorative
@@ -29,6 +102,7 @@ const IDLE_FRAMES = 90
  */
 export function CursorWake() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const { theme, cursor } = useTheme()
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -44,6 +118,10 @@ export function CursorWake() {
 
     const ctx = canvas.getContext("2d")
     if (!ctx) return
+
+    const variant = VARIANTS[cursor]
+    const primary = resolveColor(variant.primary) || "#ffffff"
+    const secondary = resolveColor(variant.secondary) || primary
 
     let dpr = Math.min(window.devicePixelRatio || 1, 2)
     const resize = () => {
@@ -66,15 +144,20 @@ export function CursorWake() {
     let idle = 0
     let running = false
 
-    const spawn = (x: number, y: number, dx: number, dy: number, speed: number) => {
-      // Unit vector along travel, and its perpendicular — the wake
-      // trails backwards and spreads sideways from those two.
+    const spawn = (
+      x: number,
+      y: number,
+      dx: number,
+      dy: number,
+      speed: number
+    ) => {
+      // Unit vector along travel, and its perpendicular — the trail
+      // draws backwards and spreads sideways from those two.
       const ux = dx / speed
       const uy = dy / speed
       const perpX = -uy
       const perpY = ux
 
-      // Faster pointer → wider, denser wake.
       const spread = Math.min(9, 2 + speed * 0.25)
       const count = speed > 14 ? 3 : 2
 
@@ -85,27 +168,26 @@ export function CursorWake() {
           particles.push({
             x: x - ux * back + perpX * (spread * side + jitter),
             y: y - uy * back + perpY * (spread * side + jitter),
-            // drift outward from the wake line, plus a little backwash
             vx: perpX * side * (0.35 + Math.random() * 0.5) - ux * 0.5,
             vy: perpY * side * (0.35 + Math.random() * 0.5) - uy * 0.5,
             life: 1,
-            decay: 0.014 + Math.random() * 0.016,
-            size: 2 + Math.random() * (speed > 10 ? 5 : 3),
+            decay: (0.014 + Math.random() * 0.016) * variant.decayScale,
+            size:
+              (2 + Math.random() * (speed > 10 ? 5 : 3)) * variant.sizeScale,
             foam: Math.random() < 0.55,
           })
         }
       }
 
-      // Occasional ripple ring where the hull cuts in.
-      if (Math.random() < 0.12) {
+      if (variant.ring && Math.random() < 0.12) {
         particles.push({
           x,
           y,
           vx: 0,
           vy: 0,
           life: 1,
-          decay: 0.022,
-          size: 4,
+          decay: 0.022 * variant.decayScale,
+          size: 4 * variant.sizeScale,
           foam: false,
         })
       }
@@ -113,6 +195,25 @@ export function CursorWake() {
       if (particles.length > MAX_PARTICLES) {
         particles.splice(0, particles.length - MAX_PARTICLES)
       }
+    }
+
+    const draw = (
+      x: number,
+      y: number,
+      size: number,
+      alpha: number,
+      color: string
+    ) => {
+      ctx.globalAlpha = alpha
+      ctx.fillStyle = color
+      if (variant.shape === "square") {
+        ctx.fillRect(x - size / 2, y - size / 2, size, size)
+      } else {
+        ctx.beginPath()
+        ctx.arc(x, y, size, 0, Math.PI * 2)
+        ctx.fill()
+      }
+      ctx.globalAlpha = 1
     }
 
     const frame = () => {
@@ -133,22 +234,18 @@ export function CursorWake() {
         const a = p.life * p.life // ease the fade out
 
         if (p.foam) {
-          ctx.beginPath()
-          ctx.fillStyle = `rgba(255,255,255,${a * 0.85})`
-          ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2)
-          ctx.fill()
+          draw(p.x, p.y, p.size * p.life, a * 0.85, primary)
         } else {
-          // deeper disturbed water under the foam
-          ctx.beginPath()
-          ctx.fillStyle = `rgba(21,149,196,${a * 0.42})`
-          ctx.arc(p.x, p.y, p.size * (1.4 - p.life * 0.4), 0, Math.PI * 2)
-          ctx.fill()
-
-          ctx.beginPath()
-          ctx.strokeStyle = `rgba(255,255,255,${a * 0.3})`
-          ctx.lineWidth = 1
-          ctx.arc(p.x, p.y, p.size * (2.4 - p.life * 1.2), 0, Math.PI * 2)
-          ctx.stroke()
+          draw(p.x, p.y, p.size * (1.4 - p.life * 0.4), a * 0.42, secondary)
+          if (variant.ring) {
+            ctx.globalAlpha = a * 0.3
+            ctx.strokeStyle = primary
+            ctx.lineWidth = 1
+            ctx.beginPath()
+            ctx.arc(p.x, p.y, p.size * (2.4 - p.life * 1.2), 0, Math.PI * 2)
+            ctx.stroke()
+            ctx.globalAlpha = 1
+          }
         }
       }
 
@@ -187,7 +284,7 @@ export function CursorWake() {
       start()
     }
 
-    // A pointer that leaves the window shouldn't strand a frozen wake.
+    // A pointer that leaves the window shouldn't strand a frozen trail.
     const onLeave = () => {
       lastX = -1
       lastY = -1
@@ -202,7 +299,9 @@ export function CursorWake() {
       window.removeEventListener("pointermove", onMove)
       document.removeEventListener("pointerleave", onLeave)
     }
-  }, [])
+    // Re-run on theme change: colours are resolved from the live CSS
+    // variables, and midnight/voyage share a variant but not a palette.
+  }, [theme, cursor])
 
   return (
     <canvas
